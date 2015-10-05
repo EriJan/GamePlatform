@@ -7,6 +7,7 @@ class CardDeal {
 
   // Default hand size 5
   CardDeal() {
+
     hand = new ArrayList<PlayingCard>();
   }
 
@@ -15,6 +16,10 @@ class CardDeal {
       hand.add(deck.drawTop());
     }
   }
+
+    public List<PlayingCard> getDeal(){
+        return hand;
+    }
 
   public PlayingCard discardCard(int cardNo) {
     return hand.remove(cardNo);
