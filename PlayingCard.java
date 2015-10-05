@@ -44,6 +44,7 @@ class PlayingCard implements Comparable<PlayingCard> {
     faceUp = false;
   }
 
+
   @Override
   public boolean equals(Object aCard) {
     PlayingCard card = (PlayingCard) aCard;
