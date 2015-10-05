@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class BlackJack extends CardGame {
-  CardDeck deck;
+  DeckHandler deck;
   // BlackJackPlayer[] players;
   // BlackJackPlayer house;
   BlackJackHand[] positions;
@@ -22,7 +22,7 @@ public class BlackJack extends CardGame {
     if (Character.isDigit(usrInputStr.charAt(0))) {
       int noPos = Integer.parseInt(usrInputStr.substring(0,1));
       System.out.println("There will be " + noPos + " at the table." );
-      deck = new CardDeck();
+      deck = new DeckHandler();
       deck.newDeck(8);
     } else {
       System.out.println("Bad input.");

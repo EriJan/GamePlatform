@@ -10,7 +10,7 @@ class CardDeal {
     hand = new ArrayList<PlayingCard>();
   }
 
-  public void drawFromDeck(CardDeck deck, int noOfCards) {
+  public void drawFromDeck(DeckHandler deck, int noOfCards) {
     for (int i = 0; i < noOfCards; i++) {
       hand.add(deck.drawTop());
     }
