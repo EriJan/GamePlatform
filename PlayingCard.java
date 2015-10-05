@@ -101,11 +101,11 @@ class PlayingCard implements Comparable<PlayingCard> {
     return valString;
   }
 
-  public void turnUp() {
+  public void revealCard() {
     faceUp = true;
   }
 
-  public void turnDown() {
+  public void hideCard() {
     faceUp = false;
   }
 

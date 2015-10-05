@@ -5,7 +5,6 @@ import java.util.ArrayList;
 class CardDeal {
   protected List<PlayingCard> hand;
 
-  // Default hand size 5
   CardDeal() {
     hand = new ArrayList<PlayingCard>();
   }
@@ -16,12 +15,32 @@ class CardDeal {
     }
   }
 
+  public void recieveCard(PlayingCard newCard) {
+    hand.add(newCard);
+  }
+
   public PlayingCard discardCard(int cardNo) {
     return hand.remove(cardNo);
   }
 
+  public void revealHand() {
+    for (PlayingCard card : hand) {
+      card.revealCard();
+    }
+  }
+
+  public void hideHand() {
+    for (PlayingCard card : hand) {
+      card.hideCard();
+    }
+  }
+
   public void sortHand() {
     Collections.sort(hand);
+  }
+
+  List<PlayingCard> getHand() {
+    return hand;
   }
 
   public int getHandSize() {
@@ -35,7 +54,6 @@ class CardDeal {
     }
     return handValue;
   }
-
 
   @Override
   public String toString() {

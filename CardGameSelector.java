@@ -18,8 +18,8 @@ public class CardGameSelector {
         theGame = new BlackJack();
         theGame.runGame();
       } else if (inputStr.equals("Patiens")){
-    	  theGame = new Patiens();
-    	  theGame.runGame();
+        theGame = new Patiens();
+        theGame.runGame();
       }
     }
   }
