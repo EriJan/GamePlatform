@@ -98,7 +98,7 @@ class PlayingCard implements Comparable<PlayingCard> {
     } else {
       valString = "––";
     }
-    return suit + valString;
+    return valString;
   }
 
   public void turnUp() {
