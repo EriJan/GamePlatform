@@ -55,14 +55,11 @@ public class the21  extends CardGame {
 					try {
 						Thread.sleep(2000);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 				
-				
 				Methods.printSlowly( String.format("Result is: %n" ));
-
 				System.out.println(player1.getName() + " : " + playersHands[0].getHandValue());
 				System.out.println(player2.getName() + " : " + playersHands[1].getHandValue());
 				}  
