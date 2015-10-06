@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
 
-class DeckHandler {
+public class DeckHandler {
   static private Set<PlayingCard> fullDeck;
   private List<PlayingCard> currentDeck;
   private List<PlayingCard> dealtCards;

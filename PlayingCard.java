@@ -7,11 +7,11 @@
 // compareTo is not 100% complying to standard
 // NO hashCode method implemented
 
-class PlayingCard implements Comparable<PlayingCard> {
+public class PlayingCard implements Comparable<PlayingCard> {
 
-  private final Suit suit;
-  private final int value;
-  private boolean faceUp;
+  protected final Suit suit;
+  protected final int value;
+  protected boolean faceUp;
 
   PlayingCard(Suit suit, int val) {
     this.suit = suit;

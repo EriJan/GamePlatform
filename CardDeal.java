@@ -2,11 +2,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 
-class CardDeal {
+public class CardDeal {
   protected List<PlayingCard> hand;
 
   CardDeal() {
-
     hand = new ArrayList<PlayingCard>();
   }
 
@@ -16,9 +15,9 @@ class CardDeal {
     }
   }
 
-    public List<PlayingCard> getDeal(){
-        return hand;
-    }
+  public List<PlayingCard> getDeal(){
+    return hand;
+  }
 
   public void recieveCard(PlayingCard newCard) {
     hand.add(newCard);
@@ -42,10 +41,6 @@ class CardDeal {
 
   public void sortHand() {
     Collections.sort(hand);
-  }
-
-  List<PlayingCard> getHand() {
-    return hand;
   }
 
   public int getHandSize() {
