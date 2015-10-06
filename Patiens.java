@@ -34,12 +34,20 @@ public class Patiens extends CardGame {
 
     public void printDeal() {
 
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < cardDealList.length; i++) {
+            for (int j = cardDealList[i].getDeal().size()-1; j >= 0; j--) {
+                if (cardDealList[i].getDeal().get(j).getValue() != 0) {
+                    cardDealList[i].getDeal().get(j).turnUp();
+                    break;
+                }
+            }
+        }
 
+        for (int i = 0; i < 7; i++) {
             System.out.print(cardDealList[0].getDeal().get(i) + "  ");
-            System.out.print(cardDealList[1].getDeal().get(i)+ "  ");
+            System.out.print(cardDealList[1].getDeal().get(i) + "  ");
             System.out.print(cardDealList[2].getDeal().get(i) + "  ");
-            System.out.print(cardDealList[3].getDeal().get(i) +"  ");
+            System.out.print(cardDealList[3].getDeal().get(i) + "  ");
             System.out.print(cardDealList[4].getDeal().get(i) + "  ");
             System.out.print(cardDealList[5].getDeal().get(i) + "  ");
             System.out.print(cardDealList[6].getDeal().get(i) + "  ");
