@@ -9,7 +9,7 @@ public class CardGameSelector {
     System.out.println("Lets play cards!");
     boolean pgmEnd = false;
     while (!pgmEnd) {
-      System.out.print("What game do you want to play?");
+      System.out.println("What game do you want to play?");
       String inputStr = userInput.nextLine();
       if ( inputStr.isEmpty() ) {
         pgmEnd = true;

@@ -2,11 +2,11 @@ import java.util.Scanner;
 
 public class BlackJackHand extends CardDeal {
 
-  private boolean isOut;
+  private boolean isDone;
 
   BlackJackHand() {
     super();
-    isOut = false;
+    isDone = false;
   }
 
   boolean isBlackJack() {
@@ -52,11 +52,11 @@ public class BlackJackHand extends CardDeal {
     return handValue;
   }
 
-  public void setIsOut() {
-    isOut = true;
+  public void setIsDone() {
+    isDone = true;
   }
 
-  public boolean isOut() {
-    return isOut;
+  public boolean isDone() {
+    return isDone;
   }
 }
