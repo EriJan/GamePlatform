@@ -35,7 +35,7 @@ public class PatiensPlayingCard extends PlayingCard {
 
 
         } else if (!faceUp && value != 0){
-            valString = "––";
+            valString = "â€“â€“";
         } else {
             valString = "  ";
         }
