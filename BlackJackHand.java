@@ -1,14 +1,20 @@
 import java.util.Scanner;
 
 public class BlackJackHand extends CardDeal {
+
+  private boolean isDone;
+
   BlackJackHand() {
     super();
+    isDone = false;
   }
 
   boolean isBlackJack() {
     boolean blackJack = false;
     if (getHandSize() == 2) {
-      PlayingCard[] handArr = (PlayingCard[]) hand.toArray();
+      PlayingCard[] handArr = new PlayingCard[2];
+      handArr[0] = hand.get(0);
+      handArr[1] = hand.get(1);
       if ((handArr[0].getValue() == 1 && handArr[1].getValue() >= 10) ||
            handArr[1].getValue() == 1 && handArr[0].getValue() >= 10) {
           blackJack = true;
@@ -21,7 +27,7 @@ public class BlackJackHand extends CardDeal {
     int aceVal = 0;
     Scanner userInput = new Scanner(System.in);
     System.out.println("What is the value of this ace?");
-    String usrInputStr = userInput.next();
+    String usrInputStr = userInput.nextLine();
     if (usrInputStr.equals("1")) {
       aceVal = 1;
     } else {
@@ -44,5 +50,13 @@ public class BlackJackHand extends CardDeal {
       }
     }
     return handValue;
+  }
+
+  public void setIsDone() {
+    isDone = true;
+  }
+
+  public boolean isDone() {
+    return isDone;
   }
 }

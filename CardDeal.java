@@ -2,22 +2,41 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 
-class CardDeal {
+public class CardDeal {
   protected List<PlayingCard> hand;
 
-  // Default hand size 5
   CardDeal() {
     hand = new ArrayList<PlayingCard>();
   }
 
-  public void drawFromDeck(CardDeck deck, int noOfCards) {
+  public void drawFromDeck(DeckHandler deck, int noOfCards) {
     for (int i = 0; i < noOfCards; i++) {
       hand.add(deck.drawTop());
     }
   }
 
+  public List<PlayingCard> getDeal(){
+    return hand;
+  }
+
+  public void recieveCard(PlayingCard newCard) {
+    hand.add(newCard);
+  }
+
   public PlayingCard discardCard(int cardNo) {
     return hand.remove(cardNo);
+  }
+
+  public void revealHand() {
+    for (PlayingCard card : hand) {
+      card.revealCard();
+    }
+  }
+
+  public void hideHand() {
+    for (PlayingCard card : hand) {
+      card.hideCard();
+    }
   }
 
   public void sortHand() {
@@ -35,7 +54,6 @@ class CardDeal {
     }
     return handValue;
   }
-
 
   @Override
   public String toString() {

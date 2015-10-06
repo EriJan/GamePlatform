@@ -7,11 +7,11 @@
 // compareTo is not 100% complying to standard
 // NO hashCode method implemented
 
-class PlayingCard implements Comparable<PlayingCard> {
+public class PlayingCard implements Comparable<PlayingCard> {
 
-  private final Suit suit;
-  private final int value;
-  private boolean faceUp;
+  protected final Suit suit;
+  protected final int value;
+  protected boolean faceUp;
 
   PlayingCard(Suit suit, int val) {
     this.suit = suit;
@@ -43,6 +43,7 @@ class PlayingCard implements Comparable<PlayingCard> {
     }
     faceUp = false;
   }
+
 
   @Override
   public boolean equals(Object aCard) {
@@ -98,14 +99,14 @@ class PlayingCard implements Comparable<PlayingCard> {
     } else {
       valString = "––";
     }
-    return suit + valString;
+    return valString;
   }
 
-  public void turnUp() {
+  public void revealCard() {
     faceUp = true;
   }
 
-  public void turnDown() {
+  public void hideCard() {
     faceUp = false;
   }
 
