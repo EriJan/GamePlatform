@@ -3,22 +3,15 @@
  */
 public class PatiensPlayingCard extends PlayingCard {
 
-    private final Suit suit;
-    private final int value;
-    private boolean faceUp;
 
     PatiensPlayingCard(Suit suit, int val) {
         super(suit, val);
-        this.suit = suit;
-        this.value = val;
 
     }
-
 
     @Override
     public String toString() {
         String valString;
-
 
         if (faceUp) {
             switch (value) {
@@ -34,20 +27,17 @@ public class PatiensPlayingCard extends PlayingCard {
                 case 13:
                     valString = "K";
                     break;
-                case 0:
-                    valString = "0";
                 default:
                     valString = Integer.toString(value);
                     break;
             }
-            if (valString.equals("0")) {
-                valString = "  ";
-            } else {
                 valString = suit + valString;
-            }
 
-        } else {
+
+        } else if (!faceUp && value != 0){
             valString = "––";
+        } else {
+            valString = "  ";
         }
         return valString;
     }
