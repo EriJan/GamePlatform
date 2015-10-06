@@ -28,10 +28,10 @@ public class PlayServer {
 			} catch (InterruptedException e) {			
 			}
 		} while (stb.toString().equalsIgnoreCase("false") && !(trys>=  30));
-			//det kan inträffa att man får error 500 i dropbox , detta är en dropbox bugg jag slet med..
+			//det kan intrÃ¤ffa att man fÃ¥r error 500 i dropbox , detta Ã¤r en dropbox bugg jag slet med..
 
 		System.out.println("number of try's = " + trys);
-		
+		trys = 0;
 		data = stb.toString();
 		return data;
 		}
@@ -53,7 +53,7 @@ public class PlayServer {
 				}				
 			}
 			
-			//man har nu ersatt ramen för spelaren men ny info
+			//man har nu ersatt ramen fÃ¶r spelaren men ny info
 			
 			for (int i = 0 ; i < dataAr.length ; i++){
 				stb.append(dataAr[i]);
@@ -63,8 +63,8 @@ public class PlayServer {
 			updatedData = stb.toString(); //nu har vi allt i en string
 			
 			//sedan skall man skriva till filen ?
-			//dvs skriva över innehållet med  stringen: updatedData
-			//ev genom att först "mellanlanda lokant" i en txt-fil, men detta är ju jobbigt!
+			//dvs skriva Ã¶ver innehÃ¥llet med  stringen: updatedData
+			//ev genom att fÃ¶rst "mellanlanda lokant" i en txt-fil, men detta Ã¤r ju jobbigt!
 			//om man misslyckas att skriva returneras false, och detta kors ex 30 ggr innan man ger upp..
 		
 		return true;
