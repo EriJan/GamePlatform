@@ -9,7 +9,7 @@ public class CardGameSelector {
     System.out.println("Lets play cards!");
     boolean pgmEnd = false;
     while (!pgmEnd) {
-      System.out.print("What game do you want to play?");
+      System.out.println("What game do you want to play?");
       String inputStr = userInput.nextLine();
       if ( inputStr.isEmpty() ) {
         pgmEnd = true;
@@ -18,8 +18,8 @@ public class CardGameSelector {
         theGame = new BlackJack();
         theGame.runGame();
       } else if (inputStr.equals("Patiens")){
-    	  theGame = new Patiens();
-    	  theGame.runGame();
+        theGame = new Patiens();
+        theGame.runGame();
       }
     }
   }
