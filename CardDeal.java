@@ -6,6 +6,7 @@ class CardDeal {
   protected List<PlayingCard> hand;
 
   CardDeal() {
+
     hand = new ArrayList<PlayingCard>();
   }
 
@@ -14,6 +15,10 @@ class CardDeal {
       hand.add(deck.drawTop());
     }
   }
+
+    public List<PlayingCard> getDeal(){
+        return hand;
+    }
 
   public void recieveCard(PlayingCard newCard) {
     hand.add(newCard);
