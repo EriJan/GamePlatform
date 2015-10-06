@@ -20,6 +20,11 @@ public class CardGameSelector {
       } else if (inputStr.equals("Patiens")){
         theGame = new Patiens();
         theGame.runGame();
+      }else if (inputStr.equals("21")) {
+        System.out.println("the game 21");
+        theGame = new the21();
+        System.out.println("the game 21 object soon running");
+        theGame.runGame();
       }
     }
   }
