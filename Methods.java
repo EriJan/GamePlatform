@@ -1,6 +1,11 @@
-package CardGame;
+//package CardGame;
 
-import java.util.Scanner;
+		import java.io.Closeable;
+		import java.io.File;
+		import java.io.FileInputStream;
+		import java.io.FileOutputStream;
+		import java.io.IOException;
+		import java.util.Scanner;
 
 public class Methods {
 	public static String inPutFromNextLine() {
@@ -10,88 +15,123 @@ public class Methods {
 		return input;
 	}
 
-public static void printSlowly(String text) {//skriver ut texter långsamt ut en string..
-	try {
-        for (char character : text.toCharArray()) {
-            System.out.print(character);  // skriver varje char (i introText)
-            
-            if ( character != ' ' ){ //om det inte vara var ett mellanslag!
-            	Thread.sleep(50);  // vänta lite tills nästa.. (skapar en tråd och väntar liiite)
-            }//annars väntar vi inte...
-        }
-    } catch (InterruptedException e) {//om tråden blir fel eller liknande
-    	System.out.println(text);//skriv ut som vanligt instället..
-    }
+	public static void printSlowly(String text) {//skriver ut texter lÃ¥ngsamt ut en string..
+		try {
+			for (char character : text.toCharArray()) {
+				System.out.print(character);  // skriver varje char (i introText)
+
+				if ( character != ' ' ){ //om det inte vara var ett mellanslag!
+					Thread.sleep(50);  // vÃ¤nta lite tills nÃ¤sta.. (skapar en trÃ¥d och vÃ¤ntar liiite)
+				}//annars vÃ¤ntar vi inte...
+			}
+		} catch (InterruptedException e) {//om trÃ¥den blir fel eller liknande
+			System.out.println(text);//skriv ut som vanligt instÃ¤llet..
+		}
 	}
 
-public static void printSlowly(String text, int mSecondsDelay) {//skriver ut texter långsamt ut en string..
-	try {
-        for (char character : text.toCharArray()) {
-            System.out.print(character);  // skriver varje char (i introText)
-            
-            if ( character != ' ' ){ //om det inte vara var ett mellanslag!
-            	Thread.sleep(mSecondsDelay);  // vänta lite tills nästa.. (skapar en tråd och väntar liiite)
-            }//annars väntar vi inte...
-        }
-    } catch (InterruptedException e) {//om tråden blir fel eller liknande
-    	System.out.println(text);//skriv ut som vanligt instället..
-    }
+	public static void printSlowly(String text, int mSecondsDelay) {//skriver ut texter lÃ¥ngsamt ut en string..
+		try {
+			for (char character : text.toCharArray()) {
+				System.out.print(character);  // skriver varje char (i introText)
+
+				if ( character != ' ' ){ //om det inte vara var ett mellanslag!
+					Thread.sleep(mSecondsDelay);  // vÃ¤nta lite tills nÃ¤sta.. (skapar en trÃ¥d och vÃ¤ntar liiite)
+				}//annars vÃ¤ntar vi inte...
+			}
+		} catch (InterruptedException e) {//om trÃ¥den blir fel eller liknande
+			System.out.println(text);//skriv ut som vanligt instÃ¤llet..
+		}
 	}
 
-/**
- * @param menyElements
- * @return the name of the selected option 
- * 	  switch (Methods.choseFromMeny("TestGame,BlackJack,Patians,21")) {
+	/**
+	 * @param menyElements
+	 * @return the name of the selected option
+	 * 	  switch (Methods.choseFromMeny("TestGame,BlackJack,Patians,21")) {
 	case "TestGame":
-		System.out.println("Run the testgame");
-		break;
+	System.out.println("Run the testgame");
+	break;
 
 	default:
-		System.out.println("do nothing..");
-		break;
-		
-	} 
- */
-public static String choseFromMeny(String menyElements) {
-	
-	
-	
-	String[] menyElements_ = menyElements.split(",");
-	StringBuilder sb = new StringBuilder(
-			      "*********** Chose ***********\n");
-	for(int i = 0; i< menyElements_.length; i++){
-		sb.append(" "
-				+ (i+1) + " : " + menyElements_[i] + "\n");
+	System.out.println("do nothing..");
+	break;
+
 	}
-	sb.append("*****************************\n");	
-	printSlowly(sb.toString());
-	String choice;
-	do{
-		System.out.println("chose:");
-		choice = inPutFromNextLine();
-	}while ( (Integer.parseInt(choice)<0) && (!choice.matches("-?\\d+(\\.\\d+)?")|| ((Integer.parseInt(choice)-1) > menyElements_.length)) );
-	
-	
-	return menyElements_[(Integer.parseInt(choice)-1)];
-}
-public static String choseFromMenyNew(String... menyElements) {
-	
-	StringBuilder sb = new StringBuilder(
-			      "*********** Chose ***********\n");
-	for(int i = 0; i< menyElements.length; i++){
-		sb.append(" "
-				+ (i+1) + " : " + menyElements[i] + "\n");
+	 */
+	public static String choseFromMeny(String menyElements) {
+
+
+
+		String[] menyElements_ = menyElements.split(",");
+		StringBuilder sb = new StringBuilder(
+				"*********** Chose ***********\n");
+		for(int i = 0; i< menyElements_.length; i++){
+			sb.append(" "
+					+ (i+1) + " : " + menyElements_[i] + "\n");
+		}
+		sb.append("*****************************\n");
+		printSlowly(sb.toString());
+		String choice;
+		do{
+			System.out.println("chose:");
+			choice = inPutFromNextLine();
+		}while ( (Integer.parseInt(choice)<0) && (!choice.matches("-?\\d+(\\.\\d+)?")|| ((Integer.parseInt(choice)-1) > menyElements_.length)) );
+
+
+		return menyElements_[(Integer.parseInt(choice)-1)];
 	}
-	sb.append("*****************************\n");	
-	printSlowly(sb.toString());
-	String choice;
-	do{
-		System.out.println("chose:");
-		choice = inPutFromNextLine();
-	}while ( (Integer.parseInt(choice)<0) && (!choice.matches("-?\\d+(\\.\\d+)?")|| ((Integer.parseInt(choice)-1) > menyElements.length)) );
-	
-	
-	return menyElements[(Integer.parseInt(choice)-1)];
-}
+	public static String choseFromMenyNew(String... menyElements) {
+
+		StringBuilder sb = new StringBuilder(
+				"*********** Chose ***********\n");
+		for(int i = 0; i< menyElements.length; i++){
+			sb.append(" "
+					+ (i+1) + " : " + menyElements[i] + "\n");
+		}
+		sb.append("*****************************\n");
+		printSlowly(sb.toString());
+		String choice;
+		do{
+			System.out.println("chose:");
+			choice = inPutFromNextLine();
+		}while ( (Integer.parseInt(choice)<0) && (!choice.matches("-?\\d+(\\.\\d+)?")|| ((Integer.parseInt(choice)-1) > menyElements.length)) );
+
+
+		return menyElements[(Integer.parseInt(choice)-1)];
+	}
+
+	public static String readFile(String filename) throws IOException {
+		File file = new File(filename);
+		int len = (int) file.length();
+		byte[] bytes = new byte[len];
+		FileInputStream fis = null;
+		try {
+			fis = new FileInputStream(file);
+			assert len == fis.read(bytes);
+		} catch (IOException e) {
+			close(fis);
+			throw e;
+		}
+		return new String(bytes, "UTF-8");
+	}
+
+	public static void writeFile(String filename, String text) throws IOException {
+		FileOutputStream fos = null;
+		try {
+			fos = new FileOutputStream(filename);
+			fos.write(text.getBytes("UTF-8"));
+		} catch (IOException e) {
+			close(fos);
+			throw e;
+		}
+	}
+
+	public static void close(Closeable closeable) {
+		try {
+			closeable.close();
+		} catch(IOException ignored) {
+		}
+	}
+
 
 }
+
