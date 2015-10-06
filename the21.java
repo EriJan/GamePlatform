@@ -5,49 +5,66 @@
 import java.util.Scanner;
 
 public class the21  extends CardGame {
-	  CardDeck deck;
+	  DeckHandler deck = new DeckHandler();
 	  Player player1,player2;
-	  the21Hands[] playersHands;
+	  the21Hands[] playersHands  ;
 	private String val;
 
-	  the21() {	 
-		  deck.shuffleDeck();			  
+	  the21() {
+		  deck.newDeck();
+		  deck.shuffleDeck();
 		  player2 = new Player("PC");
 	  }
 
 	  @Override
 	  public void runGame() {
-		  Methods.printSlowly("* The  Game 21 *");	
-		  Methods.printSlowly("* * * * * * * * * * * * * * * * * * * *\n");
+		  Methods.printSlowly("\t\t* The  Game 21 *\n");
+		  Methods.printSlowly("* * * * * * * * * * * * * * * * * * *\n");
 		  Methods.printSlowly(" Player enter your name : ");
-		  player1 = new Player(Methods.inPutFromNextLine());	
-		 
-		  while(playersHands[0].isCardToTake() && !playersHands[0].isTjock() && !val.equalsIgnoreCase("N")){
+		  player1 = new Player(Methods.inPutFromNextLine());
+		   int [] DrowCard = new int[] {0,0,0};
+		  int [] DrowCard2 = new int[] {0,0,0};
+		  playersHands = new the21Hands[2];
+		  for (int i = 0; i< playersHands.length ; i++ ){
+			  playersHands[i] = new the21Hands();
+		  }
+		  playersHands[0].drawFromDeck(deck, 3);
+		  playersHands[0].revealHand();
+		  playersHands[1].drawFromDeck(deck, 3);
+		  playersHands[1].revealHand();
+
+
+		  boolean endLoopForP1 = false;
+		  int i = 0;
+		  while(!endLoopForP1){
+			  val="";
+			  DrowCard[i] = playersHands[0].hand.get(i).getValue();
+				System.out.format("%s, Your cards :\n%s", player1.getName(), playersHands[0].hand.get(i).toString());
+				System.out.println("totally: " + playersHands[0].getHandValue(DrowCard));
 				
-			  playersHands[0].drawFromDeck(deck, 1);	
-				
-				System.out.format("%s, Your cards :\n%s", player1.getName(), playersHands[0].toString());
-				
-				System.out.println("totally: " + playersHands[0].getHandValue());
-				
-				if(playersHands[0].isCardToTake() && !playersHands[0].isTjock()){
+				if(playersHands[0].isCardToTake(DrowCard) && !playersHands[0].isTjock(DrowCard)){
 					System.out.println("vill du ha ett till ? (J/N): ");
-					val = Methods.inPutFromNextLine();//�nskades flera kort?	
+					val = Methods.inPutFromNextLine();//onskades flera kort?
 				}
+			  	if(!playersHands[0].isCardToTake(DrowCard) || playersHands[0].isTjock(DrowCard) || val.equalsIgnoreCase("N")){
+				  endLoopForP1 = true;
+			  }
+			  i++;
 			}
 		  
-		  if(!playersHands[0].isTjock()){
+		  if(!playersHands[0].isTjock(DrowCard)){
 				
-				System.out.format("nu e' det %s: s tur %n", player2.getName());
+				System.out.format("Now it is %s: s turn %n", player2.getName());
 				val = "J";
-				
-				while(playersHands[1].isCardToTake() && !playersHands[1].isTjock() && !val.equalsIgnoreCase("N") && !playersHands[0].isTjock()){
-					playersHands[1].drawFromDeck(deck, 1);
-					Methods.printSlowly( String.format("%s, (Dealers cards) :\n%s", player2.getName(), playersHands[1].toString() ) );
+			   i = 0;
+				while(playersHands[1].isCardToTake(DrowCard2) && !playersHands[1].isTjock(DrowCard2) && !val.equalsIgnoreCase("N") && !playersHands[1].isTjock(DrowCard2)){
+
+					DrowCard2[i] = playersHands[1].hand.get(i).getValue();
+					Methods.printSlowly( String.format("%s, (Dealers cards) :%s\n", player2.getName(), playersHands[1].hand.get(i).toString() ) );
 					
-					System.out.println("totally: " + playersHands[1].getHandValue());
+					System.out.println(" totally: " + playersHands[1].getHandValue(DrowCard2) );
 					
-					if(playersHands[1].getHandValue()<=14 || (playersHands[1].getHandValue() < playersHands[0].getHandValue()) ){
+					if(playersHands[1].getHandValue(DrowCard2)<=14 || (playersHands[1].getHandValue(DrowCard2) < playersHands[0].getHandValue(DrowCard2)) ){
 						val = "J";								
 					}else{
 						val = "N";
@@ -57,22 +74,23 @@ public class the21  extends CardGame {
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
+					i++;
 				}
 				
 				Methods.printSlowly( String.format("Result is: %n" ));
-				System.out.println(player1.getName() + " : " + playersHands[0].getHandValue());
-				System.out.println(player2.getName() + " : " + playersHands[1].getHandValue());
+				System.out.println(player1.getName() + " : " + playersHands[0].getHandValue(DrowCard));
+				System.out.println(player2.getName() + " : " + playersHands[1].getHandValue(DrowCard2));
 				}  
-		  if ( (playersHands[0].isTjock()) 
-					|| ((playersHands[0].getHandValue() < playersHands[1].getHandValue())  && !playersHands[1].isTjock()) ) {
+		  if ( (playersHands[0].isTjock(DrowCard))
+					|| ((playersHands[0].getHandValue(DrowCard) < playersHands[1].getHandValue(DrowCard2))  && !playersHands[1].isTjock(DrowCard2)) ) {
 				System.out.format("%s vann!! ", player2.getName());
 				
-			}else if ( (playersHands[1].getHandValue() < playersHands[0].getHandValue() ) || playersHands[1].isTjock() ) {
+			}else if ( (playersHands[1].getHandValue(DrowCard2) < playersHands[0].getHandValue(DrowCard) ) || playersHands[1].isTjock(DrowCard2) ) {
 				System.out.format("%s vann!! ", player1.getName());
 			}
-			else if ( (playersHands[1].getHandValue() == playersHands[0].getHandValue() ) && ! playersHands[0].isTjock() ) {
+			else if ( (playersHands[1].getHandValue(DrowCard2) == playersHands[0].getHandValue(DrowCard) ) && ! playersHands[0].isTjock(DrowCard) ) {
 				//System.out.format("OAVGJORT!! ");
-				System.out.format("%s vann!! ", player2.getName());
+				System.out.format("%s vann!! \n", player2.getName());
 			}
 		  
 		  
