@@ -1,7 +1,8 @@
 import java.util.Scanner;
 
-public class CardGameSelector {
-  public static void run() {
+public class CardGameSelector implements Runnable {
+
+  public void run() {
     CardGame theGame;
 
     Scanner userInput = new Scanner(System.in);

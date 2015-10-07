@@ -70,7 +70,9 @@ public Gui(String... Options){
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("klick");
-            CardGameSelector.run();
+            CardGameSelector CardGameSelectorRunnebleThread = new CardGameSelector();
+
+            new Thread(CardGameSelectorRunnebleThread).start();
         }
     });
     validate();
@@ -90,6 +92,7 @@ public Gui(String... Options){
                     BevelBorder.LOWERED, Color.DARK_GRAY, Color.BLACK);
             bselects[ClickPointer].setBorder(marking);
             System.out.println(bselects[ClickPointer].getText());
+
             CardGameSelector.run(bselects[ClickPointer].getText());
         }
         return isMarked;
