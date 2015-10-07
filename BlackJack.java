@@ -3,29 +3,19 @@ import java.util.Scanner;
 
 public class BlackJack extends CardGame {
   DeckHandler deck;
-  // BlackJackPlayer[] players;
-  // BlackJackPlayer house;
+
   ArrayList<BlackJackHand> positions;
   ArrayList<Player> players;
   BlackJackHand house;
-  // Player housePl;
 
-
-  // Create deck from 1-8
-  // Deal 2 cards to each position
-  // Deal one card to house
-  // Resolve each position
-  // deal to house, deal on 16, stand on 17.
-  //
-
-  BlackJack () {
+  BlackJack() {
     deck = new DeckHandler();
     deck.newDeck(8);
     positions = new ArrayList<BlackJackHand>();
     players = new ArrayList<Player>();
   }
 
-  void newGame() {
+  public void newGame() {
     Scanner userInput = new Scanner(System.in);
     System.out.println("How many postions at the table?");
     String usrInputStr = userInput.nextLine();
@@ -225,5 +215,4 @@ public class BlackJack extends CardGame {
     tmpStr += house.toString();
     return tmpStr;
   }
-
 }

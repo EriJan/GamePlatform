@@ -33,7 +33,6 @@ public class BlackJackHand extends CardDeal {
     return isBust;
   }
 
-
   boolean isBlackJack() {
     boolean blackJack = false;
     if (getHandSize() == 2) {
@@ -85,10 +84,4 @@ public class BlackJackHand extends CardDeal {
     return isDone;
   }
 
-//  @Override
-//  public String toString() {
-//    String handStr = "(" + owner.toString() + ")";
-//    handStr = handStr + super.toString();
-//    return handStr;
-//  }
 }
