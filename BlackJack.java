@@ -100,6 +100,10 @@ public class BlackJack extends CardGame {
         resolveHouse();
       }
 
+      endScore();
+
+      printScore();
+
       System.out.print("Hit return to play again.");
       String inputStr = userInput.nextLine();
       if (!inputStr.isEmpty()) {
@@ -129,6 +133,7 @@ public class BlackJack extends CardGame {
       if(pos.isBlackJack()) {
         System.out.println("Blackjack på position " + counter);
         pos.setIsDone();
+        pos.getOwner().setWin(2);
       }
       counter++;
     }
@@ -138,14 +143,6 @@ public class BlackJack extends CardGame {
       house.setIsDone();
     }
     System.out.println(toString());
-  }
-
-  public boolean isBust(BlackJackHand hand) {
-    boolean isBust = false;
-    if (hand.getHandValue() > 21) {
-      isBust = true;
-    }
-    return isBust;
   }
 
   public void resolvePosition(BlackJackHand hand) {
@@ -162,10 +159,11 @@ public class BlackJack extends CardGame {
         PlayingCard card = deck.drawTop();
         card.revealCard();
         hand.recieveCard(card);
-        if (isBust(hand)) {
+        if (hand.isBust()) {
           System.out.println("Sorry, you are bust!");
           moreCards = false;
           hand.setIsDone();
+          hand.getOwner().setLoss(1);
         }
       } else {
         hand.setIsDone();
@@ -184,6 +182,34 @@ public class BlackJack extends CardGame {
       }
     }
     System.out.println(house.toString());
+  }
+
+  public void endScore() {
+    if (house.isBust()) {
+      for (BlackJackHand pos : positions) {
+        if (!pos.isBust() && !pos.isBlackJack()) {
+          pos.getOwner().setWin(1);
+        }
+      }
+    } else {
+      for (BlackJackHand pos : positions) {
+        if (!pos.isBust() && !pos.isBlackJack()) {
+          if (pos.getHandValue() > house.getHandValue()) {
+            pos.getOwner().setWin(1);
+          } else {
+            pos.getOwner().setLoss(1);
+          }
+        }
+      }
+    }
+  }
+
+  public void printScore() {
+    for (Player pl : players) {
+      System.out.println(pl.toString() + " score:");
+      System.out.println("Wins: " + pl.getWin());
+      System.out.println("Losses: " + pl.getLoss());
+    }
   }
 
   @Override

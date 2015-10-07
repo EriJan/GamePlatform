@@ -25,6 +25,15 @@ public class BlackJackHand extends CardDeal {
     this.owner = owner;
   }
 
+  public boolean isBust() {
+    boolean isBust = false;
+    if (getHandValue() > 21) {
+      isBust = true;
+    }
+    return isBust;
+  }
+
+
   boolean isBlackJack() {
     boolean blackJack = false;
     if (getHandSize() == 2) {
