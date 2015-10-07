@@ -6,12 +6,13 @@ public class CardGameSelector {
 
     Scanner userInput = new Scanner(System.in);
 
-    System.out.println("Lets play cards!");
+    Methods.printSlowly("Lets play !\n");
     boolean pgmEnd = false;
     while (!pgmEnd) {
-      System.out.println("What game do you want to play?");
-      String inputStr = userInput.nextLine();
-      if ( inputStr.isEmpty() ) {
+      Methods.printSlowly("What game do you want to play?\n");
+
+      String inputStr = Methods.choseFromMenyNew("Blackjack","Patiens","21","Quit");
+      if ( inputStr.equals("Quit")) {
         pgmEnd = true;
         System.out.println("Program end.");
       } else if (inputStr.equals("Blackjack")){
@@ -23,7 +24,6 @@ public class CardGameSelector {
       }else if (inputStr.equals("21")) {
         System.out.println("the game 21");
         theGame = new the21();
-        System.out.println("the game 21 object soon running");
         theGame.runGame();
       }
     }

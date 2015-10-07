@@ -72,10 +72,13 @@ public class Methods {
 		printSlowly(sb.toString());
 		String choice;
 		do{
-			System.out.println("chose:");
+			System.out.print("chose a number(1 to " + menyElements_.length + ") :");
 			choice = inPutFromNextLine();
-		}while ( (Integer.parseInt(choice)<0) && (!choice.matches("-?\\d+(\\.\\d+)?")|| ((Integer.parseInt(choice)-1) > menyElements_.length)) );
+			if(choice.isEmpty()|| !choice.matches("[0-9]+")) {
+				choice = "-1";
 
+			}
+		}while ( (Integer.parseInt(choice)<0) || (((Integer.parseInt(choice))) > (menyElements_.length)) );
 
 		return menyElements_[(Integer.parseInt(choice)-1)];
 	}
@@ -91,10 +94,13 @@ public class Methods {
 		printSlowly(sb.toString());
 		String choice;
 		do{
-			System.out.println("chose:");
+			System.out.print("chose a number(1 to " + menyElements.length + ") :");
 			choice = inPutFromNextLine();
-		}while ( (Integer.parseInt(choice)<0) && (!choice.matches("-?\\d+(\\.\\d+)?")|| ((Integer.parseInt(choice)-1) > menyElements.length)) );
+			if(choice.isEmpty()|| !choice.matches("[0-9]+")) {
+				choice = "-1";
 
+			}
+		}while ( (Integer.parseInt(choice)<0) || (((Integer.parseInt(choice))) > (menyElements.length)) );
 
 		return menyElements[(Integer.parseInt(choice)-1)];
 	}
