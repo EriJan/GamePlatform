@@ -6,7 +6,9 @@ public class BlackJack extends CardGame {
   // BlackJackPlayer[] players;
   // BlackJackPlayer house;
   ArrayList<BlackJackHand> positions;
+  ArrayList<Player> players;
   BlackJackHand house;
+  // Player housePl;
 
 
   // Create deck from 1-8
@@ -20,12 +22,12 @@ public class BlackJack extends CardGame {
     deck = new DeckHandler();
     deck.newDeck(8);
     positions = new ArrayList<BlackJackHand>();
+    players = new ArrayList<Player>();
   }
 
   void newGame() {
     Scanner userInput = new Scanner(System.in);
     System.out.println("How many postions at the table?");
-
     String usrInputStr = userInput.nextLine();
     int noPos;
     if (Character.isDigit(usrInputStr.charAt(0))) {
@@ -33,10 +35,48 @@ public class BlackJack extends CardGame {
     } else {
       noPos = 8;
     }
-
     System.out.println("There will be " + noPos + " at the table." );
-    for (int i = 0; i < noPos; i++) {
-      positions.add(new BlackJackHand());
+
+    System.out.println("Who are the players at the table?");
+    int playerCounter = 1;
+    boolean morePlayers = true;
+    while (morePlayers) {
+      System.out.println("What are the name of player " + playerCounter + " ?");
+      usrInputStr = userInput.nextLine();
+
+      if ( usrInputStr.isEmpty()) {
+        if (playerCounter > 1) {
+          morePlayers = false;
+        } else {
+          System.out.println("Please add at least one player.");
+        }
+      } else {
+        players.add(new Player(usrInputStr));
+        playerCounter++;
+      }
+    }
+    System.out.println("Available players.");
+    playerCounter = 1;
+    for (Player pl : players) {
+      System.out.println(playerCounter + " : " + pl);
+      playerCounter++;
+    }
+    System.out.println();
+    for (int i = 1; i <= noPos; i++) {
+      System.out.println("Who owns position " + i + " ?");
+      int posOwnerId = 0;
+      boolean isDigit = false;
+      while(!isDigit) {
+        usrInputStr = userInput.nextLine();
+
+        if (Character.isDigit(usrInputStr.charAt(0))) {
+          posOwnerId = Integer.parseInt(usrInputStr.substring(0, 1)) - 1;
+          isDigit = true;
+        } else {
+          System.out.println("Not a valid number");
+        }
+      }
+      positions.add(new BlackJackHand(players.get(posOwnerId)));
     }
     house = new BlackJackHand();
     deck.shuffleDeck();
@@ -151,7 +191,7 @@ public class BlackJack extends CardGame {
     String tmpStr = "";
     int posCnt = 1;
     for (BlackJackHand pos : positions) {
-      tmpStr += "Position " + posCnt + " : ";
+      tmpStr += "Position " + posCnt + " (" + pos.getOwner() + "): ";
       tmpStr += pos.toString();
       posCnt++;
     }

@@ -3,10 +3,26 @@ import java.util.Scanner;
 public class BlackJackHand extends CardDeal {
 
   private boolean isDone;
+  private Player owner;
 
   BlackJackHand() {
     super();
     isDone = false;
+    owner = new Player("House");
+  }
+
+  BlackJackHand(Player owner) {
+    super();
+    isDone = false;
+    this.owner = owner;
+  }
+
+  public Player getOwner() {
+    return owner;
+  }
+
+  public void setOwner(Player owner) {
+    this.owner = owner;
   }
 
   boolean isBlackJack() {
@@ -59,4 +75,11 @@ public class BlackJackHand extends CardDeal {
   public boolean isDone() {
     return isDone;
   }
+
+//  @Override
+//  public String toString() {
+//    String handStr = "(" + owner.toString() + ")";
+//    handStr = handStr + super.toString();
+//    return handStr;
+//  }
 }
