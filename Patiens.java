@@ -17,13 +17,8 @@ public class Patiens extends CardGame {
     List<PlayingCard> positionDeal1 = new ArrayList<PlayingCard>();
     PatiensPlayingCard pPlayingCard;
     PatiensPlayingCard[] arrayOfEmptyCards;
-
-
-
-
-
-
-
+    ArrayList<PlayingCard> listOfOpenCards = new ArrayList<>();
+    ArrayList<Boolean> boolList = new ArrayList<>();
 
 
     String[][] cardHolder = {{""},{" __ "}, {"|  |"}, {"|  |"}, {" == "}};
@@ -33,9 +28,12 @@ public class Patiens extends CardGame {
 
     @Override
     public void runGame() {
+
+        //If något värde är ess, lägg upp det
+
         arrayOfEmptyCards[0] = new PatiensPlayingCard(Suit.Clubs, 0);
-        arrayOfEmptyCards[1] =  new PatiensPlayingCard(Suit.Diamonds, 0);
-        arrayOfEmptyCards[2]= new PatiensPlayingCard(Suit.Hearts, 0);
+        arrayOfEmptyCards[1] = new PatiensPlayingCard(Suit.Diamonds, 0);
+        arrayOfEmptyCards[2] = new PatiensPlayingCard(Suit.Hearts, 0);
         arrayOfEmptyCards[3] = new PatiensPlayingCard(Suit.Spades, 0);
 
         System.out.println("Hej och välkommen till Patiens!");
@@ -45,14 +43,93 @@ public class Patiens extends CardGame {
 
         printDeal();
 
+        listOfOpenCards = whtasUpLIst();
+        for (int i= 0; i <listOfOpenCards.size(); i++){
+            boolList.add(i, putInSortedList(listOfOpenCards.get(i)))  ;
 
-        for (int i = 0; i < cardDealList.length; i++) {
-            for (int j = cardDealList[i].getDeal().size() - 1; j >= 0; j--) {
-                if (cardDealList[i].getDeal().get(j).getValue() == 1) {
-                    cardDealList[i].getDeal().get(j).getSuit();
+        }
+
+
+        //inSortedList(PlayingCard p);
+    }
+//Metod för att lägga upp kort i de sorterade högarna
+
+//Går igenom de fyra sorterade listorna
+       /* public boolean inSortedList(PlayingCard p) {
+        boolean returnBol = false;
+        for (int i = 0; i < sortedCardDeal.length; i++) {
+            //vilket är överst`?
+            if (sortedCardDeal[i].getDeal().get(0).getSuit().equals(Suit.Clubs)) {
+                if (p.getValue() == sortedCardDeal[i].getDeal().get(0).getValue() + 1) {
+                    sortedCardDeal[i].getDeal().add(p);
+                    returnBol = true;
+                }
+            } else if (sortedCardDeal[i].getDeal().get(0).getSuit().equals(Suit.Diamonds)) {
+                if (p.getValue() == sortedCardDeal[i].getDeal().get(0).getValue() + 1) {
+                    sortedCardDeal[i].getDeal().add(p);
+                    returnBol = true;
+                }
+            } else if (sortedCardDeal[i].getDeal().get(0).getSuit().equals(Suit.Hearts)) {
+                if ((p.getValue() == sortedCardDeal[i].getDeal().get(0).getValue() + 1)) {
+                    sortedCardDeal[i].getDeal().add(p);
+                    returnBol = true;
+                }
+            } else if (sortedCardDeal[i].getDeal().get(0).getSuit().equals(Suit.Spades)) {
+                if ((p.getValue() == sortedCardDeal[i].getDeal().get(0).getValue() + 1)) {
+                    sortedCardDeal[i].getDeal().add(p);
+                    returnBol = true;
+                }
+            } else {
+                returnBol = false;
+            }
+        }
+        return returnBol;
+    }{*/
+
+    //Vilka kort ligger uppvända längst ner?
+
+    public ArrayList<PlayingCard> whtasUpLIst(){
+        ArrayList<PlayingCard> localList = new ArrayList<PlayingCard>();
+        for (int i = 0; i < cardDealList.length; i++){
+            for (int j = cardDealList[i].getHandSize()-1; j >= 0; j--) {
+                if (cardDealList[i].getDeal().get(j).getValue()!= 0){
+                    localList.add(cardDealList[i].getDeal().get(j));
+                    break;
                 }
             }
         }
+        return localList;
+    }
+
+    public boolean putInSortedList(PlayingCard p) {
+        boolean returnBol = false;
+        for (int i = 0; i < sortedCardDeal.length; i++) {
+
+            if (sortedCardDeal[i].getDeal().get(0).getSuit().equals(Suit.Clubs)) {
+                if (p.getValue() == sortedCardDeal[i].getDeal().get(0).getValue() + 1) {
+                    sortedCardDeal[i].getDeal().add(p);
+                    returnBol = true;
+                }
+            } else if (sortedCardDeal[i].getDeal().get(0).getSuit().equals(Suit.Diamonds)) {
+                if (p.getValue() == sortedCardDeal[i].getDeal().get(0).getValue() + 1) {
+                    sortedCardDeal[i].getDeal().add(p);
+                    returnBol = true;
+                }
+            } else if (sortedCardDeal[i].getDeal().get(0).getSuit().equals(Suit.Hearts)) {
+                if ((p.getValue() == sortedCardDeal[i].getDeal().get(0).getValue() + 1)) {
+                    sortedCardDeal[i].getDeal().add(p);
+                    returnBol = true;
+                }
+            } else if (sortedCardDeal[i].getDeal().get(0).getSuit().equals(Suit.Spades)) {
+                if ((p.getValue() == sortedCardDeal[i].getDeal().get(0).getValue() + 1)) {
+                    sortedCardDeal[i].getDeal().add(p);
+                    returnBol = true;
+                }
+            } else {
+                returnBol = false;
+            }
+        }
+        return returnBol;
     }
 
     public void printDeal() {
@@ -118,7 +195,7 @@ for (int i = 0; i <4; i++) {
     for (int j = 0; j < 4; j++) {
         sortedCardDeal[j] = new CardDeal();
         sortedCardDeal[j].drawFromDeck(patiensCardDeck, 0);
-        sortedCardDeal[j].getDeal().add(arrayOfEmptyCards[0]);
+        sortedCardDeal[j].getDeal().add(arrayOfEmptyCards[j]);
     }
 }
     }
