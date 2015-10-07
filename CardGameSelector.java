@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class CardGameSelector {
-  public static void main(String[] args) {
+  public static void run() {
     CardGame theGame;
 
     Scanner userInput = new Scanner(System.in);
@@ -27,5 +27,6 @@ public class CardGameSelector {
         theGame.runGame();
       }
     }
+    //System.exit(0);
   }
 }

@@ -24,9 +24,12 @@ public class Methods {
 					Thread.sleep(50);  // vÃ¤nta lite tills nÃ¤sta.. (skapar en trÃ¥d och vÃ¤ntar liiite)
 				}//annars vÃ¤ntar vi inte...
 			}
+
 		} catch (InterruptedException e) {//om trÃ¥den blir fel eller liknande
 			System.out.println(text);//skriv ut som vanligt instÃ¤llet..
 		}
+
+
 	}
 
 	public static void printSlowly(String text, int mSecondsDelay) {//skriver ut texter lÃ¥ngsamt ut en string..
