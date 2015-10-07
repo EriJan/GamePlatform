@@ -1,18 +1,19 @@
-import java.util.Scanner;
-
 public class CardGameSelector implements Runnable {
 
   public void run() {
     CardGame theGame;
 
-    Scanner userInput = new Scanner(System.in);
+    //Scanner userInput = new Scanner(System.in);
+      System.out.println(HelperMethods.introtext());
+      System.out.println(HelperMethods.introtext2());
+      System.out.println(HelperMethods.introtext3());
 
-    Methods.printSlowly("Lets play !\n");
+      HelperMethods.printSlowly(HelperMethods.introtext() + "\nLets play !\n");
     boolean pgmEnd = false;
     while (!pgmEnd) {
-      Methods.printSlowly("What game do you want to play?\n");
+        HelperMethods.printSlowly("What game do you want to play?\n");
 
-      String inputStr = Methods.choseFromMenyNew("Blackjack","Patiens","21","Quit");
+      String inputStr = HelperMethods.choseFromMenyNew("Blackjack","Patiens","21","Quit");
       if ( inputStr.equals("Quit")) {
         pgmEnd = true;
         System.out.println("Program end.");
@@ -35,9 +36,9 @@ public class CardGameSelector implements Runnable {
     public static void run(String Option) {
         CardGame theGame;
 
-        Scanner userInput = new Scanner(System.in);
+        //Scanner userInput = new Scanner(System.in);
 
-        Methods.printSlowly("Lets play !\n");
+        HelperMethods.printSlowly(HelperMethods.introtext() + "\nLets play !\n");
 
             String inputStr = Option;
             if ( inputStr.equals("Quit")) {

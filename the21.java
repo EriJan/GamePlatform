@@ -2,8 +2,6 @@
 
 
 
-import java.util.Scanner;
-
 public class the21  extends CardGame {
 	  DeckHandler deck = new DeckHandler();
 	  Player player1,player2;
@@ -18,10 +16,11 @@ public class the21  extends CardGame {
 
 	  @Override
 	  public void runGame() {
-		  Methods.printSlowly("\t\t* The  Game 21 *\n");
-		  Methods.printSlowly("* * * * * * * * * * * * * * * * * * *\n");
-		  Methods.printSlowly(" Player enter your name : ");
-		  player1 = new Player(Methods.inPutFromNextLine());
+		  HelperMethods.printSlowly("\t\t* The  Game 21 *\n");
+		  HelperMethods.printSlowly("* * * * * * * * * * * * * * * * * * *\n");
+		  HelperMethods.printSlowly(" Player enter your name : ");
+		  player1 = new Player(HelperMethods.inPutFromNextLine());
+		  player1 = new Player(HelperMethods.inPutFromNextLine());
 		   int [] DrowCard = new int[] {0,0,0};
 		  int [] DrowCard2 = new int[] {0,0,0};
 		  playersHands = new the21Hands[2];
@@ -44,7 +43,7 @@ public class the21  extends CardGame {
 				
 				if(playersHands[0].isCardToTake(DrowCard) && !playersHands[0].isTjock(DrowCard)){
 					System.out.println("vill du ha ett till ? (J/N): ");
-					val = Methods.inPutFromNextLine();//onskades flera kort?
+					val = HelperMethods.inPutFromNextLine();//onskades flera kort?
 				}
 			  	if(!playersHands[0].isCardToTake(DrowCard) || playersHands[0].isTjock(DrowCard) || val.equalsIgnoreCase("N")){
 				  endLoopForP1 = true;
@@ -60,7 +59,7 @@ public class the21  extends CardGame {
 				while(playersHands[1].isCardToTake(DrowCard2) && !playersHands[1].isTjock(DrowCard2) && !val.equalsIgnoreCase("N") && !playersHands[1].isTjock(DrowCard2)){
 
 					DrowCard2[i] = playersHands[1].hand.get(i).getValue();
-					Methods.printSlowly( String.format("%s, (Dealers cards) :%s\n", player2.getName(), playersHands[1].hand.get(i).toString() ) );
+					HelperMethods.printSlowly(String.format("%s, (Dealers cards) :%s\n", player2.getName(), playersHands[1].hand.get(i).toString()));
 					
 					System.out.println(" totally: " + playersHands[1].getHandValue(DrowCard2) );
 					
@@ -77,7 +76,7 @@ public class the21  extends CardGame {
 					i++;
 				}
 				
-				Methods.printSlowly( String.format("Result is: %n" ));
+				HelperMethods.printSlowly(String.format("Result is: %n"));
 				System.out.println(player1.getName() + " : " + playersHands[0].getHandValue(DrowCard));
 				System.out.println(player2.getName() + " : " + playersHands[1].getHandValue(DrowCard2));
 				}  
