@@ -41,10 +41,24 @@ public class Patiens extends CardGame {
         setNewPatiensGameDeck();
 
         setDeckOnField();
-
         printDeal();
         exekuteValidMoveAndRemoves();
+        if (ischangesVar) {
+            turnUpCard();
+        }
+        int longestList = lengthOfList();
+        //Metod som lägger till tomma kort
+
+
+        for (int i = 0; i < cardDealList.length; i++) {
+            int x = cardDealList[i].getHandSize();
+            for (int j = 0; j <= x; j++) {
+                cardDealList[i].getDeal().add(new PatiensPlayingCard(Suit.Clubs, 0));
+            }
+        }
+
         printDeal();
+
 
 //Gör en metod som vänder upp det understa kortet om något har förändrats
         //Gör en metod som tar den längsta listans längd och gör alla listor lika långa
@@ -54,18 +68,42 @@ public class Patiens extends CardGame {
 
 
     }
-    public void removeObeject(PlayingCard p){
-        for (int i = 0; i < cardDealList.length; i++){
-            if (cardDealList[i].getDeal().contains(p)){
-                cardDealList[i].getDeal().remove(p);
-            }
 
+    public int lengthOfList() {
+        int check = 0;
+        int checkHolder = 0;
+        for (int i = 0; i < cardDealList.length; i++) {
+            int test = cardDealList[i].getDeal().size();
+            if (check < test) {
+                check = test;
+            }
+        }
+        return check;
+    }
+
+    public void turnUpCard() {
+        for (int i = 0; i < cardDealList.length; i++) {
+            for (int j = cardDealList[i].getHandSize() - 1; j >= 0; j--) {
+                if (cardDealList[i].getDeal().get(j).getValue() != 0) {
+                    if (!cardDealList[i].getDeal().get(j).isFaceUp()) {
+                        cardDealList[i].getDeal().get(j).turnUp();
+                    }
+                }
+            }
         }
     }
-    public void exekuteValidMoveAndRemoves(){
+
+    public void removeObeject(PlayingCard p) {
+        for (int i = 0; i < cardDealList.length; i++) {
+            cardDealList[i].getDeal().remove(p);
+        }
+    }
+
+    public void exekuteValidMoveAndRemoves() {
         boolean isCangesVar = false;
         listOfOpenCards = whtasUpLIst();
         for (int i = 0; i < listOfOpenCards.size(); i++) {
+
             boolList.add(i, putInSortedList(listOfOpenCards.get(i)));
         }
         ischangesVar = isChanges();
@@ -88,48 +126,48 @@ public class Patiens extends CardGame {
             for (int j = cardDealList[i].getHandSize() - 1; j >= 0; j--) {
                 if (cardDealList[i].getDeal().get(j).getValue() != 0) {
                     localList.add(cardDealList[i].getDeal().get(j));
-                    if (putInSortedList(cardDealList[i].getDeal().get(j))){
 
-                    }
                     break;
                 }
             }
+        }
+        for (int i = 0; i < localList.size(); i++) {
+            System.out.println(localList.get(i));
         }
         return localList;
     }
 
     public boolean putInSortedList(PlayingCard p) {
         boolean returnBol = false;
-        for (int i = 0; i < sortedCardDeal.length; i++) {
 
-            if (sortedCardDeal[i].getDeal().get(0).getSuit().equals(Suit.Clubs)) {
-                if (p.getValue() == sortedCardDeal[i].getDeal().get(0).getValue() + 1) {
-                    sortedCardDeal[i].getDeal().add(p);
-                    removeObeject(p);
-                    returnBol = true;
-                }
-            } else if (sortedCardDeal[i].getDeal().get(0).getSuit().equals(Suit.Diamonds)) {
-                if (p.getValue() == sortedCardDeal[i].getDeal().get(0).getValue() + 1) {
-                    sortedCardDeal[i].getDeal().add(p);
-                    removeObeject(p);
-                    returnBol = true;
-                }
-            } else if (sortedCardDeal[i].getDeal().get(0).getSuit().equals(Suit.Hearts)) {
-                if ((p.getValue() == sortedCardDeal[i].getDeal().get(0).getValue() + 1)) {
-                    sortedCardDeal[i].getDeal().add(p);
-                    removeObeject(p);
-                    returnBol = true;
-                }
-            } else if (sortedCardDeal[i].getDeal().get(0).getSuit().equals(Suit.Spades)) {
-                if ((p.getValue() == sortedCardDeal[i].getDeal().get(0).getValue() + 1)) {
-                    sortedCardDeal[i].getDeal().add(p);
-                    removeObeject(p);
-                    returnBol = true;
-                }
-            } else {
-                returnBol = false;
+        if (p.getSuit() == Suit.Clubs) {
+            if (p.getValue() == sortedCardDeal[0].getDeal().get(0).getValue() + 1) {
+                sortedCardDeal[0].getDeal().add(p);
+                removeObeject(p);
+                returnBol = true;
             }
+        } else if (p.getSuit() == Suit.Diamonds) {
+            if (p.getValue() == sortedCardDeal[1].getDeal().get(0).getValue() + 1) {
+                sortedCardDeal[1].getDeal().add(p);
+                removeObeject(p);
+                returnBol = true;
+            }
+        } else if (p.getSuit() == Suit.Hearts) {
+            if ((p.getValue() == sortedCardDeal[2].getDeal().get(0).getValue() + 1)) {
+                sortedCardDeal[2].getDeal().add(p);
+                removeObeject(p);
+                returnBol = true;
+            }
+        } else if (p.getSuit() == Suit.Spades) {
+            if ((p.getValue() == sortedCardDeal[3].getDeal().get(0).getValue() + 1)) {
+                sortedCardDeal[3].getDeal().add(p);
+                removeObeject(p);
+                returnBol = true;
+            }
+        } else {
+            returnBol = false;
         }
+
         return returnBol;
     }
 
