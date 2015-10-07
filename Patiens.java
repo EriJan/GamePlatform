@@ -42,31 +42,110 @@ public class Patiens extends CardGame {
 
         setDeckOnField();
         printDeal();
+        System.out.println("Vill du lägga upp alla de möjliga korten på respektive hög?");
         exekuteValidMoveAndRemoves();
         if (ischangesVar) {
             turnUpCard();
         }
         int longestList = lengthOfList();
-        //Metod som lägger till tomma kort
+
+        paddingList(longestList);
 
 
-        for (int i = 0; i < cardDealList.length; i++) {
-            int x = cardDealList[i].getHandSize();
-            for (int j = 0; j <= x; j++) {
-                cardDealList[i].getDeal().add(new PatiensPlayingCard(Suit.Clubs, 0));
-            }
-        }
 
         printDeal();
 
 
-//Gör en metod som vänder upp det understa kortet om något har förändrats
-        //Gör en metod som tar den längsta listans längd och gör alla listor lika långa
 
         //Möjlighet att lägga kung på tom plats
+        //metod som kollar vad det högsta uppvända kortet är
         //
 
 
+    }
+
+    public void findCards(PlayingCard p, PlayingCard q){
+        int from = 0;
+        int to;
+        ArrayList<PlayingCard> localHost = new ArrayList<>();
+        for (int i = 0; i < cardDealList.length; i++) {
+           if( cardDealList[i].getDeal().contains(p)){
+               int localIndex = firstCardFaceUpPosition(i);
+               from = i;
+               localHost = (ArrayList<PlayingCard>) cardDealList[from].getDeal().subList(localIndex, cardDealList[from].getDeal().size()-1);
+
+
+           }
+          if (cardDealList[i].getDeal().contains(q))
+          {
+              to = i;
+          }
+        }
+
+
+    }
+
+    public void moveCards(){
+        ArrayList<PlayingCard> localListForMoveFromCheck = new ArrayList<>();
+        ArrayList<PlayingCard> localListForMoveToCheck = new ArrayList<>();
+
+        localListForMoveFromCheck = listOfCardsToMove();
+        localListForMoveToCheck = whtasUpLIst();
+        for (int i = 0; i < localListForMoveFromCheck.size(); i++) {
+            int checkFrom = localListForMoveFromCheck.get(i).getValue();
+            for (int j = 0; j < localListForMoveToCheck.size(); j++) {
+                if (checkFrom - 1 == localListForMoveToCheck.get(j).getValue()) {
+                    if (localListForMoveToCheck.get(j).getSuit() == Suit.Clubs
+                            || localListForMoveToCheck.get(j).getSuit() == Suit.Spades) {
+                        if (localListForMoveFromCheck.get(i).getSuit() == Suit.Diamonds
+                                ||localListForMoveFromCheck.get(i).getSuit() == Suit.Hearts) {
+                            //En metod som letar rätt på två kort, det en a sla läggas på det andra.Den jag ska flytta från är först
+
+                        }
+                    }
+                    if (localListForMoveToCheck.get(j).getSuit() == Suit.Hearts
+                            || localListForMoveToCheck.get(j).getSuit() == Suit.Diamonds) {
+
+                    }
+                }
+            }
+        }
+    }
+
+    public ArrayList<PlayingCard> listOfCardsToMove() {
+        ArrayList<PlayingCard> localList = new ArrayList<PlayingCard>();
+        for (int i = 0; i < cardDealList.length; i++) {
+            int position = firstCardFaceUpPosition(i);
+            localList.add(cardDealList[i].getDeal().get(position));
+        }
+
+        return localList;
+    }
+
+    public int firstCardFaceUpPosition(int i) {
+        int position = 0;
+        for (int j = cardDealList[i].getHandSize() - 1; j >= 0; j--) {
+            if (cardDealList[i].getDeal().get(j).getValue() != 0) {
+                if (!cardDealList[i].getDeal().get(j).isFaceUp()) {
+
+                    position = j - 1;
+
+                    return position;
+                }
+            }
+        }
+        return position;
+
+    }
+
+
+    public void paddingList(int longestList) {
+        for (int i = 0; i < cardDealList.length; i++) {
+            int x = longestList - cardDealList[i].getDeal().size();
+            for (int j = 0; j <= x; j++) {
+                cardDealList[i].getDeal().add(cardDealList.length - 1, new PatiensPlayingCard(Suit.Clubs, 0));
+            }
+        }
     }
 
     public int lengthOfList() {
