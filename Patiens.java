@@ -65,6 +65,8 @@ public class Patiens extends CardGame {
 
 
     }
+
+
     public PlayingCard getFaceUpCardFromDeck(){
         localCurrentDeck = patiensCardDeck.getCurrentDeck();
         localCurrentDeck.get(localCurrentDeck.size()).turnUp();
@@ -76,7 +78,7 @@ public class Patiens extends CardGame {
         int from = 0;
         int to;
         ArrayList<PlayingCard> localHost1 = new ArrayList<>();
-        ArrayList<PlayingCard> localHost2 = new ArrayList<>();
+        ArrayList<PlayingCard> localHost2;
         for (int i = 0; i < cardDealList.length; i++) {
             if (cardDealList[i].getDeal().contains(p)) {
                 int localIndexFrom = firstCardFaceUpPosition(i);
@@ -84,7 +86,7 @@ public class Patiens extends CardGame {
                 localHost1 = (ArrayList<PlayingCard>) cardDealList[from].getDeal().subList(localIndexFrom, cardDealList[from].getDeal().size() - 1);
             }
 
-            if (cardDealList[i].getDeal().contains(q)) { //Whats up list
+            if (cardDealList[i].getDeal().contains(q)) {
                   to = i;
                     for (int j = cardDealList[i].getHandSize() - 1; j >= 0; j--) {
                         if (cardDealList[i].getDeal().get(j).getValue() != 0) {
@@ -272,14 +274,20 @@ public class Patiens extends CardGame {
         return returnBol;
     }
 
-    public PlayingCard getSortedTopCard(){
+    public PlayingCard getSortedTopCard(int i){
+        return sortedCardDeal[i].getDeal().get(sortedCardDeal[i].getDeal().size()-1);
 
 
     }
 
     public void printDeal() {
-        String[][] cardHolder = {{""}, {" __ "}, {"|  |"}, {"|  |"}, {" == "}};
+        String[][] cardHolder1 = {{""}, {" __ "}, {"|  |"}, {"|  |"}, {" == "}};
         String[][] cardHolder2 = {{""}, {"   "},{" "+getFaceUpCardFromDeck()+" "}, {"   "}, {"   "}};
+        String[][] cardHolder3 = {{""}, {" __ "}, {" "+ getSortedTopCard(0)+ " "}, {"|  |"}, {" == "}};
+        String[][] cardHolder4 = {{""}, {" __ "}, {" "+ getSortedTopCard(1)+ " "}, {"|  |"}, {" == "}};
+        String[][] cardHolder5 = {{""}, {" __ "}, {" "+ getSortedTopCard(2)+ " "}, {"|  |"}, {" == "}};
+        String[][] cardHolder6 = {{""}, {" __ "}, {" "+ getSortedTopCard(3)+ " "}, {"|  |"}, {" == "}};
+
         String[] frontNumber = {"  1  ", "  2  ", "  \u2666  ", "   \u2663  ", "   \u2665  ", "  \u2660  "};
 
 
@@ -291,12 +299,12 @@ public class Patiens extends CardGame {
                     }
                     System.out.print("\n");
                 } else {
-                    System.out.print(cardHolder[i][j] + "  ");
+                    System.out.print(cardHolder1[i][j] + "  ");
                     System.out.print(cardHolder2[i][j] + "  ");
-                    System.out.print(cardHolder[i][j] + "  ");
-                    System.out.print(cardHolder[i][j] + "  ");
-                    System.out.print(cardHolder[i][j] + "  ");
-                    System.out.print(cardHolder[i][j] + "  ");
+                    System.out.print(cardHolder3[i][j] + "  ");
+                    System.out.print(cardHolder4[i][j] + "  ");
+                    System.out.print(cardHolder5[i][j] + "  ");
+                    System.out.print(cardHolder6[i][j] + "  ");
                     System.out.print("\n");
                 }
             }
