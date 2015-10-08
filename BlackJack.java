@@ -19,6 +19,7 @@ public class BlackJack extends CardGame {
     players = new ArrayList<Player>();
   }
 
+  // Todo: add possibilty to select players from file
   public void newGame() {
     Scanner userInput = new Scanner(System.in);
     System.out.println("How many postions at the table?");
@@ -224,6 +225,7 @@ public class BlackJack extends CardGame {
     for (BlackJackHand pos : positions) {
       tmpStr += "Position " + posCnt + " (" + pos.getOwner() + "): ";
       tmpStr += pos.toString();
+      tmpStr += "(" + pos.getHandValue() + ")\n";
       posCnt++;
     }
     tmpStr += "House : ";

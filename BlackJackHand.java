@@ -63,14 +63,22 @@ public class BlackJackHand extends CardDeal {
   @Override
   int getHandValue() {
     int handValue = 0;
+    int aceCount = 0;
     for (PlayingCard card : hand) {
       int cardValue = card.getValue();
       if (cardValue == 1) {
-        handValue += youHaveAnAce();
+        handValue += 1;
+        aceCount++;
+         //handValue += youHaveAnAce();       }
       } else if (cardValue < 10) {
         handValue += cardValue;
       } else {
         handValue += 10;
+      }
+    }
+    for (int i = 0; i < aceCount; i++) {
+      if (handValue + 13 <= 21) {
+        handValue += 13;
       }
     }
     return handValue;
