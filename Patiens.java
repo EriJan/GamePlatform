@@ -11,63 +11,105 @@ public class Patiens extends CardGame {
 
 
     DeckHandler patiensCardDeck = new DeckHandler();
-    CardDeal patiensCardDeal;
     CardDeal[] cardDealList = new CardDeal[7];
     CardDeal[] sortedCardDeal = new CardDeal[4];
-    List<PlayingCard> positionDeal1 = new ArrayList<PlayingCard>();
-    PatiensPlayingCard pPlayingCard;
     List<PlayingCard> localCurrentDeck;
     PatiensPlayingCard[] arrayOfEmptyCards = new PatiensPlayingCard[4];
     ArrayList<PlayingCard> listOfOpenCards = new ArrayList<>();
     ArrayList<Boolean> boolList = new ArrayList<>();
     boolean ischangesVar;
+    HelperMethods help = new HelperMethods();
 
 
-    String[][] cardHolder = {{""}, {" __ "}, {"|  |"}, {"|  |"}, {" == "}};
-    String[][] cardHolder2 = {{""}, {"   "}, {"   "}, {"   "}, {"   "}};
-    String[] frontNumber = {"  1  ", "  2  ", "  \u2666  ", "   \u2663  ", "   \u2665  ", "  \u2660  "};
 
 
     @Override
     public void runGame() {
 
 
-        arrayOfEmptyCards[0] = new PatiensPlayingCard(Suit.Clubs, 0);
-        arrayOfEmptyCards[1] = new PatiensPlayingCard(Suit.Diamonds, 0);
-        arrayOfEmptyCards[2] = new PatiensPlayingCard(Suit.Hearts, 0);
-        arrayOfEmptyCards[3] = new PatiensPlayingCard(Suit.Spades, 0);
 
         System.out.println("Hej och välkommen till Patiens!");
         setNewPatiensGameDeck();
-
         setDeckOnField();
         printDeal();
-        System.out.println("Vill du lägga upp alla de möjliga korten på respektive hög?");
-        exekuteValidMoveAndRemoves();
-        System.out.println("Vill du att de högar som kan läggas på varandra ska göra just det?");
-        moveCards();
-        System.out.println("Vill du lägga det upplagda kortet på en av högarna?");
-        putOpenCardInList();
-        System.out.println("Vill du lägga det upplagda kortet på en av högarna fortfarande?");
-        putOpenCardInList();
-        //Om det är en kung?
+        dePaddingSet();
+
+       printMenu(); //TODO ta bort lägg till radbryt efter utskrift. Ta bort att det blir null i utskriften.
+        int input = help.inPutFromNextInt();
+        switch (input){
+            case 1 : exekuteValidMoveAndRemoves();
+                openClosedCards();
+                break;
+            case 2 : moveCards();
+                openClosedCards();
+                break;
+            case 3 : moveCards();
+                openClosedCards();
+                break;
+            case 4 : putOpenCardInList();
+                break;
+            case 5 : ifKing(getFaceUpCardFromDeck()); //Hitta ett sätt
+                openClosedCards();
+                break;
+            case 6 :
+        }
+        int longestList = lengthOfList();
+        paddingSet(longestList);
         
         getFaceUpCardFromDeck(); //Byt namn på denna metod, ska heta get and turn up
         if (ischangesVar) {
             turnUpCard();
         }
-        int longestList = lengthOfList();
+        longestList = lengthOfList();
 
         paddingSet(longestList);
-
 
         printDeal();
 
 
-        //Möjlighet att lägga kung på tom plats
 
 
+    }
+    public void openClosedCards(){
+        for (CardDeal deal : cardDealList){
+            if (!deal.getLastCard().isFaceUp()){
+                deal.getLastCard().revealCard();
+            }
+        }
+    }
+    public void printMenu(){
+        System.out.println("1. Vill du lägga upp alla de möjliga korten på respektive hög? Skriv 1");
+        System.out.println("2. Vill du att de högar som kan läggas på varandra ska göra just det? Skriv 2");
+        System.out.println("3. Vill du lägga det upplagda kortet på en av högarna fortfarande? Skriv 3");
+        System.out.println("4. Vill du lägga det upplagda kortet på en av högarna? Skriv 4");
+        System.out.println("5. Vill du lägga en kung på en ledig plats? Skriv 5");
+        System.out.println("6. Vad vill du göra? flytta ett eller flera kort från en hög till en annan? Skriv 6");
+    }
+    public void initSortedList(){
+        arrayOfEmptyCards[0] = new PatiensPlayingCard(Suit.Clubs, 0);
+        arrayOfEmptyCards[1] = new PatiensPlayingCard(Suit.Diamonds, 0);
+        arrayOfEmptyCards[2] = new PatiensPlayingCard(Suit.Hearts, 0);
+        arrayOfEmptyCards[3] = new PatiensPlayingCard(Suit.Spades, 0);
 
+    }
+    public boolean isEmptyIndex(){
+        boolean isEmptyIndex = false;
+       for (CardDeal cardDeal : cardDealList){
+           if(cardDeal.isHandEmpty() ){
+               isEmptyIndex = true;
+           }
+       }return isEmptyIndex;
+    }
+
+    public void ifKing(PlayingCard p){
+        if (isEmptyIndex() && p.getValue()== 13){
+            for (CardDeal cardDeal : cardDealList){
+                if(cardDeal.isHandEmpty()){
+                    cardDeal.getDeal().add(p);
+                    break;
+                }
+            }
+        }
     }
 
 
@@ -91,9 +133,10 @@ public class Patiens extends CardGame {
             if (getFaceUpCardFromDeck().getSuit() == deal.getDeal().get(deal.getDeal().size() - 1).getSuit()
                     && localInt - 1 == deal.getDeal().get(deal.getDeal().size() - 1).getValue()) {
 
-                deal.getDeal().add(patiensCardDeck.drawTop(getFaceUpCardFromDeck()));
+                deal.getDeal().add(patiensCardDeck.drawThisCard(getFaceUpCardFromDeck()));
             }
-        }
+        }//comp to
+
 
         for (CardDeal deal : cardDealList) {
             for (int i = 0; i < deal.getDeal().size() - 1; i++) {
@@ -102,7 +145,7 @@ public class Patiens extends CardGame {
                         && deal.getDeal().get(i).getSuit() == Suit.Spades
                         || deal.getDeal().get(i).getSuit() == Suit.Clubs
                         && deal.getDeal().get(i).getValue() == localInt + 1) {
-                    deal.getDeal().add(patiensCardDeck.drawTop(getFaceUpCardFromDeck()));
+                    deal.getDeal().add(patiensCardDeck.drawThisCard(getFaceUpCardFromDeck()));
 
                 }
 
@@ -114,11 +157,11 @@ public class Patiens extends CardGame {
 
 
     public PlayingCard getFaceUpCardFromDeck() {
-        if (!patiensCardDeck.getCurrentDeck().get(localCurrentDeck.size()-1).isFaceUp()) {
-            ////patiensCardDeck.getCurrentDeck().get(localCurrentDeck.size() - 1).turnUp();
+        if (!patiensCardDeck.getCurrentDeck().get(patiensCardDeck.getCurrentDeck().size()-1).isFaceUp()) {
+            patiensCardDeck.getCurrentDeck().get(patiensCardDeck.getCurrentDeck().size() - 1).revealCard();
         }
 
-        return patiensCardDeck.getCurrentDeck().get(localCurrentDeck.size()-1);
+        return patiensCardDeck.getCurrentDeck().get(patiensCardDeck.getCurrentDeck().size()-1);
 
     }
 
@@ -252,7 +295,7 @@ public class Patiens extends CardGame {
 
     public void exekuteValidMoveAndRemoves() {
         boolean isCangesVar = false;
-        listOfOpenCards = whtasUpLIst();
+        listOfOpenCards = whtasUpLIst(); //TODO ta bort spårutskrift i WhatsUpList
         for (int i = 0; i < listOfOpenCards.size(); i++) {
 
             boolList.add(i, putInSortedList(listOfOpenCards.get(i)));
@@ -276,7 +319,7 @@ public class Patiens extends CardGame {
         for (int i = 0; i < cardDealList.length; i++) {
             for (int j = cardDealList[i].getHandSize() - 1; j >= 0; j--) {
                 if (cardDealList[i].getDeal().get(j).getValue() != 0) {
-                    localList.add(cardDealList[i].getDeal().get(j));
+                    localList.add(cardDealList[i].getDeal().get(j)); //TODO Ta bort padding
 
                     break;
                 }
@@ -290,27 +333,33 @@ public class Patiens extends CardGame {
 
     public boolean putInSortedList(PlayingCard p) {
         boolean returnBol = false;
+        int local;
 
         if (p.getSuit() == Suit.Clubs) {
-            if (p.getValue() == sortedCardDeal[0].getDeal().get(0).getValue() + 1) {
+            local = sortedCardDeal[0].getDeal().get(0).getValue()+1;
+            if (p.getValue() == local) {
                 sortedCardDeal[0].getDeal().add(p);
                 removeObeject(p);
                 returnBol = true;
             }
         } else if (p.getSuit() == Suit.Diamonds) {
-            if (p.getValue() == sortedCardDeal[1].getDeal().get(0).getValue() + 1) {
+            local = sortedCardDeal[1].getDeal().get(0).getValue()+1;
+            if (p.getValue() == local) {
                 sortedCardDeal[1].getDeal().add(p);
                 removeObeject(p);
                 returnBol = true;
             }
         } else if (p.getSuit() == Suit.Hearts) {
-            if ((p.getValue() == sortedCardDeal[2].getDeal().get(0).getValue() + 1)) {
+            local = sortedCardDeal[2].getDeal().get(0).getValue()+1;
+            System.out.println(local);
+            if ((p.getValue() ==  local)) {
                 sortedCardDeal[2].getDeal().add(p);
                 removeObeject(p);
                 returnBol = true;
             }
         } else if (p.getSuit() == Suit.Spades) {
-            if ((p.getValue() == sortedCardDeal[3].getDeal().get(0).getValue() + 1)) {
+            local = sortedCardDeal[3].getDeal().get(0).getValue()+1;
+            if ((p.getValue() == local)) {
                 sortedCardDeal[3].getDeal().add(p);
                 removeObeject(p);
                 returnBol = true;
@@ -339,7 +388,7 @@ public class Patiens extends CardGame {
         String[] frontNumber = {"  1  ", "  2  ", "  \u2666  ", "   \u2663  ", "   \u2665  ", "  \u2660  "};
 
 
-        for (int i = 0; i < cardHolder.length; i++) {
+        for (int i = 0; i < cardHolder1.length; i++) {
             for (int j = 0; j < 1; j++) {
                 if (i == 0) {
                     for (int k = 0; k < frontNumber.length; k++) {
@@ -392,7 +441,7 @@ public class Patiens extends CardGame {
             int x = 7 - cardDealList[i].getHandSize();
             for (int j = 0; j <= x; j++) {
 
-                cardDealList[i].getDeal().add(new PatiensPlayingCard(Suit.Clubs, 0));
+                cardDealList[i].getDeal().add(new PatiensPlayingCard(Suit.Clubs, 0)); //Ta bort padding i denna funktion
             }
         }
         for (int i = 0; i < 4; i++) {

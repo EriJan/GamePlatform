@@ -30,6 +30,10 @@ public class DeckHandler {
     return card;
   }
 
+  public List<PlayingCard> getCurrentDeck(){
+    return currentDeck;
+  }
+
   public int cardsLeft() {
     return currentDeck.size();
   }
