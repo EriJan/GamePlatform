@@ -4,6 +4,7 @@
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class the21  extends CardGame {
@@ -91,6 +92,7 @@ public class the21  extends CardGame {
 			}else if ( (playersHands[1].getHandValue(DrowCard2) < playersHands[0].getHandValue(DrowCard) ) || playersHands[1].isTjock(DrowCard2) ) {
 				System.out.format("%s vann!! ", player1.getName());
 			  addToScoreFile(player1.getName(),playersHands[0].getHandValue(DrowCard));
+			  addToScoreFile("Niklas 2tste2", 16);
 
 			}
 			else if ( (playersHands[1].getHandValue(DrowCard2) == playersHands[0].getHandValue(DrowCard) ) && ! playersHands[0].isTjock(DrowCard) ) {
@@ -102,7 +104,6 @@ public class the21  extends CardGame {
 	  }
 
 	public void addToScoreFile(String name, int score) {
-		System.out.println(name + " " + score);
 
 		String oldData = HelperMethods.readFile("21.txt");
 		StringBuilder sb = new StringBuilder(oldData);
@@ -110,8 +111,15 @@ public class the21  extends CardGame {
 		String scoreArray[] = sb.toString().split(";");
 		List<String> scoreList = Arrays.asList(scoreArray);
 
-		//Collections.sort(scoreArray);
-		Collections.reverse(scoreList);
+		//Collections.sort(scoreList);
+		//Collections.reverse(scoreList);
+		Collections.sort(scoreList, new Comparator<String>() {
+
+			@Override
+			public int compare(String arg0, String arg1) {
+				return  arg1.compareTo(arg0);
+			}
+		});
 		sb = new StringBuilder("");
 		for(String user: scoreList){
 		sb.append(user + ";");
@@ -125,17 +133,27 @@ public class the21  extends CardGame {
 	}
 
 	public void  printScoreboard21() {
-		String oldData = HelperMethods.readFile("21.txt");
-		System.out.println(oldData);
-		StringBuilder sb = new StringBuilder(oldData);
-		String scoreArray[] = sb.toString().split(";");
-		System.out.println(scoreArray[0] );
+		String data = HelperMethods.readFile("21.txt");
+
+		String scoreArray[] = data.toString().split(";");
+		List<String> scoreList = Arrays.asList(scoreArray);
+		//Collections.reverse(scoreList);
+		Collections.sort(scoreList, new Comparator<String>() {
+
+			@Override
+			public int compare(String arg0, String arg1) {
+				return  arg1.compareTo(arg0);
+			}
+		});
+
+		String[] scArr = new String[scoreList.size()];
+		scArr = scoreList.toArray(scArr);
 
 		HelperMethods.printSlowly("" +
 				"\n**************************************\n");
-		for (int i = 0 ; i< scoreArray.length; i++){
-			if(!scoreArray[i].contentEquals(" ")) {
-				HelperMethods.printSlowly("\t" + (i+1) + ": " + scoreArray[i]+"\n");
+		for (int i = 0 ; i< scArr.length; i++){
+			if(!scArr[i].contentEquals(" ")) {
+				HelperMethods.printSlowly("\tno" + (i+1) + ": " + scArr[i]+"\n");
 			}
 		}
 		HelperMethods.printSlowly("" +
