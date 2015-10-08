@@ -27,6 +27,16 @@ public class CardDeal {
     return hand.remove(cardNo);
   }
 
+  public PlayingCard getCard(int index) {
+    PlayingCard retCard;
+    if (index < hand.size()) {
+      retCard = hand.get(index);
+    } else {
+      retCard = null;
+    }
+    return retCard;
+  }
+
   public void revealHand() {
     for (PlayingCard card : hand) {
       card.revealCard();
