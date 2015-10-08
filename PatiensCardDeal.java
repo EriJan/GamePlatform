@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Ulla on 2015-10-08.
  */
-public class PatiensCardDeal extends CardDeal {
+public class PatiensCardDeal {
 
 
     public class CardDeal {
@@ -21,9 +21,7 @@ public class PatiensCardDeal extends CardDeal {
             }
         }
 
-        public List<PatiensPlayingCard> getDeal(){
-            return hand;
-        }
+
 
         public void recieveCard(PatiensPlayingCard newCard) {
             hand.add(newCard);
@@ -42,7 +40,9 @@ public class PatiensCardDeal extends CardDeal {
             }
             return retCard;
         }
-
+        public List<PatiensPlayingCard> getDeal(){
+            return hand;
+        }
         public PatiensPlayingCard getLastCard(){
             return hand.get(hand.size()-1);
         }

@@ -10,7 +10,7 @@ public class Patiens extends CardGame {
     }
 
 
-    DeckHandler patiensCardDeck = new DeckHandler();
+    PatiensDeckHandler patiensCardDeck = new PatiensDeckHandler();
     PatiensCardDeal[] cardDealList = new PatiensCardDeal[7];
     PatiensCardDeal[] sortedCardDeal = new PatiensCardDeal[4];
     List<PatiensPlayingCard> localCurrentDeck;
@@ -24,7 +24,11 @@ public class Patiens extends CardGame {
 
 
     @Override
-    public void runGame() {
+    public void runGame(){
+        PatiensCardDeal test = new PatiensCardDeal();
+
+
+
 
 
 
