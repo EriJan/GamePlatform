@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
 
-class DeckHandler {
+public class DeckHandler {
   static private Set<PlayingCard> fullDeck;
   private List<PlayingCard> currentDeck;
   private List<PlayingCard> dealtCards;
@@ -20,18 +20,18 @@ class DeckHandler {
     }
     // currentDeck = new ArrayList<PlayingCard>(fullDeck);
   }
-  public List<PlayingCard> getCurrentDeck(){
-    return currentDeck;
-  }
 
   public PlayingCard drawTop() {
     return currentDeck.remove(0);
   }
 
-  public PlayingCard drawTop(PlayingCard p){
+  public PlayingCard drawThisCard(PlayingCard card) {
+    currentDeck.remove(card);
+    return card;
+  }
 
-     currentDeck.remove(p);
-    return p;
+  public int cardsLeft() {
+    return currentDeck.size();
   }
 
   public void newDeck() {
