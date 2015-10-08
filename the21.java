@@ -1,6 +1,10 @@
 //package CardGame;
 
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class the21  extends CardGame {
 	  DeckHandler deck = new DeckHandler();
@@ -20,7 +24,7 @@ public class the21  extends CardGame {
 		  HelperMethods.printSlowly("* * * * * * * * * * * * * * * * * * *\n");
 		  HelperMethods.printSlowly(" Player enter your name : ");
 		  player1 = new Player(HelperMethods.inPutFromNextLine());
-		  player1 = new Player(HelperMethods.inPutFromNextLine());
+		  //player1 = new Player(HelperMethods.inPutFromNextLine());
 		   int [] DrowCard = new int[] {0,0,0};
 		  int [] DrowCard2 = new int[] {0,0,0};
 		  playersHands = new the21Hands[2];
@@ -86,14 +90,58 @@ public class the21  extends CardGame {
 				
 			}else if ( (playersHands[1].getHandValue(DrowCard2) < playersHands[0].getHandValue(DrowCard) ) || playersHands[1].isTjock(DrowCard2) ) {
 				System.out.format("%s vann!! ", player1.getName());
+			  addToScoreFile(player1.getName(),playersHands[0].getHandValue(DrowCard));
+
 			}
 			else if ( (playersHands[1].getHandValue(DrowCard2) == playersHands[0].getHandValue(DrowCard) ) && ! playersHands[0].isTjock(DrowCard) ) {
 				//System.out.format("OAVGJORT!! ");
 				System.out.format("%s vann!! \n", player2.getName());
 			}
-		  
-		  
+
+		  printScoreboard21();
 	  }
+
+	public void addToScoreFile(String name, int score) {
+		System.out.println(name + " " + score);
+
+		String oldData = HelperMethods.readFile("21.txt");
+		StringBuilder sb = new StringBuilder(oldData);
+		sb.append(score + "\t" + name + ";");
+		String scoreArray[] = sb.toString().split(";");
+		List<String> scoreList = Arrays.asList(scoreArray);
+
+		//Collections.sort(scoreArray);
+		Collections.reverse(scoreList);
+		sb = new StringBuilder("");
+		for(String user: scoreList){
+		sb.append(user + ";");
+		}
+		String newData = sb.toString();
+		try {
+			HelperMethods.writeFile("21.txt",newData);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void  printScoreboard21() {
+		String oldData = HelperMethods.readFile("21.txt");
+		System.out.println(oldData);
+		StringBuilder sb = new StringBuilder(oldData);
+		String scoreArray[] = sb.toString().split(";");
+		System.out.println(scoreArray[0] );
+
+		HelperMethods.printSlowly("" +
+				"\n**************************************\n");
+		for (int i = 0 ; i< scoreArray.length; i++){
+			if(!scoreArray[i].contentEquals(" ")) {
+				HelperMethods.printSlowly("\t" + (i+1) + ": " + scoreArray[i]+"\n");
+			}
+		}
+		HelperMethods.printSlowly("" +
+				"**************************************\n");
+
+	}
 
 
 	}

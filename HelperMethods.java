@@ -1,11 +1,7 @@
 //package CardGame;
 
-		import java.io.Closeable;
-		import java.io.File;
-		import java.io.FileInputStream;
-		import java.io.FileOutputStream;
-		import java.io.IOException;
-		import java.util.Scanner;
+import java.io.*;
+import java.util.Scanner;
 
 public class HelperMethods {
 	public static String inPutFromNextLine() {
@@ -108,19 +104,45 @@ public class HelperMethods {
 		return menyElements[(Integer.parseInt(choice)-1)];
 	}
 
-	public static String readFile(String filename) throws IOException {
-		File file = new File(filename);
+	public static String readFile(String filename)  {
+/*		File file = new File(filename);
 		int len = (int) file.length();
 		byte[] bytes = new byte[len];
 		FileInputStream fis = null;
+
 		try {
 			fis = new FileInputStream(file);
 			assert len == fis.read(bytes);
+			return new String(bytes, "UTF-8");
 		} catch (IOException e) {
-			close(fis);
-			throw e;
+			return " ;";
 		}
-		return new String(bytes, "UTF-8");
+		*/
+		StringBuilder conent = new StringBuilder("");
+		try{
+
+			//Create object of FileReader
+			FileReader inputFile = new FileReader(filename);
+
+			//Instantiate the BufferedReader Class
+			BufferedReader bufferReader = new BufferedReader(inputFile);
+
+			//Variable to hold the one line data
+			String line;
+
+
+
+			// Read file line by line and print on the console
+			while ((line = bufferReader.readLine()) != null)   {
+				conent.append(line);
+			}
+			//Close the buffer reader
+			bufferReader.close();
+		}catch(Exception e){
+			return " ;";
+		}
+		return conent.toString();
+
 	}
 
 	public static void writeFile(String filename, String text) throws IOException {
@@ -174,16 +196,58 @@ public class HelperMethods {
 		StringBuilder str = new StringBuilder("");
 		str.append("" +
 				" \n" +
-				"    ▄████████    ███▄▄▄▄           ▄█  ███        █▄        ▄██████▄  \n" +
-				"    ███      ███   ███▀▀▀██▄     ███  ███        ███      ███     ███ \n" +
-				"    ███      █▀     ███     ███     ███  ███        ███      ███     █▀  \n" +
+				"    ▄████████    ███▄▄▄▄          ▄█  ███        █▄        ▄██████▄  \n" +
+				"    ███      ███   ███▀▀▀██▄     ███  ███        ███      ███      ███ \n" +
+				"    ███      █▀     ███     ███     ███  ███        ███      ███      █▀  \n" +
 				"  ▄███▄▄▄         ███      ███     ███  ███        ███    ▄███        \n" +
 				"▀▀███▀▀▀         ███      ███     ███  ███         ███  ▀▀███   ████▄  \n" +
 				"   ███       █▄    ███     ███       ███  ███        ███      ███       ███ \n" +
-				"   ███       ███  ███     ███       ███  ███       ███      ███       ███ \n" +
-				"   ██████████   ▀█      █▀  █▄ ▄███  ████████▀       ████████▀  \n" +
+				"   ███       ███  ███     ███       ███  ███       ███       ███      ███ \n" +
+				"   ██████████   ▀█      █▀  █▄ ▄███  ████████▀        ████████▀  \n" +
 				"                                       ▀▀▀▀▀▀                          \n");
 		return str.toString();
 	}
+
+/*	public static String stringTOACCII(String text) { // throws IOException {
+
+		int width = 100;
+		int height = 30;
+		StringBuilder sb = new StringBuilder();;
+
+		//BufferedImage image = ImageIO.read(new File("/logo.jpg"));
+		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		Graphics g = image.getGraphics();
+		g.setFont(new Font("SansSerif", Font.BOLD, 24));
+
+		Graphics2D graphics = (Graphics2D) g;
+		graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+		graphics.drawString(text, 10, 20);
+
+
+		//save this to image
+		//ImageIO.write(image, "png", new File("/ascii-art.png"));
+
+		for (int y = 0; y < height; y++) {
+			sb = new StringBuilder("");
+			for (int x = 0; x < width; x++) {
+
+				sb.append(image.getRGB(x, y) == -16777216 ? " " : "$");
+
+			}
+
+			if (sb.toString().trim().isEmpty()) {
+				continue;
+			}
+
+
+		}
+		return sb.toString();
+	}
+
+*/
+
+
+
 }
 

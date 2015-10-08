@@ -8,6 +8,13 @@ public class CardGameSelector implements Runnable {
       System.out.println(HelperMethods.introtext2());
       System.out.println(HelperMethods.introtext3());
 
+//      System.out.println("Stringtext TO ascii!! : ");
+/*      try {
+          System.out.println(HelperMethods.stringTOACCII("eNjoG"));
+      } catch (Exception e) {
+          e.printStackTrace();
+      }
+*/
       HelperMethods.printSlowly(HelperMethods.introtext() + "\nLets play !\n");
     boolean pgmEnd = false;
     while (!pgmEnd) {
