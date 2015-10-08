@@ -50,6 +50,7 @@ public class Patiens extends CardGame {
         putOpenCardInList();
         System.out.println("Vill du lägga det upplagda kortet på en av högarna fortfarande?");
         putOpenCardInList();
+        //Om det är en kung?
         
         getFaceUpCardFromDeck(); //Byt namn på denna metod, ska heta get and turn up
         if (ischangesVar) {
@@ -114,7 +115,7 @@ public class Patiens extends CardGame {
 
     public PlayingCard getFaceUpCardFromDeck() {
         if (!patiensCardDeck.getCurrentDeck().get(localCurrentDeck.size()-1).isFaceUp()) {
-            patiensCardDeck.getCurrentDeck().get(localCurrentDeck.size() - 1).turnUp();
+            ////patiensCardDeck.getCurrentDeck().get(localCurrentDeck.size() - 1).turnUp();
         }
 
         return patiensCardDeck.getCurrentDeck().get(localCurrentDeck.size()-1);
@@ -236,7 +237,7 @@ public class Patiens extends CardGame {
             for (int j = cardDealList[i].getHandSize() - 1; j >= 0; j--) {
                 if (cardDealList[i].getDeal().get(j).getValue() != 0) {
                     if (!cardDealList[i].getDeal().get(j).isFaceUp()) {
-                        cardDealList[i].getDeal().get(j).turnUp();
+                        cardDealList[i].getDeal().get(j).revealCard();
                     }
                 }
             }
@@ -362,7 +363,7 @@ public class Patiens extends CardGame {
         for (int i = 0; i < cardDealList.length; i++) {
             for (int j = cardDealList[i].getDeal().size() - 1; j >= 0; j--) {
                 if (cardDealList[i].getDeal().get(j).getValue() != 0) {
-                    cardDealList[i].getDeal().get(j).turnUp();
+                    cardDealList[i].getDeal().get(j).revealCard();
                     break;
                 }
             }
