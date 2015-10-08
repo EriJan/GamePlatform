@@ -44,7 +44,27 @@ public class PlayingCard implements Comparable<PlayingCard> {
     faceUp = false;
   }
 
+  boolean isEqSuit(PlayingCard card1, PlayingCard card2) {
+    boolean isSame = false;
+    if (card1.getSuit() == card2.getSuit()) {
+      isSame = true;
+    }
+    return isSame;
+  }
 
+  boolean isRed(PlayingCard card) {
+    boolean isRed = false;
+    if (card.getSuit() == Suit.Diamonds || card.getSuit() == Suit.Hearts) {
+      isRed = true;
+    }
+    return isRed;
+  }
+
+  boolean isBlack(PlayingCard card) {
+    return !isRed(card);
+  }
+  
+  // Fixme: add override for hashVal
   @Override
   public boolean equals(Object aCard) {
     PlayingCard card = (PlayingCard) aCard;
@@ -60,6 +80,8 @@ public class PlayingCard implements Comparable<PlayingCard> {
   // To be able to call Collections.sort(collection)
   // on a collection of this object
   // This method is necessary
+  // Fixme: correct sort, value first
+  // Todo: add sort rules w. setter and getter
   @Override
   public int compareTo(PlayingCard card) {
     int compRes;
