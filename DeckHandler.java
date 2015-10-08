@@ -25,6 +25,11 @@ public class DeckHandler {
     return currentDeck.remove(0);
   }
 
+  public PlayingCard drawThisCard(PlayingCard card) {
+    currentDeck.remove(card);
+    return card;
+  }
+
   public int cardsLeft() {
     return currentDeck.size();
   }
