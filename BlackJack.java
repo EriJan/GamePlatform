@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.IOException;
+import java.io.EOFException;
+import java.io.FileNotFoundException;
+
 
 public class BlackJack extends CardGame {
   DeckHandler deck;
@@ -100,6 +104,17 @@ public class BlackJack extends CardGame {
         endGame = true;
         System.out.println("Program end.");
       }
+    }
+    printPlayersToFile();
+  }
+
+  public void printPlayersToFile() {
+
+    FileSerializable fileTest = new FileSerializable();
+    try {
+      fileTest.serializeObjectToBinaryFile(players);
+    } catch (IOException e) {
+      System.out.println("Something went wrong.");
     }
   }
 

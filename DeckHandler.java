@@ -25,6 +25,10 @@ public class DeckHandler {
     return currentDeck.remove(0);
   }
 
+  public int cardsLeft() {
+    return currentDeck.size();
+  }
+
   public void newDeck() {
     currentDeck = new ArrayList<PlayingCard>(fullDeck);
   }
