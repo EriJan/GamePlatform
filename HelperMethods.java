@@ -139,7 +139,7 @@ public class HelperMethods {
 			//Close the buffer reader
 			bufferReader.close();
 		}catch(Exception e){
-			return " ;";
+			return " ";
 		}
 		return conent.toString();
 
