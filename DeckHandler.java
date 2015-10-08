@@ -20,6 +20,9 @@ class DeckHandler {
     }
     // currentDeck = new ArrayList<PlayingCard>(fullDeck);
   }
+  public List<PlayingCard> getCurrentDeck(){
+    return currentDeck;
+  }
 
   public PlayingCard drawTop() {
     return currentDeck.remove(0);
