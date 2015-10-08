@@ -7,7 +7,7 @@
 		import java.io.IOException;
 		import java.util.Scanner;
 
-public class Methods {
+public class HelperMethods {
 	public static String inPutFromNextLine() {
 		String input= null;
 		Scanner in = new Scanner(System.in);
@@ -140,7 +140,50 @@ public class Methods {
 		} catch(IOException ignored) {
 		}
 	}
+	public static String introtext() {
+		StringBuilder str = new StringBuilder("");
+		str.append("" +
+				"                                                                        \n" +
+				"                  _/      _/         _/                              \n" +
+				"      _/_/       _/_/    _/                 _/    _/        _/_/_/   \n" +
+				"   _/_/_/_/     _/  _/  _/         _/      _/    _/      _/    _/    \n" +
+				"  _/           _/    _/_/         _/      _/    _/      _/    _/     \n" +
+				"   _/_/_/     _/      _/         _/        _/_/_/        _/_/_/      \n" +
+				"                                _/                          _/       \n" +
+				"                             _/                        _/_/          \n");
 
 
+
+
+		return str.toString();
+	}
+
+	public static String introtext2() {
+		StringBuilder str = new StringBuilder("");
+		str.append("" +
+				" ______     __   __       __     __  __     ______    \n" +
+				"/\\  ___\\   /\\ \"-.\\ \\     /\\ \\   /\\ \\/\\ \\   /\\  ___\\   \n" +
+				"\\ \\  __\\   \\ \\ \\-.  \\   _\\_\\ \\  \\ \\ \\_\\ \\  \\ \\ \\__ \\  \n" +
+				" \\ \\_____\\  \\ \\_\\\\\"\\_\\ /\\_____\\  \\ \\_____\\  \\ \\_____\\ \n" +
+				"  \\/_____/   \\/_/ \\/_/ \\/_____/   \\/_____/   \\/_____/ \n" +
+				"                         ");
+		return str.toString();
+	}
+
+	public static String introtext3() {
+		StringBuilder str = new StringBuilder("");
+		str.append("" +
+				" \n" +
+				"    ▄████████    ███▄▄▄▄           ▄█  ███        █▄        ▄██████▄  \n" +
+				"    ███      ███   ███▀▀▀██▄     ███  ███        ███      ███     ███ \n" +
+				"    ███      █▀     ███     ███     ███  ███        ███      ███     █▀  \n" +
+				"  ▄███▄▄▄         ███      ███     ███  ███        ███    ▄███        \n" +
+				"▀▀███▀▀▀         ███      ███     ███  ███         ███  ▀▀███   ████▄  \n" +
+				"   ███       █▄    ███     ███       ███  ███        ███      ███       ███ \n" +
+				"   ███       ███  ███     ███       ███  ███       ███      ███       ███ \n" +
+				"   ██████████   ▀█      █▀  █▄ ▄███  ████████▀       ████████▀  \n" +
+				"                                       ▀▀▀▀▀▀                          \n");
+		return str.toString();
+	}
 }
 
