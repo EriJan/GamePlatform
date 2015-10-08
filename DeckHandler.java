@@ -28,6 +28,12 @@ class DeckHandler {
     return currentDeck.remove(0);
   }
 
+  public PlayingCard drawTop(PlayingCard p){
+
+     currentDeck.remove(p);
+    return p;
+  }
+
   public void newDeck() {
     currentDeck = new ArrayList<PlayingCard>(fullDeck);
   }

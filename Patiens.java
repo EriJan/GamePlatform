@@ -45,36 +45,83 @@ public class Patiens extends CardGame {
         System.out.println("Vill du lägga upp alla de möjliga korten på respektive hög?");
         exekuteValidMoveAndRemoves();
         System.out.println("Vill du att de högar som kan läggas på varandra ska göra just det?");
-                moveCards();
+        moveCards();
+        System.out.println("Vill du lägga det upplagda kortet på en av högarna?");
+        putOpenCardInList();
+        System.out.println("Vill du lägga det upplagda kortet på en av högarna fortfarande?");
+        putOpenCardInList();
+        
+        getFaceUpCardFromDeck(); //Byt namn på denna metod, ska heta get and turn up
         if (ischangesVar) {
             turnUpCard();
         }
         int longestList = lengthOfList();
 
-        paddingList(longestList);
-
+        paddingSet(longestList);
 
 
         printDeal();
 
 
-
         //Möjlighet att lägga kung på tom plats
-        //metod som kollar vad det högsta uppvända kortet är
-        //
+
+
+
+    }
+
+
+
+    public void dePaddingSet() {
+        for (CardDeal deal : cardDealList) {
+            for (int i = 0; i < deal.getDeal().size(); i++) {
+                if (deal.getDeal().get(i).getValue() == 0) {
+                    deal.getDeal().remove(i);
+                }
+            }
+        }
+    }
+
+    public void putOpenCardInList() {
+
+        List<PlayingCard> localSortedList = new ArrayList<>();
+        int localInt = getFaceUpCardFromDeck().getValue();
+
+        for (CardDeal deal : sortedCardDeal) {
+            if (getFaceUpCardFromDeck().getSuit() == deal.getDeal().get(deal.getDeal().size() - 1).getSuit()
+                    && localInt - 1 == deal.getDeal().get(deal.getDeal().size() - 1).getValue()) {
+
+                deal.getDeal().add(patiensCardDeck.drawTop(getFaceUpCardFromDeck()));
+            }
+        }
+
+        for (CardDeal deal : cardDealList) {
+            for (int i = 0; i < deal.getDeal().size() - 1; i++) {
+                if (getFaceUpCardFromDeck().getSuit() == Suit.Hearts
+                        || getFaceUpCardFromDeck().getSuit() == Suit.Diamonds
+                        && deal.getDeal().get(i).getSuit() == Suit.Spades
+                        || deal.getDeal().get(i).getSuit() == Suit.Clubs
+                        && deal.getDeal().get(i).getValue() == localInt + 1) {
+                    deal.getDeal().add(patiensCardDeck.drawTop(getFaceUpCardFromDeck()));
+
+                }
+
+            }
+        }
 
 
     }
 
 
-    public PlayingCard getFaceUpCardFromDeck(){
-        localCurrentDeck = patiensCardDeck.getCurrentDeck();
-        localCurrentDeck.get(localCurrentDeck.size()).turnUp();
-        return localCurrentDeck.get(localCurrentDeck.size());
+    public PlayingCard getFaceUpCardFromDeck() {
+        if (!patiensCardDeck.getCurrentDeck().get(localCurrentDeck.size()-1).isFaceUp()) {
+            patiensCardDeck.getCurrentDeck().get(localCurrentDeck.size() - 1).turnUp();
+        }
+
+        return patiensCardDeck.getCurrentDeck().get(localCurrentDeck.size()-1);
 
     }
 
-    public void findCardsAndAddToNewList(PlayingCard p, PlayingCard q){
+    public void findCardsAndAddToNewList(PlayingCard p, PlayingCard q) {
         int from = 0;
         int to;
         ArrayList<PlayingCard> localHost1 = new ArrayList<>();
@@ -87,22 +134,22 @@ public class Patiens extends CardGame {
             }
 
             if (cardDealList[i].getDeal().contains(q)) {
-                  to = i;
-                    for (int j = cardDealList[i].getHandSize() - 1; j >= 0; j--) {
-                        if (cardDealList[i].getDeal().get(j).getValue() != 0) {
-                            int localIndexTo = j;
-                            localHost2 = (ArrayList<PlayingCard>) cardDealList[i].getDeal().subList(j + 1, cardDealList[i].getDeal().size() - 1);
-                            for (PlayingCard card : localHost2){
-                                cardDealList[i].getDeal().remove(card);
-                            }
-                            cardDealList[i].getDeal().addAll(localHost1);
+                to = i;
+                for (int j = cardDealList[i].getHandSize() - 1; j >= 0; j--) {
+                    if (cardDealList[i].getDeal().get(j).getValue() != 0) {
+                        int localIndexTo = j;
+                        localHost2 = (ArrayList<PlayingCard>) cardDealList[i].getDeal().subList(j + 1, cardDealList[i].getDeal().size() - 1);
+                        for (PlayingCard card : localHost2) {
+                            cardDealList[i].getDeal().remove(card);
                         }
+                        cardDealList[i].getDeal().addAll(localHost1);
                     }
                 }
             }
         }
+    }
 
-    public void moveCards(){
+    public void moveCards() {
         ArrayList<PlayingCard> localListForMoveFromCheck = new ArrayList<>();
         ArrayList<PlayingCard> localListForMoveToCheck = new ArrayList<>();
 
@@ -115,22 +162,22 @@ public class Patiens extends CardGame {
                     if (localListForMoveToCheck.get(j).getSuit() == Suit.Clubs
                             || localListForMoveToCheck.get(j).getSuit() == Suit.Spades) {
                         if (localListForMoveFromCheck.get(i).getSuit() == Suit.Diamonds
-                                ||localListForMoveFromCheck.get(i).getSuit() == Suit.Hearts) {
+                                || localListForMoveFromCheck.get(i).getSuit() == Suit.Hearts) {
                             //En metod som letar rätt på två kort, det en a sla läggas på det andra.Den jag ska flytta från är först
-                            System.out.println("" + localListForMoveFromCheck.get(i)+ localListForMoveToCheck.get(j));
+                            System.out.println("" + localListForMoveFromCheck.get(i) + localListForMoveToCheck.get(j));
                             findCardsAndAddToNewList(localListForMoveFromCheck.get(i), localListForMoveToCheck.get(j));
-                    }
+                        }
                     }
                     if (localListForMoveToCheck.get(j).getSuit() == Suit.Hearts
                             || localListForMoveToCheck.get(j).getSuit() == Suit.Diamonds) {
 
                         if (localListForMoveFromCheck.get(j).getSuit() == Suit.Clubs
-                                || localListForMoveFromCheck.get(j).getSuit() == Suit.Spades){
-                            System.out.println("" + localListForMoveFromCheck.get(i)+ localListForMoveToCheck.get(j));
+                                || localListForMoveFromCheck.get(j).getSuit() == Suit.Spades) {
+                            System.out.println("" + localListForMoveFromCheck.get(i) + localListForMoveToCheck.get(j));
                             findCardsAndAddToNewList(localListForMoveFromCheck.get(i), localListForMoveToCheck.get(j));
                         }
 
-                }
+                    }
                 }
             }
         }
@@ -163,7 +210,7 @@ public class Patiens extends CardGame {
     }
 
 
-    public void paddingList(int longestList) {
+    public void paddingSet(int longestList) {
         for (int i = 0; i < cardDealList.length; i++) {
             int x = longestList - cardDealList[i].getDeal().size();
             for (int j = 0; j <= x; j++) {
@@ -274,19 +321,19 @@ public class Patiens extends CardGame {
         return returnBol;
     }
 
-    public PlayingCard getSortedTopCard(int i){
-        return sortedCardDeal[i].getDeal().get(sortedCardDeal[i].getDeal().size()-1);
+    public PlayingCard getSortedTopCard(int i) {
+        return sortedCardDeal[i].getDeal().get(sortedCardDeal[i].getDeal().size() - 1);
 
 
     }
 
     public void printDeal() {
         String[][] cardHolder1 = {{""}, {" __ "}, {"|  |"}, {"|  |"}, {" == "}};
-        String[][] cardHolder2 = {{""}, {"   "},{" "+getFaceUpCardFromDeck()+" "}, {"   "}, {"   "}};
-        String[][] cardHolder3 = {{""}, {" __ "}, {" "+ getSortedTopCard(0)+ " "}, {"|  |"}, {" == "}};
-        String[][] cardHolder4 = {{""}, {" __ "}, {" "+ getSortedTopCard(1)+ " "}, {"|  |"}, {" == "}};
-        String[][] cardHolder5 = {{""}, {" __ "}, {" "+ getSortedTopCard(2)+ " "}, {"|  |"}, {" == "}};
-        String[][] cardHolder6 = {{""}, {" __ "}, {" "+ getSortedTopCard(3)+ " "}, {"|  |"}, {" == "}};
+        String[][] cardHolder2 = {{""}, {"   "}, {" " + getFaceUpCardFromDeck() + " "}, {"   "}, {"   "}};
+        String[][] cardHolder3 = {{""}, {" __ "}, {" " + getSortedTopCard(0) + " "}, {"|  |"}, {" == "}};
+        String[][] cardHolder4 = {{""}, {" __ "}, {" " + getSortedTopCard(1) + " "}, {"|  |"}, {" == "}};
+        String[][] cardHolder5 = {{""}, {" __ "}, {" " + getSortedTopCard(2) + " "}, {"|  |"}, {" == "}};
+        String[][] cardHolder6 = {{""}, {" __ "}, {" " + getSortedTopCard(3) + " "}, {"|  |"}, {" == "}};
 
         String[] frontNumber = {"  1  ", "  2  ", "  \u2666  ", "   \u2663  ", "   \u2665  ", "  \u2660  "};
 
