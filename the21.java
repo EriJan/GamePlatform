@@ -2,10 +2,8 @@
 
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class the21  extends CardGame {
 	  DeckHandler deck = new DeckHandler();
@@ -92,7 +90,7 @@ public class the21  extends CardGame {
 			}else if ( (playersHands[1].getHandValue(DrowCard2) < playersHands[0].getHandValue(DrowCard) ) || playersHands[1].isTjock(DrowCard2) ) {
 				System.out.format("%s vann!! ", player1.getName());
 			  addToScoreFile(player1.getName(),playersHands[0].getHandValue(DrowCard));
-			  addToScoreFile("Niklas 2tste2", 16);
+
 
 			}
 			else if ( (playersHands[1].getHandValue(DrowCard2) == playersHands[0].getHandValue(DrowCard) ) && ! playersHands[0].isTjock(DrowCard) ) {
@@ -107,7 +105,11 @@ public class the21  extends CardGame {
 
 		String oldData = HelperMethods.readFile("21.txt");
 		StringBuilder sb = new StringBuilder(oldData);
-		sb.append(score + "\t" + name + ";");
+		Date date = new Date();
+		SimpleDateFormat sdf;
+		sdf = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss");
+		String stringDate = sdf.format(date);
+		sb.append(score + "  " + name + " on: " + stringDate + ";"); // "\t"
 		String scoreArray[] = sb.toString().split(";");
 		List<String> scoreList = Arrays.asList(scoreArray);
 
@@ -150,14 +152,18 @@ public class the21  extends CardGame {
 		scArr = scoreList.toArray(scArr);
 
 		HelperMethods.printSlowly("" +
-				"\n**************************************\n");
-		for (int i = 0 ; i< scArr.length; i++){
-			if(!scArr[i].contentEquals(" ")) {
-				HelperMethods.printSlowly("\tno" + (i+1) + ": " + scArr[i]+"\n");
-			}
+				"\n" +
+				"********************* -HighScore:s - *******************\n");
+		if(scoreArray.length < 1){
+			System.out.println("\tEmty, it's still a chance to be no1..\n" +
+					"\t\"There should be only one..\"");
+		}else{
+			for (int i = 0 ; i< scArr.length; i++){
+					HelperMethods.printSlowly("\tno" + (i+1) + ": " + scArr[i]+"\n");
+		}
 		}
 		HelperMethods.printSlowly("" +
-				"**************************************\n");
+				"********************************************************\n");
 
 	}
 
