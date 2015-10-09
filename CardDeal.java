@@ -37,6 +37,10 @@ public class CardDeal {
     return retCard;
   }
 
+  public PlayingCard getLastCard(){
+    return hand.get(hand.size()-1);
+  }
+
   public void revealHand() {
     for (PlayingCard card : hand) {
       card.revealCard();
@@ -47,6 +51,14 @@ public class CardDeal {
     for (PlayingCard card : hand) {
       card.hideCard();
     }
+  }
+
+  public boolean isHandEmpty(){
+    boolean local = false;
+    if (hand.size()== 0){
+      local = true;
+    }
+    return local;
   }
 
   public void sortHand() {
