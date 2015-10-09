@@ -15,9 +15,9 @@ public class CardDeal {
     }
   }
 
-  public List<PlayingCard> getDeal(){
-    return hand;
-  }
+  //public List<PlayingCard> getDeal(){
+   // return hand;
+ // }
 
   public void recieveCard(PlayingCard newCard) {
     hand.add(newCard);
