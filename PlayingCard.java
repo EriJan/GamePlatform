@@ -52,16 +52,27 @@ public class PlayingCard implements Comparable<PlayingCard> {
     return isSame;
   }
 
-  boolean isRed(PlayingCard card) {
-    boolean isRed = false;
-    if (card.getSuit() == Suit.Diamonds || card.getSuit() == Suit.Hearts) {
+    boolean isRed(PlayingCard card){
+      boolean isRed = false;
+      if (card.getSuit() == Suit.Clubs || card.getSuit() == Suit.Hearts) {
+        isRed = true;
+      }
+      return isRed;
+    }
+
+    /*boolean isRed = false;
+    if (card.getSuit() == Suit.D || card.getSuit() == Suit.Hearts) {
       isRed = true;
     }
     return isRed;
-  }
+  }*/
 
   boolean isBlack(PlayingCard card) {
-    return !isRed(card);
+    boolean isBlack = false;
+    if (card.getSuit() == Suit.Diamonds || card.getSuit() == Suit.Spades){
+      isBlack = true;
+    }
+    return isBlack;
   }
   
   // Fixme: add override for hashVal

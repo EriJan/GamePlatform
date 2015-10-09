@@ -24,6 +24,8 @@ public class Patiens extends CardGame {
 
     @Override
     public void runGame() {
+
+
         boolean gameIsRunning = true;
         System.out.println("Hej och välkommen till Patiens!"); //TODO Översätt till engelska
         //TODO ta bort all padding fram till coh med WhileGameIsRUnning
@@ -230,13 +232,13 @@ public class Patiens extends CardGame {
 
     public ArrayList<PatiensPlayingCard> ifCardsSuitMach(ArrayList<PatiensPlayingCard> listToCheck) {
 
-        if (listToCheck.get(0).isRed(listToCheck.get(0)) && listToCheck.get(1).isBlack(listToCheck.get(1)) {
+        if (listToCheck.get(0).isRed(listToCheck.get(0)) && listToCheck.get(1).isBlack(listToCheck.get(1)) ){
             return listToCheck;
-        }else if (listToCheck.get(0).isBlack(listToCheck.get(0)) && listToCheck.get(1).isRed(listToCheck.get(1)) {
+        }else if (listToCheck.get(0).isBlack(listToCheck.get(0)) && listToCheck.get(1).isRed(listToCheck.get(1))) {
             return listToCheck;
         }else{
-            listToCheck.remove(0);
             listToCheck.remove(1);
+            listToCheck.remove(0);
         }
 
 
@@ -253,6 +255,8 @@ public class Patiens extends CardGame {
                 for (int j = 0; j < local; j++) {
 
                     localSubList.addAll(cardDealList[i].getDeal().subList(j, local - 1));
+                    i = cardDealList.length +2;
+                    break;
                 }
             }
 
@@ -261,6 +265,7 @@ public class Patiens extends CardGame {
         for (int i = 0; i < cardDealList.length; i++){
             if (cardDealList[i].getDeal().contains(validList.get(1))){
                 cardDealList[i].getDeal().addAll(localSubList);
+                System.out.println(cardDealList[i].getDeal());
                     validMoveExe = true;
 
             }
@@ -270,8 +275,8 @@ public class Patiens extends CardGame {
 }
 
     //TODO Denna metod ska skrivas om med anrop till nya metoder som gör denna metod läslig
-    public void moveCards() {
-
+    public boolean moveCards() {
+boolean test = false;
         localFromCheck = listOfCardsToMove(); //JÄmför två listor, passar några ihop?
         localToCheck = whtasUpLIst();
         ArrayList<PatiensPlayingCard> awnserFromCheckValue = new ArrayList<>();
@@ -280,15 +285,17 @@ public class Patiens extends CardGame {
 
         for (int i = 0; i < localFromCheck.size(); i++) {
             for (int j = 0; j < localToCheck.size(); j++) {
-                awnserFromCheckValue.add(ifCardsValueMach(localFromCheck.get(i), localToCheck.get(j)));
+                awnserFromCheckValue.addAll(ifCardsValueMach(localFromCheck.get(i), localToCheck.get(j)));
                 if (!awnserFromCheckValue.isEmpty()) {
-                    awnserFromCheckSuit.add(ifCardsSuitMach(awnserFromCheckValue));
+                    awnserFromCheckSuit.addAll(ifCardsSuitMach(awnserFromCheckValue));
                     if (!awnserFromCheckSuit.isEmpty()) {
                         addOneToAnother(awnserFromCheckSuit);
+                        test = true;
+                        return test;
                     }
                 }
             }
-        }
+        }return test;
 
     }
 
