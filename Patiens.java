@@ -211,6 +211,7 @@ public class Patiens extends CardGame {
 
         }
     }
+    public ArrayListz<>
 
     //TODO Denna metod ska skrivas om med anrop till nya metoder som gör denna metod läslig
     public void moveCards() {
@@ -220,15 +221,17 @@ public class Patiens extends CardGame {
         localFromCheck = listOfCardsToMove(); //JÄmför två listor, passar några ihop?
         localToCheck = whtasUpLIst();
 
+
         for (int i = 0; i < localFromCheck.size(); i++) {
             int checkFrom = localFromCheck.get(i).getValue();
 
             for (int j = 0; j < localToCheck.size(); j++) {
                 int checkTo = localToCheck.get(j).getValue();
+                //Hur ska jag lägga upp denna metod?
+                //En metod som kollar case 1 är
                 if (checkFrom - 1 == checkTo) {
-                    if (localToCheck.get(j)
-                            localToCheck.get(j).getSuit() == Suit.Clubs
-                            || localToCheck.get(j).getSuit() == Suit.Spades) {
+                    if (localToCheck.get(j).isBlack(localToCheck.get(j)) && localFromCheck.get(i).isRed(localFromCheck.get(i)){
+                            //en metod som
                         if (localListForMoveFromCheck.get(i).getSuit() == Suit.Diamonds
                                 || localListForMoveFromCheck.get(i).getSuit() == Suit.Hearts) {
                             //En metod som letar rätt på två kort, det en a sla läggas på det andra.Den jag ska flytta från är först
