@@ -2,10 +2,8 @@
 // Uses the enum Suit for the suit of each card
 // implements the Comparable interface and overrides
 // equals, sorted and compareTo for sorting purposes
-// NOT FIXED:
-// CHECK FOR VALID CARD value
-// compareTo is not 100% complying to standard
-// NO hashCode method implemented
+
+// TODO make PlayingCard immutable.
 
 public class PlayingCard implements Comparable<PlayingCard> {
 
