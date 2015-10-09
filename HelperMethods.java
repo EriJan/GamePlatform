@@ -11,6 +11,23 @@ public class HelperMethods {
 		return input;
 	}
 
+	public static int inPutFromNextInt() {
+		String input= null;
+		char check;
+		int returnInt;
+		while (true) {
+			input = in.nextLine();
+			check = input.charAt(0);
+			if (Character.isDigit(check)) {
+				returnInt = Integer.parseInt(input);
+				break;
+			} else {
+				System.out.println("Något har blivit fel. Tänk på att svara genom att skriva en siffra.");
+			}
+		}
+		return returnInt;
+	}
+
 	public static void printSlowly(String text) {//skriver ut texter lÃ¥ngsamt ut en string..
 		try {
 			for (char character : text.toCharArray()) {
