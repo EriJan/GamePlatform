@@ -15,7 +15,8 @@ public class HelperMethods {
 		String input= null;
 		char check;
 		int returnInt;
-		while (true) {
+    Scanner in = new Scanner(System.in);
+    while (true) {
 			input = in.nextLine();
 			check = input.charAt(0);
 			if (Character.isDigit(check)) {

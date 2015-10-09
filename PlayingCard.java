@@ -60,6 +60,19 @@ public class PlayingCard implements Comparable<PlayingCard> {
     return isRed;
   }
 
+  boolean isRed() {
+    boolean isRed = false;
+    if (this.getSuit() == Suit.Diamonds || this.getSuit() == Suit.Hearts) {
+      isRed = true;
+    }
+    return isRed;
+  }
+
+  boolean isBlack() {
+    return !this.isRed();
+  }
+
+
   boolean isBlack(PlayingCard card) {
     return !isRed(card);
   }
