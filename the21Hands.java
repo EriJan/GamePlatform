@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class the21Hands extends CardDeal {
 	private int summa;
 
