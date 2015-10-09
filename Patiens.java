@@ -211,7 +211,11 @@ public class Patiens extends CardGame {
 
         }
     }
-    public ArrayListz<>
+    public ArrayList<PatiensPlayingCard> ifCardsMach(PatiensPlayingCard p, PatiensPlayingCard q){
+        ArrayList<PatiensPlayingCard> localList = new ArrayList<>();
+
+        return localList
+    }
 
     //TODO Denna metod ska skrivas om med anrop till nya metoder som gör denna metod läslig
     public void moveCards() {
