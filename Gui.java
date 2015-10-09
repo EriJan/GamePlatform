@@ -31,8 +31,13 @@ public Gui(String... Options){
     //jb.setIcon(new ImageIcon("/logo1.png"));
     //jb.setIcon(new ImageIcon("logo1.png"));
     jb.setBackground(Color.white);
-    jb.setIcon(new ImageIcon(this.getClass().getResource("logo1.png")));
+    //correct way:
+    //jb.setIcon(new ImageIcon(this.getClass().getResource("logo1.png")));
+    //wrong way, "Test":
+    jb.setIcon(new ImageIcon("C:\\location\\logo1.png")); //is under " C:\location\"
     //logo1.png to logo6.png..
+
+
 
     //adderar en capsel!
     Box box = Box.createVerticalBox();
