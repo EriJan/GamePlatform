@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.IOException;
-import java.io.EOFException;
-import java.io.FileNotFoundException;
 
 
 public class BlackJack extends CardGame {

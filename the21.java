@@ -1,12 +1,15 @@
 //package CardGame;
 
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class the21  extends CardGame {
 	  DeckHandler deck = new DeckHandler();
 	  Player player1,player2;
 	  the21Hands[] playersHands  ;
-	private String val;
+	private String sel;
 
 	  the21() {
 		  deck.newDeck();
@@ -20,7 +23,7 @@ public class the21  extends CardGame {
 		  HelperMethods.printSlowly("* * * * * * * * * * * * * * * * * * *\n");
 		  HelperMethods.printSlowly(" Player enter your name : ");
 		  player1 = new Player(HelperMethods.inPutFromNextLine());
-		  player1 = new Player(HelperMethods.inPutFromNextLine());
+		  //player1 = new Player(HelperMethods.inPutFromNextLine());
 		   int [] DrowCard = new int[] {0,0,0};
 		  int [] DrowCard2 = new int[] {0,0,0};
 		  playersHands = new the21Hands[2];
@@ -36,16 +39,16 @@ public class the21  extends CardGame {
 		  boolean endLoopForP1 = false;
 		  int i = 0;
 		  while(!endLoopForP1){
-			  val="";
+			  sel ="";
 			  DrowCard[i] = playersHands[0].hand.get(i).getValue();
 				System.out.format("%s, Your cards :\n%s", player1.getName(), playersHands[0].hand.get(i).toString());
 				System.out.println("totally: " + playersHands[0].getHandValue(DrowCard));
 				
 				if(playersHands[0].isCardToTake(DrowCard) && !playersHands[0].isTjock(DrowCard)){
 					System.out.println("vill du ha ett till ? (J/N): ");
-					val = HelperMethods.inPutFromNextLine();//onskades flera kort?
+					sel = HelperMethods.inPutFromNextLine();//onskades flera kort?
 				}
-			  	if(!playersHands[0].isCardToTake(DrowCard) || playersHands[0].isTjock(DrowCard) || val.equalsIgnoreCase("N")){
+			  	if(!playersHands[0].isCardToTake(DrowCard) || playersHands[0].isTjock(DrowCard) || sel.equalsIgnoreCase("N")){
 				  endLoopForP1 = true;
 			  }
 			  i++;
@@ -54,9 +57,9 @@ public class the21  extends CardGame {
 		  if(!playersHands[0].isTjock(DrowCard)){
 				
 				System.out.format("Now it is %s: s turn %n", player2.getName());
-				val = "J";
+				sel = "J";
 			   i = 0;
-				while(playersHands[1].isCardToTake(DrowCard2) && !playersHands[1].isTjock(DrowCard2) && !val.equalsIgnoreCase("N") && !playersHands[1].isTjock(DrowCard2)){
+				while(playersHands[1].isCardToTake(DrowCard2) && !playersHands[1].isTjock(DrowCard2) && !sel.equalsIgnoreCase("N") && !playersHands[1].isTjock(DrowCard2)){
 
 					DrowCard2[i] = playersHands[1].hand.get(i).getValue();
 					HelperMethods.printSlowly(String.format("%s, (Dealers cards) :%s\n", player2.getName(), playersHands[1].hand.get(i).toString()));
@@ -64,9 +67,9 @@ public class the21  extends CardGame {
 					System.out.println(" totally: " + playersHands[1].getHandValue(DrowCard2) );
 					
 					if(playersHands[1].getHandValue(DrowCard2)<=14 || (playersHands[1].getHandValue(DrowCard2) < playersHands[0].getHandValue(DrowCard2)) ){
-						val = "J";								
+						sel = "J";
 					}else{
-						val = "N";
+						sel = "N";
 					}
 					try {
 						Thread.sleep(2000);
@@ -86,14 +89,83 @@ public class the21  extends CardGame {
 				
 			}else if ( (playersHands[1].getHandValue(DrowCard2) < playersHands[0].getHandValue(DrowCard) ) || playersHands[1].isTjock(DrowCard2) ) {
 				System.out.format("%s vann!! ", player1.getName());
+			  addToScoreFile(player1.getName(),playersHands[0].getHandValue(DrowCard));
+
+
 			}
 			else if ( (playersHands[1].getHandValue(DrowCard2) == playersHands[0].getHandValue(DrowCard) ) && ! playersHands[0].isTjock(DrowCard) ) {
 				//System.out.format("OAVGJORT!! ");
 				System.out.format("%s vann!! \n", player2.getName());
 			}
-		  
-		  
+
+		  printScoreboard21();
 	  }
+
+	private void addToScoreFile(String name, int score) {
+
+		String oldData = HelperMethods.readFile("21.txt");
+		StringBuilder sb = new StringBuilder(oldData);
+		Date date = new Date();
+		SimpleDateFormat sdf;
+		sdf = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss");
+		String stringDate = sdf.format(date);
+		sb.append(score + "  " + name + " on: " + stringDate + ";"); // "\t"
+		String scoreArray[] = sb.toString().split(";");
+		List<String> scoreList = Arrays.asList(scoreArray);
+
+		//Collections.sort(scoreList);
+		//Collections.reverse(scoreList);
+		Collections.sort(scoreList, new Comparator<String>() {
+
+			@Override
+			public int compare(String arg0, String arg1) {
+				return  arg1.compareTo(arg0);
+			}
+		});
+		sb = new StringBuilder("");
+		for(String user: scoreList){
+		sb.append(user + ";");
+		}
+		String newData = sb.toString();
+		try {
+			HelperMethods.writeFile("21.txt",newData);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void  printScoreboard21() {
+		String data = HelperMethods.readFile("21.txt");
+
+		String scoreArray[] = data.toString().split(";");
+		List<String> scoreList = Arrays.asList(scoreArray);
+		//Collections.reverse(scoreList);
+		Collections.sort(scoreList, new Comparator<String>() {
+
+			@Override
+			public int compare(String arg0, String arg1) {
+				return  arg1.compareTo(arg0);
+			}
+		});
+
+		String[] scArr = new String[scoreList.size()];
+		scArr = scoreList.toArray(scArr);
+
+		HelperMethods.printSlowly("" +
+				"\n" +
+				"********************* -HighScore:s - *******************\n");
+		if(scoreArray.length < 1){
+			System.out.println("\tEmty, it's still a chance to be no1..\n" +
+					"\t\"There should be only one..\"");
+		}else{
+			for (int i = 0 ; i< scArr.length; i++){
+					HelperMethods.printSlowly("\tno" + (i+1) + ": " + scArr[i]+"\n");
+		}
+		}
+		HelperMethods.printSlowly("" +
+				"********************************************************\n");
+
+	}
 
 
 	}
