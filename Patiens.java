@@ -17,6 +17,8 @@ public class Patiens extends CardGame {
     PatiensPlayingCard[] arrayOfEmptyCards = new PatiensPlayingCard[4];
     ArrayList<PatiensPlayingCard> listOfOpenCards = new ArrayList<>();
     ArrayList<Boolean> boolList = new ArrayList<>();
+    ArrayList<PatiensPlayingCard> localFromCheck = new ArrayList<>();
+    ArrayList<PatiensPlayingCard> localToCheck = new ArrayList<>();
     boolean ischangesVar;
 
 
@@ -211,51 +213,83 @@ public class Patiens extends CardGame {
 
         }
     }
-    public ArrayList<PatiensPlayingCard> ifCardsMach(PatiensPlayingCard p, PatiensPlayingCard q){
-        ArrayList<PatiensPlayingCard> localList = new ArrayList<>();
 
-        return localList
+    public ArrayList<PatiensPlayingCard> ifCardsValueMach(PatiensPlayingCard p, PatiensPlayingCard q) {
+        ArrayList<PatiensPlayingCard> localList = new ArrayList<>();
+        for (PatiensPlayingCard cardFrom : localFromCheck) {
+            for (PatiensPlayingCard cardTo : localFromCheck) {
+                if (cardFrom.getValue() + 1 == cardTo.getValue()) {
+                    localList.add(cardFrom);
+                    localList.add(cardTo);
+                    return localList;
+                }
+            }
+        }
+        return localList;
     }
+
+    public ArrayList<PatiensPlayingCard> ifCardsSuitMach(ArrayList<PatiensPlayingCard> listToCheck) {
+
+        if (listToCheck.get(0).isRed(listToCheck.get(0)) && listToCheck.get(1).isBlack(listToCheck.get(1)) {
+            return listToCheck;
+        }else if (listToCheck.get(0).isBlack(listToCheck.get(0)) && listToCheck.get(1).isRed(listToCheck.get(1)) {
+            return listToCheck;
+        }else{
+            listToCheck.remove(0);
+            listToCheck.remove(1);
+        }
+
+
+        return listToCheck;
+    }
+
+    public Boolean addOneToAnother(ArrayList<PatiensPlayingCard> validList) {
+        ArrayList<PatiensPlayingCard> localSubList = new ArrayList<>();
+        boolean validMoveExe = false;
+        int local;
+        for (int i = 0; i < cardDealList.length; i++) {
+            if (cardDealList[i].getDeal().contains(validList.get(0))) {
+                local = cardDealList[i].getDeal().size();
+                for (int j = 0; j < local; j++) {
+
+                    localSubList.addAll(cardDealList[i].getDeal().subList(j, local - 1));
+                }
+            }
+
+        }
+
+        for (int i = 0; i < cardDealList.length; i++){
+            if (cardDealList[i].getDeal().contains(validList.get(1))){
+                cardDealList[i].getDeal().addAll(localSubList);
+                    validMoveExe = true;
+
+            }
+        }
+
+    return validMoveExe;
+}
 
     //TODO Denna metod ska skrivas om med anrop till nya metoder som gör denna metod läslig
     public void moveCards() {
-        ArrayList<PatiensPlayingCard> localFromCheck = new ArrayList<>();
-        ArrayList<PatiensPlayingCard> localToCheck = new ArrayList<>();
 
         localFromCheck = listOfCardsToMove(); //JÄmför två listor, passar några ihop?
         localToCheck = whtasUpLIst();
+        ArrayList<PatiensPlayingCard> awnserFromCheckValue = new ArrayList<>();
+        ArrayList<PatiensPlayingCard> awnserFromCheckSuit = new ArrayList<>();
 
 
         for (int i = 0; i < localFromCheck.size(); i++) {
-            int checkFrom = localFromCheck.get(i).getValue();
-
             for (int j = 0; j < localToCheck.size(); j++) {
-                int checkTo = localToCheck.get(j).getValue();
-                //Hur ska jag lägga upp denna metod?
-                //En metod som kollar case 1 är
-                if (checkFrom - 1 == checkTo) {
-                    if (localToCheck.get(j).isBlack(localToCheck.get(j)) && localFromCheck.get(i).isRed(localFromCheck.get(i)){
-                            //en metod som
-                        if (localListForMoveFromCheck.get(i).getSuit() == Suit.Diamonds
-                                || localListForMoveFromCheck.get(i).getSuit() == Suit.Hearts) {
-                            //En metod som letar rätt på två kort, det en a sla läggas på det andra.Den jag ska flytta från är först
-                            System.out.println("" + localListForMoveFromCheck.get(i) + localListForMoveToCheck.get(j));
-                            findCardsAndAddToNewList(localListForMoveFromCheck.get(i), localListForMoveToCheck.get(j));
-                        }
-                    }
-                    if (localListForMoveToCheck.get(j).getSuit() == Suit.Hearts
-                            || localListForMoveToCheck.get(j).getSuit() == Suit.Diamonds) {
-
-                        if (localListForMoveFromCheck.get(j).getSuit() == Suit.Clubs
-                                || localListForMoveFromCheck.get(j).getSuit() == Suit.Spades) {
-                            System.out.println("" + localListForMoveFromCheck.get(i) + localListForMoveToCheck.get(j));
-                            findCardsAndAddToNewList(localListForMoveFromCheck.get(i), localListForMoveToCheck.get(j));
-                        }
-
+                awnserFromCheckValue.add(ifCardsValueMach(localFromCheck.get(i), localToCheck.get(j)));
+                if (!awnserFromCheckValue.isEmpty()) {
+                    awnserFromCheckSuit.add(ifCardsSuitMach(awnserFromCheckValue));
+                    if (!awnserFromCheckSuit.isEmpty()) {
+                        addOneToAnother(awnserFromCheckSuit);
                     }
                 }
             }
         }
+
     }
 
     //Skapar en lista av kort som är möjliga att flytta
@@ -501,7 +535,7 @@ public class Patiens extends CardGame {
         whatsLeftCardDeal[0] = new PatiensCardDeal();
         whatsLeftCardDeal[1] = new PatiensCardDeal();
         int localSize = patiensCardDeck.getCurrentDeck().size();
-        whatsLeftCardDeal[0].drawFromDeck(patiensCardDeck,localSize);
+        whatsLeftCardDeal[0].drawFromDeck(patiensCardDeck, localSize);
 
 
     }
