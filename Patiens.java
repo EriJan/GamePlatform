@@ -107,7 +107,7 @@ public class Patiens extends CardGame {
         arrayOfEmptyCards[1] = new PatiensPlayingCard(Suit.Diamonds, 0);
         arrayOfEmptyCards[2] = new PatiensPlayingCard(Suit.Hearts, 0);
         arrayOfEmptyCards[3] = new PatiensPlayingCard(Suit.Spades, 0);
-        System.out.println(arrayOfEmptyCards[0].toString());
+
 
     }
 
@@ -196,7 +196,7 @@ public class Patiens extends CardGame {
                 int localIndexFrom = firstCardFaceUpPosition(i);
                 from = i;
                 localHost1 = cardDealList[from].getDeal().subList(localIndexFrom, cardDealList[from].getDeal().size() - 1);
-                System.out.println(localHost1);
+
             }
 
             if (cardDealList[i].getDeal().contains(q)) {
@@ -265,7 +265,7 @@ public class Patiens extends CardGame {
         for (int i = 0; i < cardDealList.length; i++){
             if (cardDealList[i].getDeal().contains(validList.get(1))){
                 cardDealList[i].getDeal().addAll(localSubList);
-                System.out.println(cardDealList[i].getDeal());
+
                     validMoveExe = true;
 
             }
@@ -416,7 +416,7 @@ boolean test = false;
 
         if (p.getSuit() == Suit.Clubs) {
             local = sortedCardDeal[0].getDeal().get(0).getValue() + 1;
-            System.out.println(local);
+
             if (p.getValue() == local) {
                 sortedCardDeal[0].getDeal().add(p);
                 removeObeject(p);
@@ -424,7 +424,7 @@ boolean test = false;
             }
         } else if (p.getSuit() == Suit.Diamonds) {
             local = sortedCardDeal[1].getDeal().get(0).getValue() + 1;
-            System.out.println(local); //TODO ta bort spårutskrift
+
 
             if (p.getValue() == local) {
                 sortedCardDeal[1].getDeal().add(p);
@@ -433,7 +433,7 @@ boolean test = false;
             }
         } else if (p.getSuit() == Suit.Hearts) {
             local = sortedCardDeal[2].getDeal().get(0).getValue() + 1;
-            System.out.println(local);
+
             if ((p.getValue() == local)) {
                 sortedCardDeal[2].getDeal().add(p);
                 removeObeject(p);
@@ -441,7 +441,6 @@ boolean test = false;
             }
         } else if (p.getSuit() == Suit.Spades) {
             local = sortedCardDeal[3].getDeal().get(0).getValue() + 1;
-            System.out.println(local);
             if ((p.getValue() == local)) {
                 sortedCardDeal[3].getDeal().add(p);
                 removeObeject(p);
