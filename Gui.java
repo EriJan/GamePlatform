@@ -22,7 +22,7 @@ public class Gui extends JFrame {
 public Gui(String... Options){
     setTitle("TheGame");
     setVisible(true);
-    setSize(110,270);
+    setSize(110,290);
     setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 //    getContentPane().setBackground( Color.white );
@@ -34,8 +34,8 @@ public Gui(String... Options){
     //correct way:
     //jb.setIcon(new ImageIcon(this.getClass().getResource("logo1.png")));
     //wrong way, "Test":
-  // jb.setIcon(new ImageIcon("C:\\location\\logo1.png")); //is under " C:\location\"
-  jb.setIcon(new ImageIcon("/Users/Janne/JavaProj/src/logo/location/logo1.png")); //is under " C:\location\"
+   jb.setIcon(new ImageIcon("C:\\location\\logo1.png")); //is under " C:\location\"
+  //jb.setIcon(new ImageIcon("/Users/Janne/JavaProj/src/logo/location/logo1.png")); //is under " C:\location\"
     //logo1.png to logo6.png..
 
 
@@ -146,6 +146,6 @@ public Gui(String... Options){
     }
 
     public static void main(String[] args) {
-        Gui g = new Gui("Blackjack","Patiens","21","Quit");
+        Gui g = new Gui("Blackjack","Patiens","21", "FizzAndBuzz","Quit");
     }
 }
