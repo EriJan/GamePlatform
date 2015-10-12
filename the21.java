@@ -150,7 +150,7 @@ public class the21  extends CardGame {
 
 		String[] scArr = new String[scoreList.size()];
 		scArr = scoreList.toArray(scArr);
-
+		GuiHighScore gHS = new GuiHighScore(scArr);
 		HelperMethods.printSlowly("" +
 				"\n" +
 				"********************* -HighScore:s - *******************\n");
