@@ -1,6 +1,7 @@
 //package CardGame;
 
 import java.io.*;
+import java.util.Random;
 import java.util.Scanner;
 
 public class HelperMethods {
@@ -10,6 +11,7 @@ public class HelperMethods {
 		input = in.nextLine();
 		return input;
 	}
+
 
 	public static int inPutFromNextInt() {
 		String input= null;
@@ -209,6 +211,12 @@ public class HelperMethods {
 				"                         ");
 		return str.toString();
 	}
+
+    public static int getRandomInt(int min , int max) {
+        Random rand = new Random();
+        return ((rand.nextInt((max - 0) + min) + min));
+    }
+
 
 	public static String introtext3() {
 		StringBuilder str = new StringBuilder("");
