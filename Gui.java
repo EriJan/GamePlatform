@@ -18,6 +18,7 @@ public class Gui extends JFrame {
     int numberOfOptions = 4;
             //"Blackjack","Patiens","21","Quit"
 
+//ImageIcon img = new ImageIcon("C:\\location\\logo1.png");
 
 public Gui(String... Options){
     setTitle("TheGame");

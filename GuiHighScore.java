@@ -19,8 +19,8 @@ public class GuiHighScore extends JFrame {
 public GuiHighScore(String... ScoreInArray){
     setTitle("TheGame - HighScore");
     setVisible(true);
-    setSize(110,290);
-    setDefaultCloseOperation(EXIT_ON_CLOSE);
+    setSize(210,290);
+    //setDefaultCloseOperation(EXIT_ON_CLOSE);
     setBackground(Color.white);
 
 //    getContentPane().setBackground( Color.white );
