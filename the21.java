@@ -98,7 +98,8 @@ public class the21  extends CardGame {
 				System.out.format("%s vann!! \n", player2.getName());
 			}
 
-		  printScoreboard21();
+		  //printScoreboard21();
+		  System.out.println(toString());
 	  }
 
 	private void addToScoreFile(String name, int score) {
@@ -167,5 +168,40 @@ public class the21  extends CardGame {
 
 	}
 
+	public String  toString() {
+		String data = HelperMethods.readFile("21.txt");
+
+		String scoreArray[] = data.toString().split(";");
+		List<String> scoreList = Arrays.asList(scoreArray);
+		//Collections.reverse(scoreList);
+		Collections.sort(scoreList, new Comparator<String>() {
+
+			@Override
+			public int compare(String arg0, String arg1) {
+				return  arg1.compareTo(arg0);
+			}
+		});
+
+		String[] scArr = new String[scoreList.size()];
+		scArr = scoreList.toArray(scArr);
+		GuiHighScore gHS = new GuiHighScore(scArr);
+		StringBuilder str = new StringBuilder("");
+		str.append("" +
+				"\n" +
+				"********************* -HighScore:s - *******************\n");
+		if(scoreArray.length < 1){
+			str.append("\tEmty, it's still a chance to be no1..\n" +
+					"\t\"There should be only one..\"");
+		}else{
+			for (int i = 0 ; i< scArr.length; i++){
+				str.append("\tno" + (i + 1) + ": " + scArr[i] + "\n");
+			}
+		}
+		str.append("" +
+				"********************************************************\n");
+
+		return str.toString();
+
+	}
 
 	}
