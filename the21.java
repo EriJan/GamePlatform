@@ -19,10 +19,9 @@ public class the21  extends CardGame {
 
 	  @Override
 	  public void runGame() {
-		  HelperMethods.printSlowly("\t\t* The  Game 21 *\n");
-		  HelperMethods.printSlowly("* * * * * * * * * * * * * * * * * * *\n");
-		  HelperMethods.printSlowly(" Player enter your name : ");
-		  player1 = new Player(HelperMethods.inPutFromNextLine());
+		  PrintWelcome();
+
+		  player1 = getNewPlayer(HelperMethods.inPutFromNextLine());
 		  //player1 = new Player(HelperMethods.inPutFromNextLine());
 		   int [] DrowCard = new int[] {0,0,0};
 		  int [] DrowCard2 = new int[] {0,0,0};
@@ -40,13 +39,13 @@ public class the21  extends CardGame {
 		  int i = 0;
 		  while(!endLoopForP1){
 			  sel ="";
-			  DrowCard[i] = playersHands[0].hand.get(i).getValue();
-				System.out.format("%s, Your cards :\n%s", player1.getName(), playersHands[0].hand.get(i).toString());
-				System.out.println("totally: " + playersHands[0].getHandValue(DrowCard));
-				
-				if(playersHands[0].isCardToTake(DrowCard) && !playersHands[0].isTjock(DrowCard)){
-					System.out.println("vill du ha ett till ? (J/N): ");
-					sel = HelperMethods.inPutFromNextLine();//onskades flera kort?
+			  DrowCard[i] = getValueDrownCard(i);
+			  printPlayersNameAndCard(i);
+			  printTotallyOnPlayersHandDrown("totally: " + playersHands[0].getHandValue(DrowCard));
+
+			  if(playersHands[0].isCardToTake(DrowCard) && !playersHands[0].isTjock(DrowCard)){
+				  DoYouWantANewCardReveald("vill du ha ett till ? (J/N): ");
+				  sel = newCardAnswer();//onskades flera kort?
 				}
 			  	if(!playersHands[0].isCardToTake(DrowCard) || playersHands[0].isTjock(DrowCard) || sel.equalsIgnoreCase("N")){
 				  endLoopForP1 = true;
@@ -55,16 +54,16 @@ public class the21  extends CardGame {
 			}
 		  
 		  if(!playersHands[0].isTjock(DrowCard)){
-				
-				System.out.format("Now it is %s: s turn %n", player2.getName());
-				sel = "J";
+
+			  printPlayerName("Now it is %s: s turn %n", player2.getName());
+			  sel = "J";
 			   i = 0;
 				while(playersHands[1].isCardToTake(DrowCard2) && !playersHands[1].isTjock(DrowCard2) && !sel.equalsIgnoreCase("N") && !playersHands[1].isTjock(DrowCard2)){
 
 					DrowCard2[i] = playersHands[1].hand.get(i).getValue();
 					HelperMethods.printSlowly(String.format("%s, (Dealers cards) :%s\n", player2.getName(), playersHands[1].hand.get(i).toString()));
-					
-					System.out.println(" totally: " + playersHands[1].getHandValue(DrowCard2) );
+
+					printTotallyOnPlayersHandDrown(" totally: " + playersHands[1].getHandValue(DrowCard2));
 					
 					if(playersHands[1].getHandValue(DrowCard2)<=14 || (playersHands[1].getHandValue(DrowCard2) < playersHands[0].getHandValue(DrowCard2)) ){
 						sel = "J";
@@ -80,27 +79,69 @@ public class the21  extends CardGame {
 				}
 				
 				HelperMethods.printSlowly(String.format("Result is: %n"));
-				System.out.println(player1.getName() + " : " + playersHands[0].getHandValue(DrowCard));
-				System.out.println(player2.getName() + " : " + playersHands[1].getHandValue(DrowCard2));
-				}  
+			  printPlayerXresult(player1.getName() + " : " + playersHands[0].getHandValue(DrowCard));
+			  printPlayerXresult(player2.getName() + " : " + playersHands[1].getHandValue(DrowCard2));
+		  }
 		  if ( (playersHands[0].isTjock(DrowCard))
 					|| ((playersHands[0].getHandValue(DrowCard) < playersHands[1].getHandValue(DrowCard2))  && !playersHands[1].isTjock(DrowCard2)) ) {
-				System.out.format("%s vann!! ", player2.getName());
-				
-			}else if ( (playersHands[1].getHandValue(DrowCard2) < playersHands[0].getHandValue(DrowCard) ) || playersHands[1].isTjock(DrowCard2) ) {
-				System.out.format("%s vann!! ", player1.getName());
+			  printPlayerName("%s vann!! ", player2.getName());
+
+		  }else if ( (playersHands[1].getHandValue(DrowCard2) < playersHands[0].getHandValue(DrowCard) ) || playersHands[1].isTjock(DrowCard2) ) {
+			  printPlayerName("%s vann!! ", player1.getName());
 			  addToScoreFile(player1.getName(),playersHands[0].getHandValue(DrowCard));
 
 
 			}
 			else if ( (playersHands[1].getHandValue(DrowCard2) == playersHands[0].getHandValue(DrowCard) ) && ! playersHands[0].isTjock(DrowCard) ) {
 				//System.out.format("OAVGJORT!! ");
-				System.out.format("%s vann!! \n", player2.getName());
-			}
+			  printPlayerName("%s vann!! \n", player2.getName());
+		  }
 
 		  //printScoreboard21();
-		  System.out.println(toString());
+		  printScoreboard21file(toString());
 	  }
+
+	private void printPlayerXresult(String x) {
+		System.out.println(x);
+	}
+
+	private void printScoreboard21file(String x) {
+		System.out.println(x);
+	}
+
+	private void printPlayerName(String format, String name) {
+		System.out.format(format, name);
+	}
+
+	private String newCardAnswer() {
+		return HelperMethods.inPutFromNextLine();
+	}
+
+	private void DoYouWantANewCardReveald(String x) {
+		System.out.println(x);
+	}
+
+	private void printTotallyOnPlayersHandDrown(String x) {
+		System.out.println(x);
+	}
+
+	private void printPlayersNameAndCard(int i) {
+		System.out.format("%s, Your cards :\n%s", player1.getName(), playersHands[0].hand.get(i).toString());
+	}
+
+	private int getValueDrownCard(int i) {
+		return playersHands[0].hand.get(i).getValue();
+	}
+
+	private Player getNewPlayer(String name) {
+		return new Player(name);
+	}
+
+	private void PrintWelcome() {
+		HelperMethods.printSlowly("\t\t* The  Game 21 *\n");
+		HelperMethods.printSlowly("* * * * * * * * * * * * * * * * * * *\n");
+		HelperMethods.printSlowly(" Player enter your name : ");
+	}
 
 	private void addToScoreFile(String name, int score) {
 
