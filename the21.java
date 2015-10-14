@@ -1,9 +1,16 @@
 //package CardGame;
 
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.List;
 
 public class the21  extends CardGame {
 	  DeckHandler deck = new DeckHandler();
@@ -19,6 +26,7 @@ public class the21  extends CardGame {
 
 	  @Override
 	  public void runGame() {
+		  Gui21 g = new Gui21();
 		  PrintWelcome();
 
 		  player1 = getNewPlayer(HelperMethods.inPutFromNextLine());
@@ -246,3 +254,101 @@ public class the21  extends CardGame {
 	}
 
 	}
+
+ class Gui21 extends JFrame {
+	 JPanel jp = new JPanel();
+	 JButton jbY = new JButton();
+	 JButton jbN = new JButton();
+	 JLabel label;
+	 JLabel[] jLPlayerDrown1;
+	 JLabel[] jLPlayerDrown2;
+	 JLabel jLPlayer1Result;
+	 JLabel jLPlayer2Result;
+
+	 public Gui21() {
+		 setTitle("TheGame21");
+		 setVisible(true);
+		 setSize(310, 290);
+		 //setDefaultCloseOperation(EXIT_ON_CLOSE);
+		 jp.setBackground(Color.GREEN);
+		 Box boxP2 = Box.createVerticalBox();
+		 Box boxP1 = Box.createVerticalBox();
+		 Box boxP1Button = Box.createVerticalBox();
+		 add(boxP2);
+		 add(boxP1);
+		 add(boxP1Button);
+
+		 label = new JLabel("Get new card: ");
+		 Font f = label.getFont();
+		 label.setFont(f.deriveFont(f.getStyle() | Font.ITALIC));
+		 boxP1Button.add(label);
+		 jbY.addActionListener(new ActionListener() { //en inner class för detta..
+			 @Override
+			 public void actionPerformed(ActionEvent e) {
+				 System.out.println("klick Y");
+
+			 }
+		 });
+		 jbN.addActionListener(new ActionListener() { //en inner class för detta..
+			 @Override
+			 public void actionPerformed(ActionEvent e) {
+				 System.out.println("klick N");
+
+			 }
+		 });
+		 boxP1Button.add(jbN);
+		 boxP1Button.add(jbY);
+
+		 jLPlayerDrown2 = new JLabel[3];
+		 for (int i = 0 ; i<jLPlayerDrown2.length ; i++){
+			 jLPlayerDrown2[i] = new JLabel("kort"+i);
+			 final int ClickPointer = i; //MYCKET VIKTIG!
+
+			 jLPlayerDrown2[i].addMouseListener(new MouseAdapter() {
+				 private boolean isMarked;
+
+				 @Override
+				 public void mouseClicked(MouseEvent diceClickID) {
+					 //onMouseClicked(ClickID);
+
+					 //isMarked = optionsMaker(ClickPointer, isMarked);
+					 System.out.println("klick kort" + ClickPointer);
+
+				 }
+
+			 });
+			 //bselects[i].setBounds(20, 55+(i*(48+10)), 48, 48);
+
+			 //jp.add(bselects[i], BorderLayout.SOUTH);
+			 boxP2.add(jLPlayerDrown2[i]);
+		 }
+
+		 jLPlayerDrown1 = new JLabel[3];
+		 for (int i = 0 ; i<jLPlayerDrown1.length ; i++){
+			 jLPlayerDrown1[i] = new JLabel("kort"+i);
+			 final int ClickPointer = i; //MYCKET VIKTIG!
+
+			 jLPlayerDrown1[i].addMouseListener(new MouseAdapter() {
+				 private boolean isMarked;
+
+				 @Override
+				 public void mouseClicked(MouseEvent diceClickID) {
+					 //onMouseClicked(ClickID);
+
+					 //isMarked = optionsMaker(ClickPointer, isMarked);
+					 System.out.println("klick kort" + ClickPointer);
+
+				 }
+
+			 });
+			 //bselects[i].setBounds(20, 55+(i*(48+10)), 48, 48);
+
+			 //jp.add(bselects[i], BorderLayout.SOUTH);
+			 boxP1.add(jLPlayerDrown1[i]);
+		 }
+
+		 add(jp);
+		 validate();
+steg
+	 }
+}
