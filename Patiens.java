@@ -9,7 +9,19 @@ public class Patiens extends CardGame {
         super();
     }
 
-
+/*
+* från prucuctBackLog till release BackLog
+* I sprinten beräknas tid i 1, 2, 4 8 h eller i 2, 3 5 10 dagar.
+* burnDown chart
+* en sprint är timeboxad
+* gör om funktionerna för isRed
+* för g
+* product backlog
+* release backlog
+* sprint backlog (med trello)
+* BurnDow Chart
+* Minst ett spelbart spel
+* */
     PatiensDeckHandler patiensCardDeck = new PatiensDeckHandler();
     PatiensCardDeal[] cardDealList = new PatiensCardDeal[7];
     PatiensCardDeal[] sortedCardDeal = new PatiensCardDeal[4];
@@ -28,9 +40,9 @@ public class Patiens extends CardGame {
 
         boolean gameIsRunning = true;
         System.out.println("Hej och välkommen till Patiens!"); //TODO Översätt till engelska
-        //TODO ta bort all padding fram till coh med WhileGameIsRUnning
+
         setNewPatiensGameDeck();
-        setDeckOnField();
+        setDeckOnField();//UnderDeBugging
         while (gameIsRunning) {
 
             int longestList = lengthOfList();
@@ -50,17 +62,13 @@ public class Patiens extends CardGame {
 
                     break;
                 case 3:
-                    moveCards();
-
-                    break;
-                case 4:
                     putOpenCardInList();
                     break;
-                case 5:
+                case 4:
                     ifKing((PatiensPlayingCard) getFaceUpCardFromDeck());
 
                     break;
-                case 6:
+                case 5:
             }
             if (ischangesVar) {
                 //turnUpCard(); TODO dubbla metoder, ta bort en
@@ -70,7 +78,7 @@ public class Patiens extends CardGame {
         }
 
 
-        int longestList = lengthOfList();
+       /* int longestList = lengthOfList();
         paddingSet(longestList);
 
         getFaceUpCardFromDeck(); //Byt namn på denna metod, ska heta get and turn up
@@ -79,7 +87,7 @@ public class Patiens extends CardGame {
 
         paddingSet(longestList);
 
-        printDeal();
+        printDeal();*/ //Tror detta kan raderas
 
 
     }
@@ -96,10 +104,9 @@ public class Patiens extends CardGame {
         System.out.print("\n");
         System.out.println("1. Vill du lägga upp alla de möjliga korten på respektive hög? Skriv 1");
         System.out.println("2. Vill du att de högar som kan läggas på varandra ska göra just det? Skriv 2");
-        System.out.println("3. Vill du lägga det upplagda kortet på en av högarna fortfarande? Skriv 3");
-        System.out.println("4. Vill du lägga det upplagda kortet på en av högarna? Skriv 4");
-        System.out.println("5. Vill du lägga en kung på en ledig plats? Skriv 5");
-        System.out.println("6. Vad vill du göra? flytta ett eller flera kort från en hög till en annan? Skriv 6");
+        System.out.println("3. Vill du lägga det upplagda kortet på en av högarna? Skriv 4");
+        System.out.println("4. Vill du lägga en kung på en ledig plats? Skriv 5");
+        System.out.println("5. Vad vill du göra? flytta ett eller flera kort från en hög till en annan? Skriv 6");
     }
 
     public void initSortedList() {
@@ -116,6 +123,7 @@ public class Patiens extends CardGame {
         for (PatiensCardDeal cardDeal : cardDealList) {
             if (cardDeal.isHandEmpty()) {
                 isEmptyIndex = true;
+                break;
             }
         }
         return isEmptyIndex;
@@ -169,11 +177,8 @@ public class Patiens extends CardGame {
                     deal.getDeal().add(patiensCardDeck.drawThisCard((PatiensPlayingCard) getFaceUpCardFromDeck())); //TODO kolla casting
 
                 }
-
             }
         }
-
-
     }
 
 
@@ -208,11 +213,13 @@ public class Patiens extends CardGame {
                         for (PlayingCard card : localHost2) {
                             cardDealList[i].getDeal().remove(card);
                         }
-                        cardDealList[i].getDeal().addAll(localHost1);
+                        int local = cardDealList[i].getDeal().size() - 1;
+                        for (int k = 0; k < localHost1.size(); k++) {
+                            cardDealList[i].getDeal().add(local, localHost1.get(0));
+                        }
                     }
                 }
             }
-
         }
     }
 
@@ -232,11 +239,11 @@ public class Patiens extends CardGame {
 
     public ArrayList<PatiensPlayingCard> ifCardsSuitMach(ArrayList<PatiensPlayingCard> listToCheck) {
 
-        if (listToCheck.get(0).isRed(listToCheck.get(0)) && listToCheck.get(1).isBlack(listToCheck.get(1)) ){
+        if (listToCheck.get(0).isRed(listToCheck.get(0)) && listToCheck.get(1).isBlack(listToCheck.get(1))) {
             return listToCheck;
-        }else if (listToCheck.get(0).isBlack(listToCheck.get(0)) && listToCheck.get(1).isRed(listToCheck.get(1))) {
+        } else if (listToCheck.get(0).isBlack(listToCheck.get(0)) && listToCheck.get(1).isRed(listToCheck.get(1))) {
             return listToCheck;
-        }else{
+        } else {
             listToCheck.remove(1);
             listToCheck.remove(0);
         }
@@ -255,28 +262,27 @@ public class Patiens extends CardGame {
                 for (int j = 0; j < local; j++) {
 
                     localSubList.addAll(cardDealList[i].getDeal().subList(j, local - 1));
-                    i = cardDealList.length +2;
+                    i = cardDealList.length + 2;
                     break;
                 }
             }
 
         }
 
-        for (int i = 0; i < cardDealList.length; i++){
-            if (cardDealList[i].getDeal().contains(validList.get(1))){
+        for (int i = 0; i < cardDealList.length; i++) {
+            if (cardDealList[i].getDeal().contains(validList.get(1))) {
                 cardDealList[i].getDeal().addAll(localSubList);
 
-                    validMoveExe = true;
+                validMoveExe = true;
 
             }
         }
+        return validMoveExe;
+    }
 
-    return validMoveExe;
-}
 
-    //TODO Denna metod ska skrivas om med anrop till nya metoder som gör denna metod läslig
     public boolean moveCards() {
-boolean test = false;
+        boolean test = false;
         localFromCheck = listOfCardsToMove(); //JÄmför två listor, passar några ihop?
         localToCheck = whtasUpLIst();
         ArrayList<PatiensPlayingCard> awnserFromCheckValue = new ArrayList<>();
@@ -295,7 +301,8 @@ boolean test = false;
                     }
                 }
             }
-        }return test;
+        }
+        return test;
 
     }
 
@@ -531,13 +538,12 @@ boolean test = false;
 
         initSortedList();
 
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                sortedCardDeal[j] = new PatiensCardDeal();
-                sortedCardDeal[j].drawFromDeck(patiensCardDeck, 0);
-                sortedCardDeal[j].getDeal().add(arrayOfEmptyCards[j]);
-            }
+        for (int j = 0; j < 4; j++) {
+            sortedCardDeal[j] = new PatiensCardDeal();
+            sortedCardDeal[j].drawFromDeck(patiensCardDeck, 0);
+            sortedCardDeal[j].getDeal().add(arrayOfEmptyCards[j]);
         }
+
         whatsLeftCardDeal[0] = new PatiensCardDeal();
         whatsLeftCardDeal[1] = new PatiensCardDeal();
         int localSize = patiensCardDeck.getCurrentDeck().size();
