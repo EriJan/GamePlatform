@@ -349,6 +349,6 @@ public class the21  extends CardGame {
 
 		 add(jp);
 		 validate();
-steg
+
 	 }
 }
