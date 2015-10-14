@@ -2,6 +2,8 @@
 // Uses the enum Suit for the suit of each card
 // implements the Comparable interface and overrides
 // equals, sorted and compareTo for sorting purposes
+//
+// Any card value outside 1-13 will be considered as empty.
 
 // TODO make PlayingCard immutable.
 
@@ -17,31 +19,6 @@ public class PlayingCard implements Comparable<PlayingCard> {
     faceUp = false;
   }
 
-  PlayingCard(Suit suit, String val) {
-    this.suit = suit;
-    this.value = Integer.parseInt(val);
-    faceUp = false;
-  }
-
-  PlayingCard(Suit suit, char val) {
-    this.suit = suit;
-    if (val == 'J') {
-      this.value = 11;
-    } else if (val == 'Q') {
-      this.value = 12;
-    } else if (val == 'K') {
-      this.value = 13;
-    } else if (val == 'A') {
-      this.value = 1;
-    } else if (Character.isDigit(val)) {
-      this.value = Character.getNumericValue(val);
-    } else {
-      this.value = 0;
-      System.out.println(val + " does not seem to be a valid chatacter or vaue.");
-    }
-    faceUp = false;
-  }
-
   boolean isEqSuit(PlayingCard card1, PlayingCard card2) {
     boolean isSame = false;
     if (card1.getSuit() == card2.getSuit()) {
@@ -50,20 +27,13 @@ public class PlayingCard implements Comparable<PlayingCard> {
     return isSame;
   }
 
-    boolean isRed(PlayingCard card){
-      boolean isRed = false;
+  static boolean isRed(PlayingCard card){
+    boolean isRed = false;
       if (card.getSuit() == Suit.Clubs || card.getSuit() == Suit.Hearts) {
         isRed = true;
       }
-      return isRed;
-    }
-
-    /*boolean isRed = false;
-    if (card.getSuit() == Suit.D || card.getSuit() == Suit.Hearts) {
-      isRed = true;
-    }
     return isRed;
-  }*/
+  }
 
   boolean isRed() {
     boolean isRed = false;
@@ -77,13 +47,8 @@ public class PlayingCard implements Comparable<PlayingCard> {
     return !this.isRed();
   }
 
-
-  boolean isBlack(PlayingCard card) {
-    boolean isBlack = false;
-    if (card.getSuit() == Suit.Diamonds || card.getSuit() == Suit.Spades){
-      isBlack = true;
-    }
-    return isBlack;
+  static boolean isBlack(PlayingCard card) {
+    return !isRed(card);
   }
   
   // Fixme: add override for hashVal
@@ -102,17 +67,13 @@ public class PlayingCard implements Comparable<PlayingCard> {
   // To be able to call Collections.sort(collection)
   // on a collection of this object
   // This method is necessary
-  // Fixme: correct sort, value first
-  // Todo: add sort rules w. setter and getter
   @Override
   public int compareTo(PlayingCard card) {
     int compRes;
     if (this.equals(card)) {
       compRes = 0;
-    } else if (this.suit == card.getSuit()) {
-      compRes = this.value - card.getValue();
     } else {
-      compRes = this.suit.value - card.getSuit().value;
+      compRes = this.value - card.getValue();
     }
     return compRes;
   }
@@ -140,6 +101,8 @@ public class PlayingCard implements Comparable<PlayingCard> {
           break;
         }
       valString = suit + valString;
+    } else if ((value < 1 || value > 13) && faceUp) {
+      valString = "  ";
     } else {
       valString = "––";
     }
