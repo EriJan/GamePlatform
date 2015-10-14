@@ -20,6 +20,7 @@ public class PlayingCard implements Comparable<PlayingCard> {
         this.suit = suit;
         this.value = val;
         faceUp = false;
+        setIconAndDescription(suit, val);
     }
 
     PlayingCard(Suit suit, String val) {
