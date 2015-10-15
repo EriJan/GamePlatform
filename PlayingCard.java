@@ -58,10 +58,6 @@ public class PlayingCard implements Comparable<PlayingCard> {
         return !this.isRed();
     }
 
-  static boolean isBlack(PlayingCard card) {
-    return !isRed(card);
-  }
-  
   // Fixme: add override for hashVal
   @Override
   public boolean equals(Object aCard) {
@@ -140,4 +136,6 @@ public class PlayingCard implements Comparable<PlayingCard> {
   public Suit getSuit() {
     return suit;
   }
+
+  public ImageIcon getImage() { return icon;}
 }

@@ -239,9 +239,9 @@ public class Patiens extends CardGame {
 
     public ArrayList<PatiensPlayingCard> ifCardsSuitMach(ArrayList<PatiensPlayingCard> listToCheck) {
 
-        if (listToCheck.get(0).isRed(listToCheck.get(0)) && listToCheck.get(1).isBlack(listToCheck.get(1))) {
+        if (listToCheck.get(0).isRed() && listToCheck.get(1).isBlack()) {
             return listToCheck;
-        } else if (listToCheck.get(0).isBlack(listToCheck.get(0)) && listToCheck.get(1).isRed(listToCheck.get(1))) {
+        } else if (listToCheck.get(0).isBlack() && listToCheck.get(1).isRed()) {
             return listToCheck;
         } else {
             listToCheck.remove(1);

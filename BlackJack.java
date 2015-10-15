@@ -12,7 +12,8 @@ public class BlackJack extends CardGame {
   private GameUserInterface ui;
 
   BlackJack() {
-    ui = new GameTextUi();
+    //ui = new GameTextUi();
+    ui = new GameGraphicUi();
     deck = new DeckHandler();
     deck.newDeck(8);
     positions = new ArrayList<BlackJackHand>();
@@ -56,7 +57,11 @@ public class BlackJack extends CardGame {
     }
 
     for (int i = 1; i <= noPos; i++) {
-      int posOwnerId = ui.userInputInt("Who owns position " + i + " ?")
+      int posOwnerId = 0;
+      do {
+        posOwnerId = ui.userInputInt("Who owns position " + i + " ?");
+        posOwnerId--;
+      } while (posOwnerId < 0 || posOwnerId > noPos);
       positions.add(new BlackJackHand(players.get(posOwnerId)));
     }
     house = new BlackJackHand();
@@ -85,11 +90,11 @@ public class BlackJack extends CardGame {
 
       printScore();
 
-      System.out.print("Hit return to play again.");
-      String inputStr = userInput.nextLine();
+      String inputStr = ui.userInput("Hit return to play again.");
+
       if (!inputStr.isEmpty()) {
         endGame = true;
-        System.out.println("Program end.");
+        ui.gameMessage("Program end.");
       }
     }
     printPlayersToFile();
@@ -101,7 +106,7 @@ public class BlackJack extends CardGame {
     try {
       fileTest.serializeObjectToBinaryFile(players);
     } catch (IOException e) {
-      System.out.println("Something went wrong.");
+      ui.gameMessage("Something went wrong.");
     }
   }
 
@@ -113,10 +118,9 @@ public class BlackJack extends CardGame {
         pos.recieveCard(card);
       }
       PlayingCard card = deck.drawTop();
-      // card.revealCard();
+      card.revealCard();
       house.recieveCard(card);
     }
-    // System.out.println(toString());
   }
 
   public void checkBlackJackAll() {
@@ -141,19 +145,18 @@ public class BlackJack extends CardGame {
   public void resolvePosition(BlackJackHand hand) {
     int posNo = positions.indexOf(hand);
     posNo++;
-    Scanner userInput = new Scanner(System.in);
     boolean moreCards = true;
 
     while (moreCards) {
-      System.out.println("Position " + posNo + " do you want another card (y)?");
-      System.out.println(hand.toString());
-      String inputStr = userInput.nextLine();
+      String inputStr = ui.userInput("Position " + posNo + " do you want another card (y)?");
+
+
       if (inputStr.equals("y")) {
         PlayingCard card = deck.drawTop();
         card.revealCard();
         hand.recieveCard(card);
         if (hand.isBust()) {
-          System.out.println("Sorry, you are bust!");
+          ui.gameMessage("Sorry, you are bust!");
           moreCards = false;
           hand.setIsDone();
           hand.getOwner().setLoss(1);
@@ -162,8 +165,9 @@ public class BlackJack extends CardGame {
         hand.setIsDone();
         moreCards = false;
       }
+      ui.gameMessage(hand.toString());
     }
-    System.out.println(hand.toString());
+
   }
 
   public void resolveHouse() {
@@ -174,7 +178,7 @@ public class BlackJack extends CardGame {
         house.recieveCard(card);
       }
     }
-    System.out.println(house.toString());
+    ui.gameMessage(house.toString());
   }
 
   public void endScore() {
@@ -199,9 +203,9 @@ public class BlackJack extends CardGame {
 
   public void printScore() {
     for (Player pl : players) {
-      System.out.println(pl.toString() + " score:");
-      System.out.println("Wins: " + pl.getWin());
-      System.out.println("Losses: " + pl.getLoss());
+      ui.gameMessage(pl.toString() + " score:");
+      ui.gameMessage("Wins: " + pl.getWin());
+      ui.gameMessage("Losses: " + pl.getLoss());
     }
   }
 
