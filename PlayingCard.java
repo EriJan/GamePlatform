@@ -89,9 +89,10 @@ public class PlayingCard implements Comparable<PlayingCard> {
   public String toString() {
     String valString;
 
-    if (faceUp) {
+    if ((value < 1 || value > 13)) {
+      valString = "  ";
+    } else if (faceUp) {
       switch (value) {
-        
         case 1:
           valString = "A";
           break;
@@ -109,8 +110,6 @@ public class PlayingCard implements Comparable<PlayingCard> {
           break;
         }
       valString = suit + valString;
-    } else if ((value < 1 || value > 13) && faceUp) {
-      valString = "  ";
     } else {
       valString = "––";
     }
