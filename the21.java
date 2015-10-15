@@ -1,16 +1,9 @@
 //package CardGame;
 
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.List;
 
 public class the21  extends CardGame {
 	  DeckHandler deck = new DeckHandler();
@@ -26,7 +19,7 @@ public class the21  extends CardGame {
 
 	  @Override
 	  public void runGame() {
-		  Gui21 g = new Gui21();
+		  //Gui21 g = new Gui21();
 		  PrintWelcome();
 
 		  player1 = getNewPlayer(HelperMethods.inPutFromNextLine());
@@ -159,7 +152,7 @@ public class the21  extends CardGame {
 		SimpleDateFormat sdf;
 		sdf = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss");
 		String stringDate = sdf.format(date);
-		sb.append(score + "  " + name + " on: " + stringDate + ";"); // "\t"
+		sb.append(score + "@" + name + "@" + stringDate + ";"); // "\t"
 		String scoreArray[] = sb.toString().split(";");
 		List<String> scoreList = Arrays.asList(scoreArray);
 
@@ -221,19 +214,32 @@ public class the21  extends CardGame {
 		String data = HelperMethods.readFile("21.txt");
 
 		String scoreArray[] = data.toString().split(";");
+
 		List<String> scoreList = Arrays.asList(scoreArray);
 		//Collections.reverse(scoreList);
 		Collections.sort(scoreList, new Comparator<String>() {
 
 			@Override
 			public int compare(String arg0, String arg1) {
-				return  arg1.compareTo(arg0);
+				return arg1.compareTo(arg0);
 			}
 		});
 
 		String[] scArr = new String[scoreList.size()];
-		scArr = scoreList.toArray(scArr);
-		GuiHighScore gHS = new GuiHighScore(scArr);
+		scArr = scoreList.toArray(scArr);//now it has " in it and is not a 2D array
+		String[][] scArr2D = new String[scoreList.size()][scoreList.size() * 3];
+
+		for (int i = 0; i < scoreList.size(); i++)
+			scArr2D[i] = scArr[i].toString().split("@");
+
+		//for (int i = 0; i < scoreList.size(); i++)
+				//for (int j = 0; j < (scoreList.size()*3); j++)
+				//	scArr2D[i][j] = );
+
+
+		GuiHighScore gHS = new GuiHighScore(scArr2D);
+
+
 		StringBuilder str = new StringBuilder("");
 		str.append("" +
 				"\n" +
@@ -254,7 +260,7 @@ public class the21  extends CardGame {
 	}
 
 	}
-
+/*
  class Gui21 extends JFrame {
 	 JPanel jp = new JPanel();
 	 JButton jbY = new JButton();
@@ -352,3 +358,4 @@ public class the21  extends CardGame {
 
 	 }
 }
+*/
