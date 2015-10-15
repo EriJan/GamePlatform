@@ -3,7 +3,7 @@ import java.util.*;
 /**
  * Created by Ulla on 2015-10-08.
  */
-public class PatiensDeckHandler  {
+public class PatiensDeckHandler  extends DeckHandler{
     static private Set<PatiensPlayingCard> fullDeck;
     private List<PatiensPlayingCard> currentDeck;
     private List<PatiensPlayingCard> dealtCards;
@@ -29,8 +29,8 @@ public class PatiensDeckHandler  {
         return card;
     }
 
-    public List<PatiensPlayingCard> getCurrentDeck(){
-        return currentDeck;
+    public PatiensPlayingCard getCurrentDeck(){
+        return (PatiensPlayingCard) currentDeck;
     }
 
     public int cardsLeft() {

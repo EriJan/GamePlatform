@@ -30,7 +30,7 @@ public class DeckHandler {
     return card;
   }
 
-  public List<PlayingCard> getCurrentDeck(){
+  public PatiensPlayingCard getCurrentDeck(){
     return currentDeck;
   }
 
