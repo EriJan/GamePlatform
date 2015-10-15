@@ -37,6 +37,10 @@ public class CardDeal {
     return retCard;
   }
 
+  public List<PlayingCard> getDeal(){
+    return this.hand;
+  }
+
   public PlayingCard getLastCard(){
     return hand.get(hand.size()-1);
   }

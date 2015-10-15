@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class PatiensCardDeal {
 
-    private List<PatiensPlayingCard> hand;
+    /*private List<PatiensPlayingCard> hand;
 
     PatiensCardDeal() {
         hand = new ArrayList<PatiensPlayingCard>();
@@ -90,6 +90,7 @@ public class PatiensCardDeal {
         }
         return handStr;
     }
+    */
 }
 
 

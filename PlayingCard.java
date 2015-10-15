@@ -43,7 +43,7 @@ public class PlayingCard implements Comparable<PlayingCard> {
     } else {
       localSuit = "s";
     }
-    this.icon = new ImageIcon("C:/Users/Ulla/Documents/GitHub/testCardGame/" + localSuit + i + ".png", localSuit+i);
+    this.icon = new ImageIcon(localSuit + i + ".png", localSuit+i);
   }
   
   boolean isRed() {
@@ -55,7 +55,11 @@ public class PlayingCard implements Comparable<PlayingCard> {
   }
 
     boolean isBlack() {
-        return !this.isRed();
+        boolean isBlack = false;
+        if (this.getSuit()== Suit.Clubs || this.getSuit()==Suit.Spades){
+            isBlack = true;
+        }
+        return isBlack;
     }
 
   // Fixme: add override for hashVal
@@ -84,8 +88,39 @@ public class PlayingCard implements Comparable<PlayingCard> {
     }
     return compRes;
   }
+    @Override
+    public String toString() {
+        String valString;
 
-  @Override
+        if (faceUp) {
+            switch (value) {
+                case 1:
+                    valString = "A";
+                    break;
+                case 11:
+                    valString = "J";
+                    break;
+                case 12:
+                    valString = "Q";
+                    break;
+                case 13:
+                    valString = "K";
+                    break;
+                default:
+                    valString = Integer.toString(value);
+                    break;
+            }
+            valString = suit + valString;
+
+
+        } else if (!faceUp && value != 0){
+            valString = "––";
+        } else {
+            valString = "  ";
+        }
+        return valString;
+    }
+  /*@Override
   public String toString() {
     String valString;
 
@@ -115,7 +150,7 @@ public class PlayingCard implements Comparable<PlayingCard> {
       valString = "––";
     }
     return valString;
-  }
+  }*/
 
   public void revealCard() {
     faceUp = true;

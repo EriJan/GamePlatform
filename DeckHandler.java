@@ -28,10 +28,6 @@ public class DeckHandler {
     return card;
   }
 
-  public PatiensPlayingCard getCurrentDeck(){
-    return currentDeck;
-  }
-
   public int cardsLeft() {
     return currentDeck.size();
   }
