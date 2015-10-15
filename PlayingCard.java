@@ -7,16 +7,21 @@
 
 // TODO make PlayingCard immutable.
 
+import javax.swing.*;
+import java.util.ArrayList;
+
 public class PlayingCard implements Comparable<PlayingCard> {
 
   protected final Suit suit;
   protected final int value;
   protected boolean faceUp;
+  protected ImageIcon icon;
 
   PlayingCard(Suit suit, int val) {
     this.suit = suit;
     this.value = val;
     faceUp = false;
+    setIconAndDescription(suit, val);
   }
 
   boolean isEqSuit(PlayingCard card1, PlayingCard card2) {
@@ -27,14 +32,20 @@ public class PlayingCard implements Comparable<PlayingCard> {
     return isSame;
   }
 
-  static boolean isRed(PlayingCard card){
-    boolean isRed = false;
-      if (card.getSuit() == Suit.Clubs || card.getSuit() == Suit.Hearts) {
-        isRed = true;
-      }
-    return isRed;
+  void setIconAndDescription(Suit suit, int i) {
+    String localSuit;
+    if (suit == Suit.Clubs) {
+      localSuit = "c";
+    } else if (suit == Suit.Diamonds) {
+      localSuit = "d";
+    } else if (suit == Suit.Hearts) {
+      localSuit = "h";
+    } else {
+      localSuit = "s";
+    }
+    this.icon = new ImageIcon("C:/Users/Ulla/Documents/GitHub/testCardGame/" + localSuit + i + ".png", localSuit+i);
   }
-
+  
   boolean isRed() {
     boolean isRed = false;
     if (this.getSuit() == Suit.Diamonds || this.getSuit() == Suit.Hearts) {
@@ -43,9 +54,9 @@ public class PlayingCard implements Comparable<PlayingCard> {
     return isRed;
   }
 
-  boolean isBlack() {
-    return !this.isRed();
-  }
+    boolean isBlack() {
+        return !this.isRed();
+    }
 
   static boolean isBlack(PlayingCard card) {
     return !isRed(card);
@@ -84,6 +95,7 @@ public class PlayingCard implements Comparable<PlayingCard> {
 
     if (faceUp) {
       switch (value) {
+        
         case 1:
           valString = "A";
           break;
