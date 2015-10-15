@@ -61,6 +61,10 @@ public class CardGameSelector implements Runnable {
                 System.out.println("the game 21");
                 theGame = new the21();
                 theGame.runGame();
+            }else if (inputStr.equals("FizzAndBuzz")) {
+                System.out.println("the game FizzAndBuzz");
+                theGame = new FizzAndBuzz();
+                theGame.runGame();
             }
         }
         //System.exit(0);

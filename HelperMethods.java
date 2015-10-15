@@ -1,6 +1,8 @@
 //package CardGame;
 
 import java.io.*;
+import java.util.Locale;
+import java.util.Random;
 import java.util.Scanner;
 
 public class HelperMethods {
@@ -9,6 +11,25 @@ public class HelperMethods {
 		Scanner in = new Scanner(System.in);
 		input = in.nextLine();
 		return input;
+	}
+	private enum OSType {
+		Windows, MacOS, Linux, Other
+	};
+	protected static OSType detectedOS;
+	public static OSType getOperatingSystemType() {
+		if (detectedOS == null) {
+			String OS = System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH);
+			if ((OS.indexOf("mac") >= 0) || (OS.indexOf("darwin") >= 0)) {
+				detectedOS = OSType.MacOS;
+			} else if (OS.indexOf("win") >= 0) {
+				detectedOS = OSType.Windows;
+			} else if (OS.indexOf("nux") >= 0) {
+				detectedOS = OSType.Linux;
+			} else {
+				detectedOS = OSType.Other;
+			}
+		}
+		return detectedOS;
 	}
 
 	public static int inPutFromNextInt() {
@@ -209,6 +230,12 @@ public class HelperMethods {
 				"                         ");
 		return str.toString();
 	}
+
+    public static int getRandomInt(int min , int max) {
+        Random rand = new Random();
+        return ((rand.nextInt((max - 0) + min) + min));
+    }
+
 
 	public static String introtext3() {
 		StringBuilder str = new StringBuilder("");
