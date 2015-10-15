@@ -43,7 +43,7 @@ public class PlayingCard implements Comparable<PlayingCard> {
     } else {
       localSuit = "s";
     }
-    this.icon = new ImageIcon("C:/Users/Ulla/Documents/GitHub/testCardGame/" + localSuit + i + ".png", localSuit+i);
+    this.icon = new ImageIcon("./" + localSuit + i + ".png", localSuit+i);
   }
   
   boolean isRed() {

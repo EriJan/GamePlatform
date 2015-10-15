@@ -21,6 +21,8 @@ public class GameGraphicUi implements GameUserInterface {
 
     // int deckLength = deck.cardsLeft();
 
+
+
     for (int i = 0; i < 5; i++) {
       PlayingCard card = deck.drawTop();
       card.revealCard();
@@ -65,11 +67,11 @@ public class GameGraphicUi implements GameUserInterface {
 
   @Override
   public void gameMessage(String message) {
-    // JOptionPane.showInternalMessageDialog(null, message);
+    /// JOptionPane.showInternalMessageDialog(message);
 
     // JOptionPane.showMessageDialog(null, "alert", "alert", message);
     // JOptionPane.showMessageDialog("Eggs are not supposed to be green.");
 
-    System.out.println(message);
+    //System.out.println(message);
   }
 }
