@@ -1,12 +1,31 @@
 //package CardGame;
 
 import java.io.*;
+import java.net.*;
 import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 
 public class HelperMethods {
-	public static String inPutFromNextLine() {
+
+  public static boolean fileExists(String URLName){
+    try {
+      HttpURLConnection.setFollowRedirects(false);
+      // note : you may also need
+      //        HttpURLConnection.setInstanceFollowRedirects(false)
+      HttpURLConnection con =
+              (HttpURLConnection) new URL(URLName).openConnection();
+      con.setRequestMethod("HEAD");
+      return (con.getResponseCode() == HttpURLConnection.HTTP_OK);
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
+
+
+  public static String inPutFromNextLine() {
 		String input= null;
 		Scanner in = new Scanner(System.in);
 		input = in.nextLine();
@@ -56,7 +75,7 @@ public class HelperMethods {
 				System.out.print(character);  // skriver varje char (i introText)
 
 				if ( character != ' ' ){ //om det inte vara var ett mellanslag!
-					Thread.sleep(50);  // vÃ¤nta lite tills nÃ¤sta.. (skapar en trÃ¥d och vÃ¤ntar liiite)
+					Thread.sleep(5);  // vÃ¤nta lite tills nÃ¤sta.. (skapar en trÃ¥d och vÃ¤ntar liiite)
 				}//annars vÃ¤ntar vi inte...
 			}
 
@@ -143,7 +162,30 @@ public class HelperMethods {
 		return menyElements[(Integer.parseInt(choice)-1)];
 	}
 
-	public static String readFile(String filename)  {
+  public static int choseFromMenyInt(String... menyElements) {
+
+    StringBuilder sb = new StringBuilder(
+            "*********** Chose ***********\n");
+    for(int i = 0; i< menyElements.length; i++){
+      sb.append(" "
+              + (i+1) + " : " + menyElements[i] + "\n");
+    }
+    sb.append("*****************************\n");
+    printSlowly(sb.toString());
+    String choice;
+    do{
+      System.out.print("chose a number(1 to " + menyElements.length + ") :");
+      choice = inPutFromNextLine();
+      if(choice.isEmpty()|| !choice.matches("[0-9]+")) {
+        choice = "-1";
+
+      }
+    }while ( (Integer.parseInt(choice)<0) || (((Integer.parseInt(choice))) > (menyElements.length)) );
+
+    return Integer.parseInt(choice)-1;
+  }
+
+  public static String readFile(String filename)  {
 /*		File file = new File(filename);
 		int len = (int) file.length();
 		byte[] bytes = new byte[len];

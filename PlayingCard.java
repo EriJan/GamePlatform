@@ -43,7 +43,12 @@ public class PlayingCard implements Comparable<PlayingCard> {
     } else {
       localSuit = "s";
     }
-    this.icon = new ImageIcon("./" + localSuit + i + ".png", localSuit+i);
+    // String url = "http://github.com/EriJan/GamePlatform/blob/EriJan-devel/" + localSuit + i + ".png";
+    //if (HelperMethods.fileExists(url)) {
+    String path = "/Users/Janne/JavaProj/IntelliJ/GamePlatform/"  + localSuit + i + ".png";
+    this.icon = new ImageIcon(path, localSuit + i);
+      //System.out.println(url + "exists!");
+    //}
   }
   
   boolean isRed() {
