@@ -5,35 +5,9 @@ import java.awt.*;
 /**
  * Created by Janne on 15/10/15.
  */
-public class GameGraphicUi implements GameUserInterface {
+public abstract class GameGraphicUi implements GameUserInterface {
 
-  JFrame jframe;
-
-  public GameGraphicUi() {
-    jframe = new JFrame("The Game");
-
-    jframe.setLayout(new GridLayout(4,13));
-    jframe.getContentPane().setBackground(Color.lightGray);
-
-    DeckHandler deck = new DeckHandler();
-    deck.newDeck();
-    deck.sortDeck();
-    int noCards = deck.cardsLeft();
-
-     for (int i = 0; i < noCards; i++) {
-      PlayingCard card = deck.drawTop();
-      card.revealCard();
-      JLabel label = new JLabel(card.getImage());
-      //label.setPreferredSize(new Dimension(400,400));
-      label.setBorder(new EtchedBorder());
-      jframe.getContentPane().add(label);
-    }
-    jframe.pack();
-    jframe.setVisible(true);
-    jframe.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-
-  }
+  protected JFrame jframe;
 
   @Override
   public void welcomeMessage(String message) {
@@ -61,13 +35,15 @@ public class GameGraphicUi implements GameUserInterface {
         gameMessage("Något har blivit fel. Tänk på att svara genom att skriva en siffra.");
       }
     }
-
     return returnInt;
   }
 
   @Override
   public boolean userInputBool(String queryString, String cond) {
-    return false;
+    int ans = JOptionPane.showConfirmDialog(jframe, queryString, "Game Query",
+            JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+    boolean retAns = (ans == 0) ? false : true;
+    return retAns;
   }
 
   @Override
@@ -76,16 +52,12 @@ public class GameGraphicUi implements GameUserInterface {
   }
 
   @Override
-  public void displayGameState(CardGame game) {
-
-
-    System.out.println(game.toString());
-  }
+  public abstract void displayGameState(CardGame game);
 
   @Override
   public void gameMessage(String message) {
-
-    JOptionPane.showMessageDialog(jframe,message);
+    JOptionPane.showMessageDialog(jframe, message, "Game Message",
+            JOptionPane.PLAIN_MESSAGE);
 
   }
 }

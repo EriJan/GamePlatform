@@ -87,7 +87,13 @@ public class Patiens extends CardGame {
             }
         }
     }
-    public void printMenu() {
+
+  @Override
+  public void setUi() {
+
+  }
+
+  public void printMenu() {
         System.out.print("\n");
         System.out.println("1. Vill du lägga upp alla de möjliga korten på respektive hög? Skriv 1");
         System.out.println("2. Vill du vända upp ett nytt kort? skriv 2");

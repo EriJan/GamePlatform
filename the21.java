@@ -102,7 +102,12 @@ public class the21  extends CardGame {
 		  printScoreboard21file(toString());
 	  }
 
-	private void printPlayerXresult(String x) {
+  @Override
+  public void setUi() {
+
+  }
+
+  private void printPlayerXresult(String x) {
 		System.out.println(x);
 	}
 

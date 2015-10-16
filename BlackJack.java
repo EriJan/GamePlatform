@@ -5,16 +5,15 @@ import java.io.IOException;
 
 
 public class BlackJack extends CardGame {
-  DeckHandler deck;
-
+  private DeckHandler deck;
   private ArrayList<BlackJackHand> positions;
   private ArrayList<Player> players;
   private BlackJackHand house;
   private GameUserInterface ui;
 
   BlackJack() {
-    ui = new GameTextUi();
-    // ui = new GameGraphicUi();
+    // ui = new GameTextUi();
+    ui = new BlackJackGraphicUi();
     deck = new DeckHandler();
     deck.newDeck(8);
     positions = new ArrayList<BlackJackHand>();
@@ -95,6 +94,11 @@ public class BlackJack extends CardGame {
       }
     }
     printPlayersToFile();
+  }
+
+  @Override
+  public void setUi() {
+
   }
 
   public void printPlayersToFile() {

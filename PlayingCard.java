@@ -43,13 +43,9 @@ public class PlayingCard implements Comparable<PlayingCard> {
     } else {
       localSuit = "s";
     }
-    // String url = "http://github.com/EriJan/GamePlatform/blob/EriJan-devel/" + localSuit + i + ".png";
-    //if (HelperMethods.fileExists(url)) {
-    String iconRoot = "/Users/Janne/JavaProj/IntelliJ/GamePlatform/cardicons";
+    String iconRoot = "/Users/Janne/JavaProj/IntelliJ/GamePlatform/cardicons/";
     String iconPath =  iconRoot + localSuit + i + ".png";
     this.icon = new ImageIcon(iconPath, localSuit + i);
-      //System.out.println(url + "exists!");
-    //}
   }
   
   boolean isRed() {
@@ -126,37 +122,6 @@ public class PlayingCard implements Comparable<PlayingCard> {
         }
         return valString;
     }
-  /*@Override
-  public String toString() {
-    String valString;
-
-    if (faceUp) {
-      switch (value) {
-        
-        case 1:
-          valString = "A";
-          break;
-        case 11:
-          valString = "J";
-          break;
-        case 12:
-          valString = "Q";
-          break;
-        case 13:
-          valString = "K";
-          break;
-        default:
-          valString = Integer.toString(value);
-          break;
-        }
-      valString = suit + valString;
-    } else if ((value < 1 || value > 13) && faceUp) {
-      valString = "  ";
-    } else {
-      valString = "––";
-    }
-    return valString;
-  }*/
 
   public void revealCard() {
     faceUp = true;
