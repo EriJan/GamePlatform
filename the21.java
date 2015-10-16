@@ -19,6 +19,7 @@ public class the21  extends CardGame {
 
 	  @Override
 	  public void runGame() {
+		  //Gui21 g = new Gui21();
 		  PrintWelcome();
 
 		  player1 = getNewPlayer(HelperMethods.inPutFromNextLine());
@@ -151,7 +152,7 @@ public class the21  extends CardGame {
 		SimpleDateFormat sdf;
 		sdf = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss");
 		String stringDate = sdf.format(date);
-		sb.append(score + "  " + name + " on: " + stringDate + ";"); // "\t"
+		sb.append(score + "@" + name + "@" + stringDate + ";"); // "\t"
 		String scoreArray[] = sb.toString().split(";");
 		List<String> scoreList = Arrays.asList(scoreArray);
 
@@ -213,19 +214,32 @@ public class the21  extends CardGame {
 		String data = HelperMethods.readFile("21.txt");
 
 		String scoreArray[] = data.toString().split(";");
+
 		List<String> scoreList = Arrays.asList(scoreArray);
 		//Collections.reverse(scoreList);
 		Collections.sort(scoreList, new Comparator<String>() {
 
 			@Override
 			public int compare(String arg0, String arg1) {
-				return  arg1.compareTo(arg0);
+				return arg1.compareTo(arg0);
 			}
 		});
 
 		String[] scArr = new String[scoreList.size()];
-		scArr = scoreList.toArray(scArr);
-		GuiHighScore gHS = new GuiHighScore(scArr);
+		scArr = scoreList.toArray(scArr);//now it has " in it and is not a 2D array
+		String[][] scArr2D = new String[scoreList.size()][scoreList.size() * 3];
+
+		for (int i = 0; i < scoreList.size(); i++)
+			scArr2D[i] = scArr[i].toString().split("@");
+
+		//for (int i = 0; i < scoreList.size(); i++)
+				//for (int j = 0; j < (scoreList.size()*3); j++)
+				//	scArr2D[i][j] = );
+
+
+		GuiHighScore gHS = new GuiHighScore(scArr2D);
+
+
 		StringBuilder str = new StringBuilder("");
 		str.append("" +
 				"\n" +
@@ -246,3 +260,102 @@ public class the21  extends CardGame {
 	}
 
 	}
+/*
+ class Gui21 extends JFrame {
+	 JPanel jp = new JPanel();
+	 JButton jbY = new JButton();
+	 JButton jbN = new JButton();
+	 JLabel label;
+	 JLabel[] jLPlayerDrown1;
+	 JLabel[] jLPlayerDrown2;
+	 JLabel jLPlayer1Result;
+	 JLabel jLPlayer2Result;
+
+	 public Gui21() {
+		 setTitle("TheGame21");
+		 setVisible(true);
+		 setSize(310, 290);
+		 //setDefaultCloseOperation(EXIT_ON_CLOSE);
+		 jp.setBackground(Color.GREEN);
+		 Box boxP2 = Box.createVerticalBox();
+		 Box boxP1 = Box.createVerticalBox();
+		 Box boxP1Button = Box.createVerticalBox();
+		 add(boxP2);
+		 add(boxP1);
+		 add(boxP1Button);
+
+		 label = new JLabel("Get new card: ");
+		 Font f = label.getFont();
+		 label.setFont(f.deriveFont(f.getStyle() | Font.ITALIC));
+		 boxP1Button.add(label);
+		 jbY.addActionListener(new ActionListener() { //en inner class för detta..
+			 @Override
+			 public void actionPerformed(ActionEvent e) {
+				 System.out.println("klick Y");
+
+			 }
+		 });
+		 jbN.addActionListener(new ActionListener() { //en inner class för detta..
+			 @Override
+			 public void actionPerformed(ActionEvent e) {
+				 System.out.println("klick N");
+
+			 }
+		 });
+		 boxP1Button.add(jbN);
+		 boxP1Button.add(jbY);
+
+		 jLPlayerDrown2 = new JLabel[3];
+		 for (int i = 0 ; i<jLPlayerDrown2.length ; i++){
+			 jLPlayerDrown2[i] = new JLabel("kort"+i);
+			 final int ClickPointer = i; //MYCKET VIKTIG!
+
+			 jLPlayerDrown2[i].addMouseListener(new MouseAdapter() {
+				 private boolean isMarked;
+
+				 @Override
+				 public void mouseClicked(MouseEvent diceClickID) {
+					 //onMouseClicked(ClickID);
+
+					 //isMarked = optionsMaker(ClickPointer, isMarked);
+					 System.out.println("klick kort" + ClickPointer);
+
+				 }
+
+			 });
+			 //bselects[i].setBounds(20, 55+(i*(48+10)), 48, 48);
+
+			 //jp.add(bselects[i], BorderLayout.SOUTH);
+			 boxP2.add(jLPlayerDrown2[i]);
+		 }
+
+		 jLPlayerDrown1 = new JLabel[3];
+		 for (int i = 0 ; i<jLPlayerDrown1.length ; i++){
+			 jLPlayerDrown1[i] = new JLabel("kort"+i);
+			 final int ClickPointer = i; //MYCKET VIKTIG!
+
+			 jLPlayerDrown1[i].addMouseListener(new MouseAdapter() {
+				 private boolean isMarked;
+
+				 @Override
+				 public void mouseClicked(MouseEvent diceClickID) {
+					 //onMouseClicked(ClickID);
+
+					 //isMarked = optionsMaker(ClickPointer, isMarked);
+					 System.out.println("klick kort" + ClickPointer);
+
+				 }
+
+			 });
+			 //bselects[i].setBounds(20, 55+(i*(48+10)), 48, 48);
+
+			 //jp.add(bselects[i], BorderLayout.SOUTH);
+			 boxP1.add(jLPlayerDrown1[i]);
+		 }
+
+		 add(jp);
+		 validate();
+
+	 }
+}
+*/
