@@ -3,8 +3,8 @@ import java.util.List;
 /**
  * Created by Ulla on 2015-10-05.
  */
-public class PatiensPlayingCard extends PlayingCard {
-
+//public class PatiensPlayingCard extends PlayingCard {
+/*
     PatiensPlayingCard(Suit suit, int val) {
         super(suit, val);
 
@@ -42,4 +42,4 @@ public class PatiensPlayingCard extends PlayingCard {
         }
         return valString;
     }
-}
+}*/
