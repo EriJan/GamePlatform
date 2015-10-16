@@ -15,12 +15,18 @@ public class PlayingCard implements Comparable<PlayingCard> {
   protected final Suit suit;
   protected final int value;
   protected boolean faceUp;
+    protected boolean isRed;
   protected ImageIcon icon;
 
   PlayingCard(Suit suit, int val) {
     this.suit = suit;
     this.value = val;
     faceUp = false;
+      if (suit == Suit.Spades || suit == Suit.Clubs){
+          this.isRed = false;
+      }else if (suit == Suit.Hearts || suit == Suit.Diamonds){
+          this.isRed = true;
+      }
     setIconAndDescription(suit, val);
   }
 
@@ -48,7 +54,7 @@ public class PlayingCard implements Comparable<PlayingCard> {
   
   boolean isRed() {
     boolean isRed = false;
-    if (this.getSuit() == Suit.Diamonds || this.getSuit() == Suit.Hearts) {
+    if (this.isRed) {
       isRed = true;
     }
     return isRed;
@@ -56,7 +62,7 @@ public class PlayingCard implements Comparable<PlayingCard> {
 
     boolean isBlack() {
         boolean isBlack = false;
-        if (this.getSuit()== Suit.Clubs || this.getSuit()==Suit.Spades){
+        if (!this.isRed){
             isBlack = true;
         }
         return isBlack;

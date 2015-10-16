@@ -17,9 +17,9 @@ public enum Suit {
     public String toString() {
       char suitRepCh;
       if (this == Clubs) {
-        suitRepCh = '\u2666';
+        suitRepCh = '\u2663'; //TODO byt plats s? att representationerna st?mmer '\u2666'
       } else if (this == Diamonds) {
-        suitRepCh = '\u2663';
+        suitRepCh = '\u2666';
       } else if (this == Hearts) {
         suitRepCh = '\u2665';
       } else if (this == Spades) {
