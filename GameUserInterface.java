@@ -6,7 +6,7 @@ public interface GameUserInterface {
   public String userInput(String queryString);
   public int userInputInt(String queryString);
   public boolean userInputBool(String queryString, String cond);
-  public int userInputFromMenu(String... menuElements);
+  public int userInputFromMenu(String queryString, String... menuElements);
   public void displayGameState(CardGame game);
   public void gameMessage(String message);
 }

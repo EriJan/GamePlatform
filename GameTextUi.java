@@ -34,8 +34,10 @@ public class GameTextUi implements GameUserInterface {
     return condMet;
   }
 
+
   @Override
-  public int userInputFromMenu(String... menuElements) {
+  public int userInputFromMenu(String queryString, String... menuElements) {
+    gameMessage(queryString);
     return HelperMethods.choseFromMenyInt(menuElements);
   }
 

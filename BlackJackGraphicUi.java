@@ -29,13 +29,13 @@ public class BlackJackGraphicUi extends GameGraphicUi {
       jframe.getContentPane().add(label);
     }
     jframe.pack();
-    jframe.setVisible(true);
+    jframe.setVisible(false);
     jframe.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
   }
   @Override
   public void displayGameState(CardGame game) {
-    System.out.println(game.toString());
+    gameMessage(game.toString());
   }
 }

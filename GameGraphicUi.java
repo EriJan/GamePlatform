@@ -11,8 +11,17 @@ public abstract class GameGraphicUi implements GameUserInterface {
 
   @Override
   public void welcomeMessage(String message) {
-    HelperMethods.printSlowly(message,10);
+    HelperMethods.printSlowly(message, 10);
   }
+
+
+  @Override
+  public void gameMessage(String message) {
+    JOptionPane.showMessageDialog(jframe, message, "Game Message",
+            JOptionPane.PLAIN_MESSAGE);
+
+  }
+
 
   @Override
   public String userInput(String queryString) {
@@ -42,22 +51,26 @@ public abstract class GameGraphicUi implements GameUserInterface {
   public boolean userInputBool(String queryString, String cond) {
     int ans = JOptionPane.showConfirmDialog(jframe, queryString, "Game Query",
             JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
-    boolean retAns = (ans == 0) ? false : true;
+    boolean retAns = (ans == 0) ? true : false;
     return retAns;
   }
 
   @Override
-  public int userInputFromMenu(String... menuElements) {
-    return HelperMethods.choseFromMenyInt(menuElements);
+  public int userInputFromMenu(String queryString, String... menuElements) {
+    String retStr = (String) JOptionPane.showInputDialog(jframe,
+            queryString, "Choose from menu", JOptionPane.PLAIN_MESSAGE,
+            null, menuElements, menuElements[0]);
+    int menuItemNo = 0;
+    int i = 0;
+    for (String str : menuElements) {
+      if (retStr.equals(str)) {
+        menuItemNo = i;
+      }
+      i++;
+    }
+    return menuItemNo;
   }
 
   @Override
   public abstract void displayGameState(CardGame game);
-
-  @Override
-  public void gameMessage(String message) {
-    JOptionPane.showMessageDialog(jframe, message, "Game Message",
-            JOptionPane.PLAIN_MESSAGE);
-
-  }
 }
