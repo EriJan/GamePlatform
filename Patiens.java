@@ -51,8 +51,10 @@ public class Patiens extends CardGame {
             paddingSet(longestList);
             printDeal();
             dePaddingSet();
+            printMenu();
+            int input = HelperMethods.inPutFromNextInt();
 
-            int input = PatiensGUI.printMenue();
+            //int input = PatiensGUI.printMenue();
 
             switch (input) {
                 case 1:
@@ -82,10 +84,26 @@ public class Patiens extends CardGame {
                     break;
 
             }
-            if (ischangesVar) {
+            if (ischangesVar) { //TODO denna variable stämmer inte riktigt
                 openClosedCards();
             }
         }
+    }
+    public void printMenu() {
+        String one = "1. Vill du lägga upp alla de möjliga korten på respektive hög? Skriv 1 \n";
+        String two = "2. Vill du vända upp ett nytt kort? skriv 2 \n";
+        String three = "3. Vill du att de högar som kan läggas på varandra ska göra just det? Skriv 3 \n";
+        String four = "4. Vill du lägga det upplagda kortet på en av högarna? Skriv 4\n";
+        String five = "5. Vill du lägga en kung på en ledig plats? Skriv 5\n";
+        String six = "6. Vill du vända på högen? Skriv 6\n";
+
+       System.out.print("\n");
+        System.out.print(one);
+        System.out.print(two);
+        System.out.print(three);
+        System.out.print(four);
+        System.out.print(five);
+        System.out.print(six);
     }
 
     public String printMenuPatiens() {
@@ -364,8 +382,8 @@ public class Patiens extends CardGame {
 
     public boolean moveCards() {
         boolean test = false;
-        localFromCheck = listOfCardsToMove(); //JÄmför två listor, passar några ihop?
-        localToCheck = whtasUpLIst();
+        localToCheck = listOfCardsToMove(); //JÄmför två listor, passar några ihop?
+        localFromCheck = whtasUpLIst();
         ArrayList<PlayingCard> awnserFromCheckValue = new ArrayList<>();
         ArrayList<PlayingCard> awnserFromCheckSuit = new ArrayList<>();
 
@@ -380,7 +398,7 @@ public class Patiens extends CardGame {
                         test = true;
                         return test;
                     } else {
-                        break; //TODO Tror detta är ett brak som måste upp ett hack
+                        continue;
                     }
                 } else if (awnserFromCheckValue.isEmpty()) {
                     test = false;
@@ -397,15 +415,15 @@ public class Patiens extends CardGame {
         ArrayList<PlayingCard> localList = new ArrayList<PlayingCard>();
         for (int i = 0; i < cardDealList.length; i++) {
             if (cardDealList[i].isHandEmpty()) {
-                break;
+                continue;
             } else {
                 int position = firstCardFaceUpPosition(i);
                 localList.add((PlayingCard) cardDealList[i].getDeal().get(position));
             }
-            int localInt = whatsLeftCardDeal[0].getDeal().size() - 1;
-            localList.add(whatsLeftCardDeal[0].getCard(localInt));//TODO kanske lägga detta kort överst i listan?
 
-        }return localList;
+
+        }//localList.add(whatsLeftCardDeal[1].getCard(0));
+        return localList;
     }
 
     //metod som kollar det översta kortet som är uppvänt i en lista
@@ -486,13 +504,17 @@ public class Patiens extends CardGame {
     public ArrayList<PlayingCard> whtasUpLIst() {
         ArrayList<PlayingCard> localList = new ArrayList<>();
         for (int i = 0; i < cardDealList.length; i++) {
+            if (cardDealList[i].isHandEmpty()){
+                continue;
+            }else {
             for (int j = cardDealList[i].getHandSize() - 1; j >= 0; j--) {
                 localList.add(cardDealList[i].getDeal().get(j));
+            }
 
                 break;
 
             }
-        }
+        }localList.add(whatsLeftCardDeal[1].getCard(0));
         return localList;
     }
 
@@ -576,7 +598,7 @@ public class Patiens extends CardGame {
             }
         }
         System.out.print("\n");
-        openClosedCards();
+        openClosedCards(); //TODO Denna metod borde inte anropas här
 
 
         /*for (int i = 0; i < cardDealList.length; i++) { //TODO Detta moment kan vara onödigt eftersedan jag lagt till metod som öppnar kort
