@@ -79,6 +79,7 @@ public class BlackJack extends CardGame {
         for (BlackJackHand pos : positions) {
           if (!pos.isDone()) {
             resolvePosition(pos);
+            ui.displayGameState(this);
           }
         }
         resolveHouse();
@@ -164,7 +165,7 @@ public class BlackJack extends CardGame {
         moreCards = false;
       }
      }
-    ui.gameMessage("Position " + posNo + " final hand: " + hand.toString());
+    //ui.gameMessage("Position " + posNo + " final hand: " + hand.toString());
   }
 
   public void resolveHouse() {
