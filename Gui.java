@@ -23,7 +23,7 @@ public class Gui extends JFrame {
 public Gui(String... Options){
     setTitle("TheGame");
     setVisible(true);
-    setSize(110,290);
+    setSize(210,290);
     setDefaultCloseOperation(EXIT_ON_CLOSE);
     ImageIcon icon = new ImageIcon(("C:\\location\\logo1.png"));
     setIconImage(icon.getImage());
