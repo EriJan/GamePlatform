@@ -1,6 +1,4 @@
 import javax.swing.*;
-import javax.swing.border.EtchedBorder;
-import java.awt.*;
 
 /**
  * Created by Janne on 15/10/15.
@@ -71,6 +69,11 @@ public abstract class GameGraphicUi implements GameUserInterface {
     return menuItemNo;
   }
 
+
+
   @Override
   public abstract void displayGameState(CardGame game);
+
+
+
 }

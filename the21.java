@@ -10,8 +10,10 @@ public class the21  extends CardGame {
 	  Player player1,player2;
 	  the21Hands[] playersHands  ;
 	private String sel;
+	private GameUserInterface ui;
 
 	  the21() {
+          ui = new the21GraphicUi();
 		  deck.newDeck();
 		  deck.shuffleDeck();
 		  player2 = new Player("PC");
@@ -21,8 +23,9 @@ public class the21  extends CardGame {
 	  public void runGame() {
 		  //Gui21 g = new Gui21();
 		  PrintWelcome();
+//int noPos = ui.userInputInt("Playername?");
 
-		  player1 = getNewPlayer(HelperMethods.inPutFromNextLine());
+		  player1 = getNewPlayer(ui.userInput("Type your name"));
 		  //player1 = new Player(HelperMethods.inPutFromNextLine());
 		   int [] DrowCard = new int[] {0,0,0};
 		  int [] DrowCard2 = new int[] {0,0,0};
@@ -41,12 +44,20 @@ public class the21  extends CardGame {
 		  while(!endLoopForP1){
 			  sel ="";
 			  DrowCard[i] = getValueDrownCard(i);
-			  printPlayersNameAndCard(i);
-			  printTotallyOnPlayersHandDrown("totally: " + playersHands[0].getHandValue(DrowCard));
+              String m = String.format("%s, Your cards :\n%s" +
+                      "%n totally: %s%n" +
+                      " > Add one more?", player1.getName(), playersHands[0].hand.get(i).toString(),playersHands[0].getHandValue(DrowCard));
+			 // printPlayersNameAndCard(i);
+			 // printTotallyOnPlayersHandDrown("totally: " + playersHands[0].getHandValue(DrowCard));
+
 
 			  if(playersHands[0].isCardToTake(DrowCard) && !playersHands[0].isTjock(DrowCard)){
-				  DoYouWantANewCardReveald("vill du ha ett till ? (J/N): ");
-				  sel = newCardAnswer();//onskades flera kort?
+				  //DoYouWantANewCardReveald("vill du ha ett till ? (J/N): ");
+                  endLoopForP1 = !ui.userInputBool(m,"Y/N");
+				  //sel = newCardAnswer();//onskades flera kort?
+                  if(endLoopForP1){
+                      sel="N";
+                  }
 				}
 			  	if(!playersHands[0].isCardToTake(DrowCard) || playersHands[0].isTjock(DrowCard) || sel.equalsIgnoreCase("N")){
 				  endLoopForP1 = true;
@@ -56,15 +67,21 @@ public class the21  extends CardGame {
 		  
 		  if(!playersHands[0].isTjock(DrowCard)){
 
-			  printPlayerName("Now it is %s: s turn %n", player2.getName());
+              String m = String.format("Now it is %s: s turn %n", player2.getName());
+              //ui.gameMessage(m);
+              ui.userInputBool(m,"Y/N");
 			  sel = "J";
 			   i = 0;
 				while(playersHands[1].isCardToTake(DrowCard2) && !playersHands[1].isTjock(DrowCard2) && !sel.equalsIgnoreCase("N") && !playersHands[1].isTjock(DrowCard2)){
 
 					DrowCard2[i] = playersHands[1].hand.get(i).getValue();
-					HelperMethods.printSlowly(String.format("%s, (Dealers cards) :%s\n", player2.getName(), playersHands[1].hand.get(i).toString()));
+					//HelperMethods.printSlowly(String.format("%s, (Dealers cards) :%s\n", player2.getName(), playersHands[1].hand.get(i).toString()));
+                   // ui.gameMessage(
+                            ui.userInputBool(String.format("%s, (Dealers cards) :%s%n" +
+                            " Totally: %s ", player2.getName(), playersHands[1].hand.get(i).toString(),playersHands[1].getHandValue(DrowCard2)),"OK/OK");
 
-					printTotallyOnPlayersHandDrown(" totally: " + playersHands[1].getHandValue(DrowCard2));
+
+                    //printTotallyOnPlayersHandDrown(" totally: " + playersHands[1].getHandValue(DrowCard2));
 					
 					if(playersHands[1].getHandValue(DrowCard2)<=14 || (playersHands[1].getHandValue(DrowCard2) < playersHands[0].getHandValue(DrowCard2)) ){
 						sel = "J";
@@ -82,24 +99,31 @@ public class the21  extends CardGame {
 				HelperMethods.printSlowly(String.format("Result is: %n"));
 			  printPlayerXresult(player1.getName() + " : " + playersHands[0].getHandValue(DrowCard));
 			  printPlayerXresult(player2.getName() + " : " + playersHands[1].getHandValue(DrowCard2));
-		  }
-		  if ( (playersHands[0].isTjock(DrowCard))
+              }
+          StringBuilder r = new StringBuilder(String.format("%s : %s %n %s : %s %n",player1.getName(),playersHands[0].getHandValue(DrowCard),player2.getName(), playersHands[1].getHandValue(DrowCard2)) );
+
+          if ( (playersHands[0].isTjock(DrowCard))
 					|| ((playersHands[0].getHandValue(DrowCard) < playersHands[1].getHandValue(DrowCard2))  && !playersHands[1].isTjock(DrowCard2)) ) {
-			  printPlayerName("%s vann!! ", player2.getName());
+
+              r.append(String.format("%s vann!! ", player2.getName()));
+			  //printPlayerName("%s vann!! ", player2.getName());
 
 		  }else if ( (playersHands[1].getHandValue(DrowCard2) < playersHands[0].getHandValue(DrowCard) ) || playersHands[1].isTjock(DrowCard2) ) {
-			  printPlayerName("%s vann!! ", player1.getName());
+			  //printPlayerName("%s vann!! ", player1.getName());
+              r.append(String.format("%s vann!! ", player1.getName()));
 			  addToScoreFile(player1.getName(),playersHands[0].getHandValue(DrowCard));
 
 
 			}
 			else if ( (playersHands[1].getHandValue(DrowCard2) == playersHands[0].getHandValue(DrowCard) ) && ! playersHands[0].isTjock(DrowCard) ) {
 				//System.out.format("OAVGJORT!! ");
-			  printPlayerName("%s vann!! \n", player2.getName());
+			  //printPlayerName("%s vann!! \n", player2.getName());
+              r.append(String.format("%s vann!! ", player2.getName()));
 		  }
+          ui.userInputBool(r.toString(), "ok/ok");
 
 		  //printScoreboard21();
-		  printScoreboard21file(toString());
+          printScoreboard21file(toString());
 	  }
 
   @Override
@@ -132,7 +156,9 @@ public class the21  extends CardGame {
 	}
 
 	private void printPlayersNameAndCard(int i) {
-		System.out.format("%s, Your cards :\n%s", player1.getName(), playersHands[0].hand.get(i).toString());
+       // ui.userInputBool("");
+        //String.format("%s, Your cards :\n%s", player1.getName(), playersHands[0].hand.get(i).toString()));
+		//System.out.format("%s, Your cards :\n%s", player1.getName(), playersHands[0].hand.get(i).toString());
 	}
 
 	private int getValueDrownCard(int i) {
@@ -146,7 +172,7 @@ public class the21  extends CardGame {
 	private void PrintWelcome() {
 		HelperMethods.printSlowly("\t\t* The  Game 21 *\n");
 		HelperMethods.printSlowly("* * * * * * * * * * * * * * * * * * *\n");
-		HelperMethods.printSlowly(" Player enter your name : ");
+		//HelperMethods.printSlowly(" Player enter your name : ");
 	}
 
 	private void addToScoreFile(String name, int score) {
