@@ -25,7 +25,7 @@ public class the21  extends CardGame {
 		  PrintWelcome();
 //int noPos = ui.userInputInt("Playername?");
 
-		  player1 = getNewPlayer(ui.userInput("Type your name"));
+		  player1 = getUserInputForName(); //MVC
 		  //player1 = new Player(HelperMethods.inPutFromNextLine());
 		   int [] DrowCard = new int[] {0,0,0};
 		  int [] DrowCard2 = new int[] {0,0,0};
@@ -53,7 +53,9 @@ public class the21  extends CardGame {
 
 			  if(playersHands[0].isCardToTake(DrowCard) && !playersHands[0].isTjock(DrowCard)){
 				  //DoYouWantANewCardReveald("vill du ha ett till ? (J/N): ");
-                  endLoopForP1 = !ui.userInputBool(m,"Y/N");
+
+                  endLoopForP1 = !getUserInputForNewCard(m); //MVC
+
 				  //sel = newCardAnswer();//onskades flera kort?
                   if(endLoopForP1){
                       sel="N";
@@ -69,7 +71,7 @@ public class the21  extends CardGame {
 
               String m = String.format("Now it is %s: s turn %n", player2.getName());
               //ui.gameMessage(m);
-              ui.userInputBool(m,"Y/N");
+              informUserInfoFromPCsTurn(m); //MVC
 			  sel = "J";
 			   i = 0;
 				while(playersHands[1].isCardToTake(DrowCard2) && !playersHands[1].isTjock(DrowCard2) && !sel.equalsIgnoreCase("N") && !playersHands[1].isTjock(DrowCard2)){
@@ -77,8 +79,8 @@ public class the21  extends CardGame {
 					DrowCard2[i] = playersHands[1].hand.get(i).getValue();
 					//HelperMethods.printSlowly(String.format("%s, (Dealers cards) :%s\n", player2.getName(), playersHands[1].hand.get(i).toString()));
                    // ui.gameMessage(
-                            ui.userInputBool(String.format("%s, (Dealers cards) :%s%n" +
-                            " Totally: %s ", player2.getName(), playersHands[1].hand.get(i).toString(),playersHands[1].getHandValue(DrowCard2)),"OK/OK");
+                    informUserInfoFromPCsTurn(String.format("%s, (Dealers cards) :%s%n" +
+                            " Totally: %s ", player2.getName(), playersHands[1].hand.get(i).toString(),playersHands[1].getHandValue(DrowCard2)));
 
 
                     //printTotallyOnPlayersHandDrown(" totally: " + playersHands[1].getHandValue(DrowCard2));
@@ -120,13 +122,25 @@ public class the21  extends CardGame {
 			  //printPlayerName("%s vann!! \n", player2.getName());
               r.append(String.format("%s vann!! ", player2.getName()));
 		  }
-          ui.userInputBool(r.toString(), "ok/ok");
+          informUserInfoFromPCsTurn(r.toString());
 
 		  //printScoreboard21();
           printScoreboard21file(toString());
 	  }
 
-  @Override
+    private void informUserInfoFromPCsTurn(String m) {
+        ui.userInputBool(m,"Y/N");
+    }
+
+    private boolean getUserInputForNewCard(String m) {
+        return ui.userInputBool(m,"Y/N");
+    }
+
+    private Player getUserInputForName() {
+        return getNewPlayer(ui.userInput("Type your name"));
+    }
+
+    @Override
   public void setUi(GameGraphicUi ui) {
 
   }
