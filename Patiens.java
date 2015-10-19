@@ -33,6 +33,7 @@ public class Patiens extends CardGame {
     ArrayList<PlayingCard> localFromCheck = new ArrayList<>();
     ArrayList<PlayingCard> localToCheck = new ArrayList<>();
     boolean ischangesVar;
+    int longestList;
 
 
     @Override
@@ -46,7 +47,7 @@ public class Patiens extends CardGame {
         setDeckOnField();
         while (gameIsRunning) {
 
-            int longestList = lengthOfList();
+            longestList = lengthOfList();
             openClosedCards();
             paddingSet(longestList);
             printDeal();
@@ -89,6 +90,7 @@ public class Patiens extends CardGame {
             }
         }
     }
+
     public void printMenu() {
         String one = "1. Vill du lägga upp alla de möjliga korten på respektive hög? Skriv 1 \n";
         String two = "2. Vill du vända upp ett nytt kort? skriv 2 \n";
@@ -97,7 +99,7 @@ public class Patiens extends CardGame {
         String five = "5. Vill du lägga en kung på en ledig plats? Skriv 5\n";
         String six = "6. Vill du vända på högen? Skriv 6\n";
 
-       System.out.print("\n");
+        System.out.print("\n");
         System.out.print(one);
         System.out.print(two);
         System.out.print(three);
@@ -134,7 +136,7 @@ public class Patiens extends CardGame {
 
     public boolean putOpenCardFromWhatsLeft() {
 
-        boolean isChange = putInSortedList(whatsLeftCardDeal[0].getDeal().get(0));
+        boolean isChange = putInSortedList(whatsLeftCardDeal[1].getDeal().get(0));
         return isChange;
     }
 
@@ -279,10 +281,10 @@ public class Patiens extends CardGame {
         }
     }
 
-    public ArrayList<PlayingCard> ifCardsValueMach(PlayingCard p, PlayingCard q) {
+    public ArrayList<PlayingCard> ifCardsValueMach() {
         ArrayList<PlayingCard> localList = new ArrayList<>();
         for (PlayingCard cardFrom : localFromCheck) {
-            for (PlayingCard cardTo : localFromCheck) {
+            for (PlayingCard cardTo : localToCheck) {
                 if (cardFrom.getValue() + 1 == cardTo.getValue()) {
                     localList.add(cardFrom);
                     localList.add(cardTo);
@@ -316,7 +318,7 @@ public class Patiens extends CardGame {
         PlayingCard local1 = validList.get(1);
         PlayingCard local2 = validList.get(0);
         if (local1.getValue() - 1 == local2.getValue()) {
-            if (whatsLeftCardDeal[0].getDeal().contains((local2))) {
+            if (whatsLeftCardDeal[1].getDeal().contains((local2))) {
                 localSubList.add(local2);
                 whatsLeftCardDeal[0].getDeal().remove(local2);
             } else {
@@ -382,29 +384,22 @@ public class Patiens extends CardGame {
 
     public boolean moveCards() {
         boolean test = false;
-        localToCheck = listOfCardsToMove(); //JÄmför två listor, passar några ihop?
-        localFromCheck = whtasUpLIst();
+        localFromCheck = listOfCardsToMove(); //JÄmför två listor, passar några ihop?
+        localToCheck = whtasUpLIst();
         ArrayList<PlayingCard> awnserFromCheckValue = new ArrayList<>();
         ArrayList<PlayingCard> awnserFromCheckSuit = new ArrayList<>();
 
-
-        for (int i = 0; i < localFromCheck.size(); i++) {
-            for (int j = 0; j < localToCheck.size(); j++) {
-                awnserFromCheckValue.addAll(ifCardsValueMach(localFromCheck.get(i), localToCheck.get(j)));//TODO i vilken ordning?
-                if (!awnserFromCheckValue.isEmpty()) {
-                    awnserFromCheckSuit.addAll(ifCardsSuitMach(awnserFromCheckValue));
-                    if (!awnserFromCheckSuit.isEmpty()) {
-                        addOneToAnother(awnserFromCheckSuit);
-                        test = true;
-                        return test;
-                    } else {
-                        continue;
-                    }
-                } else if (awnserFromCheckValue.isEmpty()) {
-                    test = false;
-                    return test;
-                }
+        awnserFromCheckValue.addAll(ifCardsValueMach());
+        if (!awnserFromCheckValue.isEmpty()) {
+            awnserFromCheckSuit.addAll(ifCardsSuitMach(awnserFromCheckValue));
+            if (!awnserFromCheckSuit.isEmpty()) {
+                addOneToAnother(awnserFromCheckSuit);
+                test = true;
+                return test;
             }
+        } else if (awnserFromCheckValue.isEmpty()) {
+            test = false;
+            return test;
         }
         return test;
 
@@ -422,7 +417,8 @@ public class Patiens extends CardGame {
             }
 
 
-        }//localList.add(whatsLeftCardDeal[1].getCard(0));
+        }
+        localList.add(whatsLeftCardDeal[1].getCard(0));
         return localList;
     }
 
@@ -460,10 +456,10 @@ public class Patiens extends CardGame {
         for (int i = 0; i < cardDealList.length; i++) {
             int test = cardDealList[i].getDeal().size();
             if (check < test) {
-                check = test +1;
+                check = test;
             }
         }
-        return check;
+        return check + 1;
     }
 
 
@@ -504,17 +500,14 @@ public class Patiens extends CardGame {
     public ArrayList<PlayingCard> whtasUpLIst() {
         ArrayList<PlayingCard> localList = new ArrayList<>();
         for (int i = 0; i < cardDealList.length; i++) {
-            if (cardDealList[i].isHandEmpty()){
+            if (cardDealList[i].isHandEmpty()) {
                 continue;
-            }else {
-            for (int j = cardDealList[i].getHandSize() - 1; j >= 0; j--) {
-                localList.add(cardDealList[i].getDeal().get(j));
+            } else {
+                int local = cardDealList[i].getHandSize();
+                localList.add(cardDealList[i].getDeal().get(local - 1));
             }
 
-                break;
-
-            }
-        }localList.add(whatsLeftCardDeal[1].getCard(0));
+        }
         return localList;
     }
 
@@ -610,7 +603,7 @@ public class Patiens extends CardGame {
             }*/
 
 
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < longestList; i++) {
             System.out.print(cardDealList[0].getDeal().get(i) + "   ");
             System.out.print(cardDealList[1].getDeal().get(i) + "   ");
             System.out.print(cardDealList[2].getDeal().get(i) + "   ");
