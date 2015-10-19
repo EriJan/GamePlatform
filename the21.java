@@ -103,7 +103,7 @@ public class the21  extends CardGame {
 	  }
 
   @Override
-  public void setUi() {
+  public void setUi(GameGraphicUi ui) {
 
   }
 

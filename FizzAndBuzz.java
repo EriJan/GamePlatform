@@ -61,7 +61,7 @@ public class FizzAndBuzz extends CardGame {
     }
 
   @Override
-  public void setUi() {
+  public void setUi(GameGraphicUi ui) {
 
   }
 

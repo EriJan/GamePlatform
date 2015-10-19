@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import java.io.IOException;
 
@@ -96,7 +97,7 @@ public class BlackJack extends CardGame {
   }
 
   @Override
-  public void setUi() {
+  public void setUi(GameGraphicUi ui) {
 
   }
 
@@ -211,6 +212,13 @@ public class BlackJack extends CardGame {
     ui.gameMessage(scoreStr);
   }
 
+  public BlackJackHand getHouse () {
+    return house;
+  }
+
+  public ArrayList<BlackJackHand> getPositions() {
+    return positions;
+  }
 
   @Override
   public String toString() {

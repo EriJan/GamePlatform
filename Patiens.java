@@ -89,7 +89,7 @@ public class Patiens extends CardGame {
     }
 
   @Override
-  public void setUi() {
+  public void setUi(GameGraphicUi ui) {
 
   }
 
