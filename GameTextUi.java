@@ -20,8 +20,25 @@ public class GameTextUi implements GameUserInterface {
   }
 
   @Override
-  public String userInputFromMenu(String... menuElements) {
-    return HelperMethods.choseFromMenyNew(menuElements);
+  public boolean userInputBool(String queryString, String cond) {
+    System.out.println(queryString);
+    String replyStr = HelperMethods.inPutFromNextLine();
+    char condChar = Character.toLowerCase(cond.charAt(0));
+    char replyChar = Character.toLowerCase(replyStr.charAt(0));
+    boolean condMet;
+    if (replyChar == condChar) {
+      condMet = true;
+    } else {
+      condMet = false;
+    }
+    return condMet;
+  }
+
+
+  @Override
+  public int userInputFromMenu(String queryString, String... menuElements) {
+    gameMessage(queryString);
+    return HelperMethods.choseFromMenyInt(menuElements);
   }
 
   @Override

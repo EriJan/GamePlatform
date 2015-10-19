@@ -60,7 +60,12 @@ public class FizzAndBuzz extends CardGame {
 
     }
 
-    public String RealAnswer(int tal){
+  @Override
+  public void setUi(GameGraphicUi ui) {
+
+  }
+
+  public String RealAnswer(int tal){
         if(tal % 3 == 0) {
             return "Fizz";
         } else

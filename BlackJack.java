@@ -1,19 +1,20 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import java.io.IOException;
 
 
 public class BlackJack extends CardGame {
-  DeckHandler deck;
-
+  private DeckHandler deck;
   private ArrayList<BlackJackHand> positions;
   private ArrayList<Player> players;
   private BlackJackHand house;
   private GameUserInterface ui;
 
   BlackJack() {
-    //ui = new GameTextUi();
-    ui = new GameGraphicUi();
+    // ui = new GameTextUi();
+    ui = new BlackJackGraphicUi();
     deck = new DeckHandler();
     deck.newDeck(8);
     positions = new ArrayList<BlackJackHand>();
@@ -23,20 +24,18 @@ public class BlackJack extends CardGame {
   // Todo: add possibilty to select players from file
   public void newGame() {
     ui.welcomeMessage("\n***Lets play Black Jack***\n");
-    int noPos = ui.userInputInt("How many postions at the table?");
+    int noPos = ui.userInputInt("How many postions at the table? (1-8)");
     if (noPos < 1 || noPos > 8) {
       noPos = 8;
     }
-    ui.gameMessage("There will be " + noPos + " at the table." );
+    // ui.gameMessage("There will be " + noPos + " positions at the table." );
 
-    Scanner userInput = new Scanner(System.in);
-    String usrInputStr;
-
-    ui.gameMessage("Who are the players at the table?");
+    // String usrInputStr;
+    // ui.gameMessage("Who are the players at the table? (return to end)");
     int playerCounter = 1;
     boolean morePlayers = true;
     while (morePlayers) {
-      usrInputStr = ui.userInput("What are the name of player " + playerCounter + " ?");
+      String usrInputStr = ui.userInput("What is the name of player " + playerCounter + " ?");
 
       if ( usrInputStr.isEmpty()) {
         if (playerCounter > 1) {
@@ -49,19 +48,18 @@ public class BlackJack extends CardGame {
         playerCounter++;
       }
     }
-    ui.gameMessage("Available players.");
-    playerCounter = 1;
-    for (Player pl : players) {
-      ui.gameMessage(playerCounter + " : " + pl);
-      playerCounter++;
+
+    String[] playerArr = new String[players.size()];
+
+    for (int i = 0; i < players.size(); i++) {
+      playerArr[i] = players.get(i).getName();
     }
 
     for (int i = 1; i <= noPos; i++) {
       int posOwnerId = 0;
-      do {
-        posOwnerId = ui.userInputInt("Who owns position " + i + " ?");
-        posOwnerId--;
-      } while (posOwnerId < 0 || posOwnerId > noPos);
+      // ui.gameMessage("Who owns position " + i + " ?");
+      posOwnerId = ui.userInputFromMenu("Who owns position " + i + " ?",
+              playerArr);
       positions.add(new BlackJackHand(players.get(posOwnerId)));
     }
     house = new BlackJackHand();
@@ -71,12 +69,12 @@ public class BlackJack extends CardGame {
   @Override
   public void runGame() {
     boolean endGame = false;
-    Scanner userInput = new Scanner(System.in);
 
     while (!endGame) {
       newGame();
       initialDeal();
       checkBlackJackAll();
+      ui.displayGameState(this);
       if (!house.isDone()) {
         for (BlackJackHand pos : positions) {
           if (!pos.isDone()) {
@@ -85,19 +83,22 @@ public class BlackJack extends CardGame {
         }
         resolveHouse();
       }
-
+      ui.displayGameState(this);
       endScore();
 
       printScore();
 
-      String inputStr = ui.userInput("Hit return to play again.");
-
-      if (!inputStr.isEmpty()) {
+      if (!ui.userInputBool("Play again? (Yes/no)", "Yes")) {
         endGame = true;
         ui.gameMessage("Program end.");
       }
     }
     printPlayersToFile();
+  }
+
+  @Override
+  public void setUi(GameGraphicUi ui) {
+
   }
 
   public void printPlayersToFile() {
@@ -139,7 +140,6 @@ public class BlackJack extends CardGame {
       ui.gameMessage("House gets Blackjack " + counter);
       house.setIsDone();
     }
-    System.out.println(toString());
   }
 
   public void resolvePosition(BlackJackHand hand) {
@@ -148,10 +148,8 @@ public class BlackJack extends CardGame {
     boolean moreCards = true;
 
     while (moreCards) {
-      String inputStr = ui.userInput("Position " + posNo + " do you want another card (y)?");
-
-
-      if (inputStr.equals("y")) {
+      if (ui.userInputBool("Position " + posNo +
+              " do you want another card (Yes/No)? " + hand.toString(),"Yes")) {
         PlayingCard card = deck.drawTop();
         card.revealCard();
         hand.recieveCard(card);
@@ -165,9 +163,8 @@ public class BlackJack extends CardGame {
         hand.setIsDone();
         moreCards = false;
       }
-      ui.gameMessage(hand.toString());
-    }
-
+     }
+    ui.gameMessage("Position " + posNo + " final hand: " + hand.toString());
   }
 
   public void resolveHouse() {
@@ -178,7 +175,7 @@ public class BlackJack extends CardGame {
         house.recieveCard(card);
       }
     }
-    ui.gameMessage(house.toString());
+    ui.gameMessage("House ends with " + house.toString());
   }
 
   public void endScore() {
@@ -202,11 +199,25 @@ public class BlackJack extends CardGame {
   }
 
   public void printScore() {
+    String scoreStr = "";
     for (Player pl : players) {
-      ui.gameMessage(pl.toString() + " score:");
-      ui.gameMessage("Wins: " + pl.getWin());
-      ui.gameMessage("Losses: " + pl.getLoss());
+      scoreStr += pl.toString() + " score:";
+      scoreStr += "Wins: " + pl.getWin();
+      scoreStr += " Losses: " + pl.getLoss() + "\n";
+
+      // ui.gameMessage(pl.toString() + " score:");
+      // ui.gameMessage("Wins: " + pl.getWin());
+      // ui.gameMessage("Losses: " + pl.getLoss());
     }
+    ui.gameMessage(scoreStr);
+  }
+
+  public BlackJackHand getHouse () {
+    return house;
+  }
+
+  public ArrayList<BlackJackHand> getPositions() {
+    return positions;
   }
 
   @Override

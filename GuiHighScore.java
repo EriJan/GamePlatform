@@ -14,14 +14,16 @@ import java.awt.*;
 public class GuiHighScore extends JFrame {
     JPanel jp = new JPanel();
     JLabel[] highScores;
+    JTable jT;
 
 
-public GuiHighScore(String... ScoreInArray){
+public GuiHighScore(String[]... ScoreInArray){
     setTitle("TheGame - HighScore");
     setVisible(true);
-    setSize(210,290);
+    setSize(500,250);
     //setDefaultCloseOperation(EXIT_ON_CLOSE);
     setBackground(Color.white);
+
 
 //    getContentPane().setBackground( Color.white );
     //jb.setIcon(new ImageIcon("/images/logo1.png"));
@@ -66,6 +68,8 @@ public GuiHighScore(String... ScoreInArray){
     //add(label, BorderLayout.NORTH);
     //jp.setLayout(null);
 
+
+    /*region Description
     highScores = new JLabel[ScoreInArray.length];
     for (int i = 0 ; i<ScoreInArray.length ; i++){
         highScores[i] = new JLabel(ScoreInArray[i]);
@@ -73,8 +77,20 @@ public GuiHighScore(String... ScoreInArray){
         box.add(highScores[i], BorderLayout.SOUTH);
         //jp.add(bselects[i]);
     }
+    */
 
-    jp.add(box);
+    String[] name = {"Score", "Name", "Date"};
+    Object[][] cells= ScoreInArray;
+
+    jT = new JTable(cells, name);
+    //jT.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+    //box.add(jT);
+    //jp.add(box);
+    //jp.add(jT);
+    Container c = getContentPane();
+    c.setLayout(new FlowLayout());
+    c.add(box);
+    c.add(new JScrollPane(jT), BorderLayout.CENTER);
 
     add(jp);
 

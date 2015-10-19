@@ -5,71 +5,72 @@ import java.awt.*;
 /**
  * Created by Janne on 15/10/15.
  */
-public class GameGraphicUi implements GameUserInterface {
+public abstract class GameGraphicUi implements GameUserInterface {
 
-  JFrame jframe;
-
-  public GameGraphicUi() {
-    jframe = new JFrame("The Game");
-
-    jframe.setLayout(new GridLayout(2,5));
-    jframe.getContentPane().setBackground(Color.lightGray);
-
-    DeckHandler deck = new DeckHandler();
-    deck.newDeck();
-    deck.sortDeck();
-
-    // int deckLength = deck.cardsLeft();
-
-    for (int i = 0; i < 5; i++) {
-      PlayingCard card = deck.drawTop();
-      card.revealCard();
-      JLabel label = new JLabel(card.toString(), JLabel.CENTER);
-      label.setPreferredSize(new Dimension(100,100));
-      label.setBorder(new EtchedBorder());
-      jframe.getContentPane().add(label);
-    }
-    jframe.pack();
-    jframe.setVisible(true);
-    jframe.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-
-  }
+  protected JFrame jframe;
 
   @Override
   public void welcomeMessage(String message) {
-    HelperMethods.printSlowly(message,10);
+    HelperMethods.printSlowly(message, 10);
   }
+
+
+  @Override
+  public void gameMessage(String message) {
+    JOptionPane.showMessageDialog(jframe, message, "Game Message",
+            JOptionPane.PLAIN_MESSAGE);
+
+  }
+
 
   @Override
   public String userInput(String queryString) {
-    System.out.println(queryString);
-    return HelperMethods.inPutFromNextLine();
+    String retStr = (String) JOptionPane.showInputDialog(queryString);
+    return retStr;
   }
 
   @Override
   public int userInputInt(String queryString) {
-    System.out.println(queryString);
-    return HelperMethods.inPutFromNextInt();
+    boolean isDigit = false;
+    int returnInt = 0;
+
+    while (!isDigit) {
+      String retStr = (String) JOptionPane.showInputDialog(queryString);
+      char check = retStr.charAt(0);
+      if (Character.isDigit(check)) {
+        returnInt = Integer.parseInt(retStr);
+        isDigit = true;
+      } else {
+        gameMessage("Något har blivit fel. Tänk på att svara genom att skriva en siffra.");
+      }
+    }
+    return returnInt;
   }
 
   @Override
-  public String userInputFromMenu(String... menuElements) {
-    return HelperMethods.choseFromMenyNew(menuElements);
+  public boolean userInputBool(String queryString, String cond) {
+    int ans = JOptionPane.showConfirmDialog(jframe, queryString, "Game Query",
+            JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+    boolean retAns = (ans == 0) ? true : false;
+    return retAns;
   }
 
   @Override
-  public void displayGameState(CardGame game) {
-    System.out.println(game.toString());
+  public int userInputFromMenu(String queryString, String... menuElements) {
+    String retStr = (String) JOptionPane.showInputDialog(jframe,
+            queryString, "Choose from menu", JOptionPane.PLAIN_MESSAGE,
+            null, menuElements, menuElements[0]);
+    int menuItemNo = 0;
+    int i = 0;
+    for (String str : menuElements) {
+      if (retStr.equals(str)) {
+        menuItemNo = i;
+      }
+      i++;
+    }
+    return menuItemNo;
   }
 
   @Override
-  public void gameMessage(String message) {
-    // JOptionPane.showInternalMessageDialog(null, message);
-
-    // JOptionPane.showMessageDialog(null, "alert", "alert", message);
-    // JOptionPane.showMessageDialog("Eggs are not supposed to be green.");
-
-    System.out.println(message);
-  }
+  public abstract void displayGameState(CardGame game);
 }
