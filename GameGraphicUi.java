@@ -26,6 +26,7 @@ public abstract class GameGraphicUi implements GameUserInterface {
   @Override
   public String userInput(String queryString) {
     String retStr = (String) JOptionPane.showInputDialog(queryString);
+    retStr = (retStr == null) ? "" : retStr;
     return retStr;
   }
 
@@ -36,10 +37,15 @@ public abstract class GameGraphicUi implements GameUserInterface {
 
     while (!isDigit) {
       String retStr = (String) JOptionPane.showInputDialog(queryString);
-      char check = retStr.charAt(0);
-      if (Character.isDigit(check)) {
-        returnInt = Integer.parseInt(retStr);
-        isDigit = true;
+      retStr = (retStr == null) ? "" : retStr;
+      if (!retStr.isEmpty()) {
+        char check = retStr.charAt(0);
+        if (Character.isDigit(check)) {
+          returnInt = Integer.parseInt(retStr);
+          isDigit = true;
+        } else {
+          gameMessage("Något har blivit fel. Tänk på att svara genom att skriva en siffra.");
+        }
       } else {
         gameMessage("Något har blivit fel. Tänk på att svara genom att skriva en siffra.");
       }
@@ -60,6 +66,7 @@ public abstract class GameGraphicUi implements GameUserInterface {
     String retStr = (String) JOptionPane.showInputDialog(jframe,
             queryString, "Choose from menu", JOptionPane.PLAIN_MESSAGE,
             null, menuElements, menuElements[0]);
+    retStr = (retStr == null) ? "" : retStr;
     int menuItemNo = 0;
     int i = 0;
     for (String str : menuElements) {
