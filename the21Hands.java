@@ -1,3 +1,6 @@
+/**
+ * Created by Niklas on 19/10/15.
+ */
 public class the21Hands extends CardDeal {
 	private int summa;
 

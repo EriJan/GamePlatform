@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * Created by Niklas on 19/10/15.
+ */
+
 public class the21  extends CardGame {
 	  DeckHandler deck = new DeckHandler();
 	  Player player1,player2;

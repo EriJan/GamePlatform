@@ -5,10 +5,15 @@ import java.net.*;
 import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
-
+/**
+ * Created by Niklas on 19/10/15.
+ *
+ */
 public class HelperMethods {
 
-  public static boolean fileExists(String URLName){
+	public static final String ERROR_TRY_AGAIN = "Något har blivit fel. Tänk på att svara genom att skriva en siffra.";
+
+	public static boolean fileExists(String URLName){
     try {
       HttpURLConnection.setFollowRedirects(false);
       // note : you may also need
@@ -24,7 +29,10 @@ public class HelperMethods {
     }
   }
 
-
+	/**
+	 * get string from input (scanner nextline)
+	 *
+	 */
   public static String inPutFromNextLine() {
 		String input= null;
 		Scanner in = new Scanner(System.in);
@@ -35,6 +43,11 @@ public class HelperMethods {
 		Windows, MacOS, Linux, Other
 	};
 	protected static OSType detectedOS;
+	/**
+	 * return OS :
+	 * Windows, MacOS, Linux, Other
+	 *good for path if used..
+	 */
 	public static OSType getOperatingSystemType() {
 		if (detectedOS == null) {
 			String OS = System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH);
@@ -50,7 +63,10 @@ public class HelperMethods {
 		}
 		return detectedOS;
 	}
-
+	/**
+	 * get int from input (scanner nextline)
+	 *
+	 */
 	public static int inPutFromNextInt() {
 		String input= null;
 		char check;
@@ -63,12 +79,15 @@ public class HelperMethods {
 				returnInt = Integer.parseInt(input);
 				break;
 			} else {
-				System.out.println("Något har blivit fel. Tänk på att svara genom att skriva en siffra.");
+				System.out.println(ERROR_TRY_AGAIN);
 			}
 		}
 		return returnInt;
 	}
-
+	/**
+	 * print slowly a System.out.print, fixed delay
+	 *
+	 */
 	public static void printSlowly(String text) {//skriver ut texter lÃ¥ngsamt ut en string..
 		try {
 			for (char character : text.toCharArray()) {
@@ -85,7 +104,10 @@ public class HelperMethods {
 
 
 	}
-
+	/**
+	 * print slowly a System.out.print, and adjusting mSecond
+	 *
+	 */
 	public static void printSlowly(String text, int mSecondsDelay) {//skriver ut texter lÃ¥ngsamt ut en string..
 		try {
 			for (char character : text.toCharArray()) {
@@ -184,7 +206,10 @@ public class HelperMethods {
 
     return Integer.parseInt(choice)-1;
   }
-
+	/**
+	 * read filename, if not exist return " "
+	 *
+	 */
   public static String readFile(String filename)  {
 /*		File file = new File(filename);
 		int len = (int) file.length();
@@ -225,7 +250,10 @@ public class HelperMethods {
 		return conent.toString();
 
 	}
-
+	/**
+	 * write to filename
+	 *
+	 */
 	public static void writeFile(String filename, String text) throws IOException {
 		FileOutputStream fos = null;
 		try {
@@ -243,6 +271,10 @@ public class HelperMethods {
 		} catch(IOException ignored) {
 		}
 	}
+	/**
+	 * print nice logo eNug
+	 *
+	 */
 	public static String introtext() {
 		StringBuilder str = new StringBuilder("");
 		str.append("" +
