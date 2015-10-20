@@ -1,6 +1,7 @@
 //package CardGame;
 
 
+import javax.swing.*;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -33,6 +34,8 @@ public class the21  extends CardGame {
 		  //player1 = new Player(HelperMethods.inPutFromNextLine());
 		   int [] DrowCard = new int[] {0,0,0};
 		  int [] DrowCard2 = new int[] {0,0,0};
+		  ImageIcon[] DrowCardImg = new ImageIcon[] {new ImageIcon(),new ImageIcon(),new ImageIcon()};
+		  ImageIcon [] DrowCard2Img = new ImageIcon[] {new ImageIcon(),new ImageIcon(),new ImageIcon()};
 		  playersHands = new the21Hands[2];
 		  for (int i = 0; i< playersHands.length ; i++ ){
 			  playersHands[i] = new the21Hands();
@@ -48,6 +51,7 @@ public class the21  extends CardGame {
 		  while(!endLoopForP1){
 			  sel ="";
 			  DrowCard[i] = getValueDrownCard(i);
+			  DrowCardImg[i] = getValueDrownCardImg(i);
               String m = String.format("%s, Your cards :\n%s" +
                       "%n totally: %s%n" +
                       " > Add one more?", player1.getName(), playersHands[0].hand.get(i).toString(),playersHands[0].getHandValue(DrowCard));
@@ -58,7 +62,7 @@ public class the21  extends CardGame {
 			  if(playersHands[0].isCardToTake(DrowCard) && !playersHands[0].isTjock(DrowCard)){
 				  //DoYouWantANewCardReveald("vill du ha ett till ? (J/N): ");
 
-                  endLoopForP1 = !getUserInputForNewCard(m); //MVC
+                  endLoopForP1 = !getUserInputForNewCard(m,DrowCardImg[i]); //MVC
 
 				  //sel = newCardAnswer();//onskades flera kort?
                   if(endLoopForP1){
@@ -75,16 +79,17 @@ public class the21  extends CardGame {
 
               String m = String.format("Now it is %s: s turn %n", player2.getName());
               //ui.gameMessage(m);
-              informUserInfoFromPCsTurn(m); //MVC
+              informUserInfoFromPCsTurn(m, DrowCard2Img[i]); //MVC
 			  sel = "J";
 			   i = 0;
 				while(playersHands[1].isCardToTake(DrowCard2) && !playersHands[1].isTjock(DrowCard2) && !sel.equalsIgnoreCase("N") && !playersHands[1].isTjock(DrowCard2)){
 
 					DrowCard2[i] = playersHands[1].hand.get(i).getValue();
+					DrowCard2Img[i] = playersHands[1].hand.get(i).getImage();
 					//HelperMethods.printSlowly(String.format("%s, (Dealers cards) :%s\n", player2.getName(), playersHands[1].hand.get(i).toString()));
                    // ui.gameMessage(
                     informUserInfoFromPCsTurn(String.format("%s, (Dealers cards) :%s%n" +
-                            " Totally: %s ", player2.getName(), playersHands[1].hand.get(i).toString(),playersHands[1].getHandValue(DrowCard2)));
+                            " Totally: %s ", player2.getName(), playersHands[1].hand.get(i).toString(),playersHands[1].getHandValue(DrowCard2)), DrowCard2Img[i]);
 
 
                     //printTotallyOnPlayersHandDrown(" totally: " + playersHands[1].getHandValue(DrowCard2));
@@ -126,17 +131,18 @@ public class the21  extends CardGame {
 			  //printPlayerName("%s vann!! \n", player2.getName());
               r.append(String.format("%s vann!! ", player2.getName()));
 		  }
-          informUserInfoFromPCsTurn(r.toString());
+          informUserInfoFromPCsTurn(r.toString(), DrowCard2Img[i]);
 
 		  //printScoreboard21();
           printScoreboard21file(toString());
 	  }
 
-    private void informUserInfoFromPCsTurn(String m) {
+	private void informUserInfoFromPCsTurn(String m, ImageIcon imageIcon) {
         ui.gameMessage(m);
+
     }
 
-    private boolean getUserInputForNewCard(String m) {
+    private boolean getUserInputForNewCard(String m, ImageIcon imageIcon) {
         return ui.userInputBool(m,"Y/N");
     }
 
@@ -181,6 +187,10 @@ public class the21  extends CardGame {
 
 	private int getValueDrownCard(int i) {
 		return playersHands[0].hand.get(i).getValue();
+	}
+
+	private ImageIcon getValueDrownCardImg(int i) {
+		return playersHands[0].hand.get(i).getImage();
 	}
 
 	private Player getNewPlayer(String name) {

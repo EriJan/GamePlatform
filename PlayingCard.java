@@ -8,7 +8,6 @@
 // TODO make PlayingCard immutable.
 
 import javax.swing.*;
-import java.util.ArrayList;
 
 public class PlayingCard implements Comparable<PlayingCard> {
 
@@ -33,19 +32,18 @@ public class PlayingCard implements Comparable<PlayingCard> {
   }
 
   void setIconAndDescription(Suit suit, int i) {
-    String localSuit;
+    String stringSuit;
     if (suit == Suit.Clubs) {
-      localSuit = "c";
+      stringSuit = "c";
     } else if (suit == Suit.Diamonds) {
-      localSuit = "d";
+      stringSuit = "d";
     } else if (suit == Suit.Hearts) {
-      localSuit = "h";
+      stringSuit = "h";
     } else {
-      localSuit = "s";
+      stringSuit = "s";
     }
-    String iconRoot = "/Users/Janne/JavaProj/IntelliJ/GamePlatform/cardicons/";
-    String iconPath =  iconRoot + localSuit + i + ".png";
-    this.icon = new ImageIcon(iconPath, localSuit + i);
+
+      this.icon = new ImageIcon(this.getClass().getResource("cardicons/" + stringSuit + i + ".png"), stringSuit + i);
   }
   
   boolean isRed() {
