@@ -37,8 +37,8 @@ public Gui(String... Options){
     //correct way:
     //jb.setIcon(new ImageIcon(this.getClass().getResource("logo1.png")));
     //wrong way, "Test":
-   jb.setIcon(new ImageIcon("C:\\location\\logo1.png")); //is under " C:\location\"
-  //jb.setIcon(new ImageIcon("/Users/Janne/JavaProj/src/logo/location/logo1.png")); //is under " C:\location\"
+   //jb.setIcon(new ImageIcon("C:\\location\\logo1.png")); //is under " C:\location\"
+   jb.setIcon(new ImageIcon("/Users/Janne/JavaProj/src/logo/location/logo1.png")); //is under " C:\location\"
     //logo1.png to logo6.png..
 
 

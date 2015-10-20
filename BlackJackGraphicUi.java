@@ -16,6 +16,15 @@ public class BlackJackGraphicUi extends GameGraphicUi {
     jframe.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
   }
 
+  /**
+   * Basicly a way to display several card deals with the use of
+   * SpringLayout. If the same side of the cards are used as reference,
+   * west in this case, you can model overlapping cards.
+   * display order is last added on top. Seems a bit messy to fix the display
+   * order, but anot really necessary anyway.
+   * TODO make better names for i and j
+   * @param game
+   */
   @Override
   public void displayGameState(CardGame game) {
     jframe.getContentPane().removeAll();

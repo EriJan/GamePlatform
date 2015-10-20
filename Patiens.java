@@ -36,7 +36,13 @@ public class Patiens extends CardGame {
     int longestList;
 
 
-    @Override
+  @Override
+  public void setUi(GameGraphicUi ui) {
+
+  }
+
+
+  @Override
     public void runGame() {
 
 

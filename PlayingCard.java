@@ -15,8 +15,10 @@ public class PlayingCard implements Comparable<PlayingCard> {
   protected final Suit suit;
   protected final int value;
   protected boolean faceUp;
-    protected boolean isRed;
+  protected boolean isRed;
   protected ImageIcon icon;
+  protected static final ImageIcon backside = new ImageIcon(
+          "/Users/Janne/JavaProj/IntelliJ/GamePlatform/cardicons/b2fv.png");
 
   PlayingCard(Suit suit, int val) {
     this.suit = suit;
@@ -52,6 +54,7 @@ public class PlayingCard implements Comparable<PlayingCard> {
     String iconRoot = "/Users/Janne/JavaProj/IntelliJ/GamePlatform/cardicons/";
     String iconPath =  iconRoot + localSuit + i + ".png";
     this.icon = new ImageIcon(iconPath, localSuit + i);
+
   }
   
   boolean isRed() {
