@@ -25,38 +25,38 @@ public class DeckHandler {
 
   public PlayingCard drawThisCard(PlayingCard card) {
     currentDeck.remove(card);
-    return card;
-  }
+return card;
+        }
 
-  public int cardsLeft() {
-    return currentDeck.size();
-  }
+public int cardsLeft() {
+        return currentDeck.size();
+        }
 
-  public void newDeck() {
-    currentDeck = new ArrayList<PlayingCard>(fullDeck);
-  }
+public void newDeck() {
+        currentDeck = new ArrayList<PlayingCard>(fullDeck);
+        }
 
-  public void newDeck(int noOfDecks) {
-    currentDeck = new ArrayList<PlayingCard>();
-    for (int i = 0; i < noOfDecks; i++) {
-      currentDeck.addAll(fullDeck);
-    }
-  }
+public void newDeck(int noOfDecks) {
+        currentDeck = new ArrayList<PlayingCard>();
+        for (int i = 0; i < noOfDecks; i++) {
+        currentDeck.addAll(fullDeck);
+        }
+        }
 
-  public void shuffleDeck() {
-    Collections.shuffle(currentDeck);
-  }
+public void shuffleDeck() {
+        Collections.shuffle(currentDeck);
+        }
 
-  public void sortDeck() {
-    Collections.sort(currentDeck);
-  }
+public void sortDeck() {
+        Collections.sort(currentDeck);
+        }
 
-  @Override
-  public String toString() {
-    String cardListStr = "";
-    for (PlayingCard card : currentDeck) {
-      cardListStr = cardListStr + card.toString() + "\n";
-    }
-    return cardListStr;
-  }
-}
+@Override
+public String toString() {
+        String cardListStr = "";
+        for (PlayingCard card : currentDeck) {
+        cardListStr = cardListStr + card.toString() + "\n";
+        }
+        return cardListStr;
+        }
+        }

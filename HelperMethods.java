@@ -62,6 +62,8 @@ public class HelperMethods {
 			if (Character.isDigit(check)) {
 				returnInt = Integer.parseInt(input);
 				break;
+			} else if( input.equals(null)){
+				System.out.println("Försök igen");
 			} else {
 				System.out.println("Något har blivit fel. Tänk på att svara genom att skriva en siffra.");
 			}
