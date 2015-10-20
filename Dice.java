@@ -1,6 +1,10 @@
 /**
  * Created by NIK1114 on 2015-10-13.
- */
+ *
+ * Dice:
+ * A dice has 6 pictures (dicefacesimg) and 6 values( int diceFaces)
+ * must "be in a cup" (shake-cup) to be rolled..
+ **/
 import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
@@ -38,6 +42,7 @@ public class Dice implements Runnable{
     Image[] dicefacesimg = {dice1Img,dice2Img,dice3Img,dice4Img,dice5Img,dice6Img};
     Image resultFaceImg = dicefacesimg[0];
 
+    /** if NOT thread is used! and If the dice is in cup **/
     public void rowle() {
         if(inCup){
             System.out.println("katsat en av dem(innan run)");
@@ -47,6 +52,7 @@ public class Dice implements Runnable{
 
     }
 
+    /** get the dice int-value: 1,2,3,4,5,6 **/
     public int getDiceValue() {
         //här borde jag uppdatera jframes EVENTUELLT!, men hur skapar jag den länken?!
         return result;
@@ -56,8 +62,9 @@ public class Dice implements Runnable{
         return isSpinning;
     }
 
+    /** the Roller method! if we use thread  = If the dive is in cup then roll dice (the isSpinning it true while spinning, and update setResult while spinning**/
     @Override
-    public void run() { //så att vi kan se den rullande tärningen :-)
+    public void run() {
         System.out.println("försöker att katsa en av dem(innan kontroll i run)");
         if(inCup){
 
@@ -81,7 +88,6 @@ public class Dice implements Runnable{
                 try {
                     Thread.sleep(20);
                 } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
@@ -91,31 +97,36 @@ public class Dice implements Runnable{
 
     }
 
+    /** the run() set this 40 times/roll **/
     private void setResult(int i) {
         result = diceFaces[i];
         System.out.println("i dice : " + i);
         setFaceImg(i);
-
     }
 
+    /** "activate" the role function **/
     public void setInCup() {
         inCup = true;
     }
 
+    /** "de-activate" the role function **/
     public void removeInCup() {
         inCup = false;
     }
 
+    /**  check if dice is in cup **/
     public boolean isInCup() {
         return inCup;
     }
 
+    /** update the dice face up image (resultFaceImg)**/
     private void setFaceImg(int i) {
         System.out.println("uppdaterar img: "+ i);
         resultFaceImg = dicefacesimg[i];
 //		notifyObservers(); //nu har vi en ändring..
     }
 
+    /**  Call this to get the (resultFaceImg) **/
     public Image getFaceImg() {
         return resultFaceImg;
     }
