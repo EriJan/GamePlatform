@@ -103,17 +103,19 @@ public class Patiens extends CardGame {
 
         }
     }
-    public boolean checkWin(){
+
+    public boolean checkWin() {
         boolean won = false;
         int i = 0;
-        for (CardDeal deal : sortedCardDeal){
-            if (deal.getLastCard().getValue()== 13){
+        for (CardDeal deal : sortedCardDeal) {
+            if (deal.getLastCard().getValue() == 13) {
                 i++;
             }
-            if (i == 4){
+            if (i == 4) {
                 won = true;
             }
-        }return won;
+        }
+        return won;
     }
 
     public void printMenu() {
@@ -251,26 +253,36 @@ public class Patiens extends CardGame {
         for (PlayingCard card : p) {
             if (card.getValue() == 13) {
                 for (CardDeal deal : cardDealList) {
-                    if (deal.getCard(0).getValue() == 13) {
-                        continue;
-                    } else {
-                        q = card;
-                        return q;
-                    }
+                    int local = deal.getHandSize();
+                    if (local != 0) {
+                        if (deal.getCard(0).getValue() != 13) {
+                            for (PlayingCard c : deal.getDeal()) {
+                                if (c.getValue() == 13 && c.faceUp) {
+                                    q = c;
+                                    return q;
+                                }
+                            }
 
+                        }
+                        if (getFaceUpCardFromDeck().getValue() == 13) {//TODO flytta ner detta ett hack
+                            q = getFaceUpCardFromDeck();
+                        }
+                    }
                 }
             }
-        }return q;
+        }
+        return q;
     }
 
     //Metod som lägger en kung på en ledig plats
+
     public boolean putKingInOpenIndex() {
         boolean isChange = false;//TODO titta på en lösning som fungerar om det finns fler än en kung
         List<PlayingCard> localList1 = new ArrayList<>();
         ArrayList<PlayingCard> localList2 = listOfCardsToMove();
 
         if (!ifKingAndOpen(localList2).isEmpty()) {
-            PlayingCard p = ifKingAndOpen(localList2).remove(0);
+            PlayingCard p = ifKingAndOpen(localList2).remove(0);//TODO kolla vilken av kungarna som ska flyttas här
             if (getFaceUpCardFromDeck() == p) {
                 localList1.add(p);
                 addToIndex(localList1);
@@ -278,8 +290,8 @@ public class Patiens extends CardGame {
                 return isChange;
             } else {
                 if (numberOfKings(localList2) > 1) {
-                p = kingsToMove(localList2);
-            }
+                    p = kingsToMove(localList2);
+                }
                 for (CardDeal cardDeal : cardDealList) {
                     if (cardDeal.getDeal().contains(p)) {
                         if (cardDeal.getCard(0).getValue() == 13) {
@@ -291,13 +303,21 @@ public class Patiens extends CardGame {
                                 localList1 = cardDeal.getDeal().subList(i, cardDeal.getHandSize());
                                 addToIndex(localList1);
                                 for (PlayingCard cardRemove : localList1) {
+                                    System.out.println(cardRemove);
                                     cardDeal.getDeal().remove(cardRemove);
-                                    isChange = true;
-                                    return isChange;
                                 }
+                                isChange = true;
+                                return isChange;
                             }
+
                         }
                     }
+                } if (p == getFaceUpCardFromDeck()) {//Flytta ner
+                    localList1.add(p);
+                    addToIndex(localList1);
+                    whatsLeftCardDeal[1].getDeal().remove(p);
+                    isChange = true;
+                    return isChange;
                 }
             }
 
@@ -686,7 +706,7 @@ public class Patiens extends CardGame {
                 //System.out.print(frontNumber[k]);
                 // }
                 System.out.print(cardHolder1[i][j] + "\t");
-                System.out.print(cardHolder2[i][j] + "\t\t");
+                System.out.print(cardHolder2[i][j] + "\t\t\t");
                 System.out.print(cardHolder3[i][j] + "\t");
                 System.out.print(cardHolder4[i][j] + "\t");
                 System.out.print(cardHolder5[i][j] + "\t");
