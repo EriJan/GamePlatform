@@ -133,7 +133,7 @@ public class the21  extends CardGame {
 	  }
 
     private void informUserInfoFromPCsTurn(String m) {
-        ui.userInputBool(m,"Y/N");
+        ui.gameMessage(m);
     }
 
     private boolean getUserInputForNewCard(String m) {

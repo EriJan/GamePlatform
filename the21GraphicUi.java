@@ -96,7 +96,7 @@ public class the21GraphicUi extends GameGraphicUi {
     jframe.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
   }
-
+/*
   @Override
   public void gameMessage(String message) {
     //ui.gameMessage(String.format("%s, Your cards :\n%s", player1.getName(), playersHands[0].hand.get(i).toString()));
@@ -105,6 +105,7 @@ public class the21GraphicUi extends GameGraphicUi {
     jframe.repaint();
 
   }
+*/
 
   @Override
   public void displayGameState(CardGame game) {
