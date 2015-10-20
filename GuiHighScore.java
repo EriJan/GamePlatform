@@ -1,19 +1,20 @@
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
 import java.awt.*;
 
 /**
  * Created by NIK1114 on 2015-10-07.
  * http://www.designmantic.com/logo-design/samples
  *
- * make a object of GuiHighScore(String ScoreInArray)
+ * make a object of GuiHighScore(String 2D-ScoreInArray)
  * (and the GUI just print the ScoreInArray..)
+ * the cells is:
+ * "Score", "Name", "Date"
+ * in String[]... ScoreInArray
  *
  */
 public class GuiHighScore extends JFrame {
     JPanel jp = new JPanel();
-    JLabel[] highScores;
+
     JTable jT;
 
 
@@ -44,49 +45,27 @@ public GuiHighScore(String[]... ScoreInArray){
 
     //adderar en capsel!
     Box box = Box.createVerticalBox();
-    //box.set(Color.white);
+
     add(box);
 
     JLabel label = new JLabel("HighScores: ");
     Font f = label.getFont();
 // bold
-//    label.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+    label.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
     label.setFont(f.deriveFont(f.getStyle() | Font.ITALIC));
 // unbold
 //    label.setFont(f.deriveFont(f.getStyle() & ~Font.BOLD));
 
-            //label.setHorizontalAlignment(JLabel.RIGHT);
             label.setAlignmentX(JLabel.CENTER_ALIGNMENT);
     box.add(label);
 
-    //jp.setBackground(Color.GREEN);
-
-   // jp.add(jb, BorderLayout.SOUTH);
-
-    //jp.add(label, BorderLayout.SOUTH);
-
-    //add(label, BorderLayout.NORTH);
-    //jp.setLayout(null);
-
-
-    /*region Description
-    highScores = new JLabel[ScoreInArray.length];
-    for (int i = 0 ; i<ScoreInArray.length ; i++){
-        highScores[i] = new JLabel(ScoreInArray[i]);
-
-        box.add(highScores[i], BorderLayout.SOUTH);
-        //jp.add(bselects[i]);
-    }
-    */
 
     String[] name = {"Score", "Name", "Date"};
     Object[][] cells= ScoreInArray;
 
     jT = new JTable(cells, name);
     //jT.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-    //box.add(jT);
-    //jp.add(box);
-    //jp.add(jT);
+
     Container c = getContentPane();
     c.setLayout(new FlowLayout());
     c.add(box);
@@ -98,25 +77,6 @@ public GuiHighScore(String[]... ScoreInArray){
 
 
 }
-    public boolean optionsMaker(final int ClickPointer,boolean isMarked) {
-        if (isMarked){
-               isMarked = false;
-            highScores[ClickPointer].setBorder(null);
-
-
-        }else if (!isMarked){
-            //lblMarkeraDeTrningar.setText("på");
-            isMarked = true;
-            Border marking = new BevelBorder(
-                    BevelBorder.LOWERED, Color.DARK_GRAY, Color.BLACK);
-            highScores[ClickPointer].setBorder(marking);
-            System.out.println(highScores[ClickPointer].getText());
-
-            CardGameSelector.run(highScores[ClickPointer].getText());
-        }
-        return isMarked;
-    }
-
 
 
 }
