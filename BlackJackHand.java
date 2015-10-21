@@ -29,6 +29,7 @@ public class BlackJackHand extends CardDeal {
     boolean isBust = false;
     if (getHandValue() > 21) {
       isBust = true;
+      hideHand();
     }
     return isBust;
   }

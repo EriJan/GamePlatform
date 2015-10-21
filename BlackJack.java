@@ -1,7 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
 import java.io.IOException;
 
 
@@ -13,7 +10,6 @@ public class BlackJack extends CardGame {
   private GameUserInterface ui;
 
   BlackJack() {
-    // ui = new GameTextUi();
     ui = new BlackJackGraphicUi();
     deck = new DeckHandler();
     deck.newDeck(8);

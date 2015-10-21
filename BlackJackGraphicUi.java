@@ -13,7 +13,7 @@ public class BlackJackGraphicUi extends GameGraphicUi {
     jframe.setLayout(new GridBagLayout());
     jframe.getContentPane().setBackground(Color.green);
     jframe.setVisible(false);
-    jframe.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    // jframe.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
   }
 
   /**

@@ -18,21 +18,21 @@ public class PlayingCard implements Comparable<PlayingCard> {
   protected boolean isRed;
   protected ImageIcon icon;
   protected static final ImageIcon backside = new ImageIcon(
-          "/Users/Janne/JavaProj/IntelliJ/GamePlatform/cardicons/b2fv.png");
+          PlayingCard.class.getResource("cardicons/b2fv.png"));
 
-    PlayingCard(Suit suit, int val) {
-        this.suit = suit;
-        this.value = val;
-        faceUp = false;
-        if (suit == Suit.Spades || suit == Suit.Clubs) {
-            this.isRed = false;
-        } else if (suit == Suit.Hearts || suit == Suit.Diamonds) {
-            this.isRed = true;
-        }
-        if (val != 0) {
-            setIconAndDescription(suit, val);
-        }
+  PlayingCard(Suit suit, int val) {
+    this.suit = suit;
+    this.value = val;
+    faceUp = false;
+    if (suit == Suit.Spades || suit == Suit.Clubs) {
+      this.isRed = false;
+    } else if (suit == Suit.Hearts || suit == Suit.Diamonds) {
+      this.isRed = true;
     }
+    if (val != 0) {
+      setIconAndDescription(suit, val);
+    }
+  }
 
   boolean isEqSuit(PlayingCard card1, PlayingCard card2) {
     boolean isSame = false;
@@ -42,21 +42,21 @@ public class PlayingCard implements Comparable<PlayingCard> {
     return isSame;
   }
 
-    void setIconAndDescription(Suit suit, int i) {
-        String stringSuit;
-        if (suit == Suit.Clubs) {
-            stringSuit = "c";
-        } else if (suit == Suit.Diamonds) {
-            stringSuit = "d";
-        } else if (suit == Suit.Hearts) {
-            stringSuit = "h";
-        } else {
-            stringSuit = "s";
-        }
-
-        this.icon = new ImageIcon(this.getClass().getResource("cardicons/" + stringSuit + i + ".png"));
+  void setIconAndDescription(Suit suit, int i) {
+    String stringSuit;
+    if (suit == Suit.Clubs) {
+      stringSuit = "c";
+    } else if (suit == Suit.Diamonds) {
+      stringSuit = "d";
+    } else if (suit == Suit.Hearts) {
+      stringSuit = "h";
+    } else {
+      stringSuit = "s";
     }
-    
+
+    this.icon = new ImageIcon(this.getClass().getResource("cardicons/" + stringSuit + i + ".png"));
+  }
+
   boolean isRed() {
     boolean isRed = false;
     if (this.isRed) {
@@ -65,13 +65,13 @@ public class PlayingCard implements Comparable<PlayingCard> {
     return isRed;
   }
 
-    boolean isBlack() {
-        boolean isBlack = false;
-        if (!this.isRed){
-            isBlack = true;
-        }
-        return isBlack;
+  boolean isBlack() {
+    boolean isBlack = false;
+    if (!this.isRed){
+      isBlack = true;
     }
+    return isBlack;
+  }
 
   // Fixme: add override for hashVal
   @Override
@@ -99,38 +99,38 @@ public class PlayingCard implements Comparable<PlayingCard> {
     }
     return compRes;
   }
-    @Override
-    public String toString() {
-        String valString;
+  @Override
+  public String toString() {
+    String valString;
 
-        if (faceUp) {
-            switch (value) {
-                case 1:
-                    valString = "A";
-                    break;
-                case 11:
-                    valString = "J";
-                    break;
-                case 12:
-                    valString = "Q";
-                    break;
-                case 13:
-                    valString = "K";
-                    break;
-                default:
-                    valString = Integer.toString(value);
-                    break;
-            }
-            valString = suit + valString;
+    if (faceUp) {
+      switch (value) {
+        case 1:
+          valString = "A";
+          break;
+        case 11:
+          valString = "J";
+          break;
+        case 12:
+          valString = "Q";
+          break;
+        case 13:
+          valString = "K";
+          break;
+        default:
+          valString = Integer.toString(value);
+          break;
+      }
+      valString = suit + valString;
 
 
-        } else if (!faceUp && value != 0){
-            valString = "––";
-        } else {
-            valString = "  ";
-        }
-        return valString;
+    } else if (!faceUp && value != 0){
+      valString = "––";
+    } else {
+      valString = "  ";
     }
+    return valString;
+  }
 
   public void revealCard() {
     faceUp = true;
@@ -152,5 +152,11 @@ public class PlayingCard implements Comparable<PlayingCard> {
     return suit;
   }
 
-  public ImageIcon getImage() { return icon;}
+  public ImageIcon getImage() {
+    ImageIcon tempIcon = backside;
+    if (faceUp) {
+      tempIcon = icon;
+    }
+    return tempIcon;
+  }
 }
