@@ -15,6 +15,8 @@ public class Gui extends JFrame {
     JPanel jp = new JPanel();
     JButton jb = new JButton();
     JLabel[] bselects;
+    public int x, y, w;
+
     int numberOfOptions = 4;
             //"Blackjack","Patiens","21","Quit"
 
@@ -27,6 +29,11 @@ public Gui(String... Options){
     setDefaultCloseOperation(EXIT_ON_CLOSE);
     ImageIcon icon = new ImageIcon(("C:\\location\\logo1.png"));
     setIconImage(icon.getImage());
+    setLocation(10,0);
+
+    x = getX();
+    w = getWidth();
+    y = getY();
 
 //    getContentPane().setBackground( Color.white );
     //jb.setIcon(new ImageIcon("/images/logo1.png"));
