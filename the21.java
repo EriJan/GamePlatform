@@ -10,7 +10,7 @@ import java.util.*;
  * Created by Niklas on 19/10/15.
  */
 
-public class the21  extends CardGame {
+public class the21  extends CardGame implements Runnable{
 	  DeckHandler deck = new DeckHandler();
 	  Player player1,player2;
 	  the21Hands[] playersHands  ;
@@ -52,7 +52,7 @@ public class the21  extends CardGame {
 					userImg.add(DrowCardImg[i]);
 				}
 				else{
-					userImg.add( new ImageIcon(this.getClass().getResource("cardicons/b1fv.png")) ); //turn downcard img
+					userImg.add( new ImageIcon(this.getClass().getResource("cardicons/b2fv.png")) ); //turn downcard img
 				}
 
 			}
@@ -68,7 +68,7 @@ public class the21  extends CardGame {
 					pCImg.add(DrowCard2Img[i]);
 				}
 				else{
-					pCImg.add( new ImageIcon(this.getClass().getResource("cardicons/b1fv.png")) ); //turn downcard img
+					pCImg.add( new ImageIcon(this.getClass().getResource("cardicons/b2fv.png")) ); //turn downcard img
 				}
 
 			}
@@ -423,7 +423,11 @@ public class the21  extends CardGame {
 
 	}
 
+	@Override
+	public void run() {
+		runGame();
 	}
+}
 /*
  class Gui21 extends JFrame {
 	 JPanel jp = new JPanel();
