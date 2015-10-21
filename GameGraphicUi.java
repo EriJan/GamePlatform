@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by Janne on 15/10/15.
@@ -6,6 +7,17 @@ import javax.swing.*;
 public abstract class GameGraphicUi implements GameUserInterface {
 
   protected JFrame jframe;
+
+  @Override
+  public void waitStart() {
+    jframe.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+  }
+
+  @Override
+  public void waitEnd() {
+
+    jframe.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+  }
 
   @Override
   public void welcomeMessage(String message) {
