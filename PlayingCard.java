@@ -20,17 +20,19 @@ public class PlayingCard implements Comparable<PlayingCard> {
   protected static final ImageIcon backside = new ImageIcon(
           "/Users/Janne/JavaProj/IntelliJ/GamePlatform/cardicons/b2fv.png");
 
-  PlayingCard(Suit suit, int val) {
-    this.suit = suit;
-    this.value = val;
-    faceUp = false;
-      if (suit == Suit.Spades || suit == Suit.Clubs){
-          this.isRed = false;
-      }else if (suit == Suit.Hearts || suit == Suit.Diamonds){
-          this.isRed = true;
-      }
-    setIconAndDescription(suit, val);
-  }
+    PlayingCard(Suit suit, int val) {
+        this.suit = suit;
+        this.value = val;
+        faceUp = false;
+        if (suit == Suit.Spades || suit == Suit.Clubs) {
+            this.isRed = false;
+        } else if (suit == Suit.Hearts || suit == Suit.Diamonds) {
+            this.isRed = true;
+        }
+        if (val != 0) {
+            setIconAndDescription(suit, val);
+        }
+    }
 
   boolean isEqSuit(PlayingCard card1, PlayingCard card2) {
     boolean isSame = false;
@@ -40,23 +42,21 @@ public class PlayingCard implements Comparable<PlayingCard> {
     return isSame;
   }
 
-  void setIconAndDescription(Suit suit, int i) {
-    String localSuit;
-    if (suit == Suit.Clubs) {
-      localSuit = "c";
-    } else if (suit == Suit.Diamonds) {
-      localSuit = "d";
-    } else if (suit == Suit.Hearts) {
-      localSuit = "h";
-    } else {
-      localSuit = "s";
-    }
-    String iconRoot = "/Users/Janne/JavaProj/IntelliJ/GamePlatform/cardicons/";
-    String iconPath =  iconRoot + localSuit + i + ".png";
-    this.icon = new ImageIcon(iconPath, localSuit + i);
+    void setIconAndDescription(Suit suit, int i) {
+        String stringSuit;
+        if (suit == Suit.Clubs) {
+            stringSuit = "c";
+        } else if (suit == Suit.Diamonds) {
+            stringSuit = "d";
+        } else if (suit == Suit.Hearts) {
+            stringSuit = "h";
+        } else {
+            stringSuit = "s";
+        }
 
-  }
-  
+        this.icon = new ImageIcon(this.getClass().getResource("cardicons/" + stringSuit + i + ".png"));
+    }
+    
   boolean isRed() {
     boolean isRed = false;
     if (this.isRed) {
