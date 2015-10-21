@@ -108,6 +108,26 @@ public class the21GraphicUi extends GameGraphicUi {
 */
 
   @Override
+  public void welcomeMessage(String message) {
+    super.welcomeMessage(message);
+  }
+
+  @Override
+  public void waitStart() {
+    super.waitStart();
+  }
+
+  @Override
+  public void waitEnd() {
+    super.waitEnd();
+  }
+
+  @Override
+  public boolean userInputBool(String queryString, String cond) {
+    return super.userInputBool(queryString, cond);
+  }
+
+  @Override
   public void displayGameState(CardGame game) {
     gameMessage(game.toString());
   }

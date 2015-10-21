@@ -79,7 +79,7 @@ public class the21  extends CardGame {
 
               String m = String.format("Now it is %s: s turn %n", player2.getName());
               //ui.gameMessage(m);
-              informUserInfoFromPCsTurn(m, DrowCard2Img[i]); //MVC
+              informUserInfoFromPCsTurn(m); //MVC
 			  sel = "J";
 			   i = 0;
 				while(playersHands[1].isCardToTake(DrowCard2) && !playersHands[1].isTjock(DrowCard2) && !sel.equalsIgnoreCase("N") && !playersHands[1].isTjock(DrowCard2)){
@@ -99,11 +99,13 @@ public class the21  extends CardGame {
 					}else{
 						sel = "N";
 					}
+					MVCWaitStart();
 					try {
 						Thread.sleep(2000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
+					MVCWaitEnd();
 					i++;
 				}
 				
@@ -131,11 +133,23 @@ public class the21  extends CardGame {
 			  //printPlayerName("%s vann!! \n", player2.getName());
               r.append(String.format("%s vann!! ", player2.getName()));
 		  }
-          informUserInfoFromPCsTurn(r.toString(), DrowCard2Img[i]);
+          informUserInfoFromPCsTurn(r.toString());
 
 		  //printScoreboard21();
           printScoreboard21file(toString());
 	  }
+
+	private void MVCWaitStart() {
+		ui.waitStart();
+	}
+	private void MVCWaitEnd() {
+		ui.waitEnd();
+	}
+
+	private void informUserInfoFromPCsTurn(String m) {
+		ui.gameMessage(m);
+
+	}
 
 	private void informUserInfoFromPCsTurn(String m, ImageIcon imageIcon) {
         ui.gameMessage(m);
