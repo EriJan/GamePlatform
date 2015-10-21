@@ -124,6 +124,7 @@ public class the21  extends CardGame {
 		  }else if ( (playersHands[1].getHandValue(DrowCard2) < playersHands[0].getHandValue(DrowCard) ) || playersHands[1].isTjock(DrowCard2) ) {
 			  //printPlayerName("%s vann!! ", player1.getName());
               r.append(String.format("%s vann!! ", player1.getName()));
+			  HelperMethods.Beep();
 			  addToScoreFile(player1.getName(),playersHands[0].getHandValue(DrowCard));
 
 

@@ -1,7 +1,9 @@
 //package CardGame;
 
+import java.awt.*;
 import java.io.*;
-import java.net.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
@@ -39,6 +41,11 @@ public class HelperMethods {
 		input = in.nextLine();
 		return input;
 	}
+
+	public static void Beep() {
+		Toolkit.getDefaultToolkit().beep();
+	}
+
 	private enum OSType {
 		Windows, MacOS, Linux, Other
 	};
