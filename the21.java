@@ -314,7 +314,7 @@ public class the21  extends CardGame implements Runnable{
     StringBuilder sb = new StringBuilder(oldData);
     Date date = new Date();
     SimpleDateFormat sdf;
-    sdf = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss");
+    sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     String stringDate = sdf.format(date);
     sb.append(score + "@" + name + "@" + stringDate + ";"); // "\t"
     String scoreArray[] = sb.toString().split(";");
