@@ -43,23 +43,23 @@ public class PlayingCard implements Comparable<PlayingCard> {
   }
 
   void setIconAndDescription(Suit suit, int i) {
-    String stringSuit;
+    String localSuit;
     if (suit == Suit.Clubs) {
-      stringSuit = "c";
+      localSuit = "c";
     } else if (suit == Suit.Diamonds) {
-      stringSuit = "d";
+      localSuit = "d";
     } else if (suit == Suit.Hearts) {
-      stringSuit = "h";
+      localSuit = "h";
     } else {
-      stringSuit = "s";
+      localSuit = "s";
     }
 
-    this.icon = new ImageIcon(this.getClass().getResource("cardicons/" + stringSuit + i + ".png"));
+    this.icon = new ImageIcon(this.getClass().getResource("cardicons/" + localSuit + i + ".png"));
   }
-
+  
   boolean isRed() {
     boolean isRed = false;
-    if (this.isRed) {
+    if (this.getSuit() == Suit.Diamonds || this.getSuit() == Suit.Hearts) {
       isRed = true;
     }
     return isRed;
@@ -99,38 +99,38 @@ public class PlayingCard implements Comparable<PlayingCard> {
     }
     return compRes;
   }
-  @Override
-  public String toString() {
-    String valString;
+    @Override
+    public String toString() {
+        String valString;
 
-    if (faceUp) {
-      switch (value) {
-        case 1:
-          valString = "A";
-          break;
-        case 11:
-          valString = "J";
-          break;
-        case 12:
-          valString = "Q";
-          break;
-        case 13:
-          valString = "K";
-          break;
-        default:
-          valString = Integer.toString(value);
-          break;
-      }
-      valString = suit + valString;
+        if (faceUp) {
+            switch (value) {
+                case 1:
+                    valString = "A";
+                    break;
+                case 11:
+                    valString = "J";
+                    break;
+                case 12:
+                    valString = "Q";
+                    break;
+                case 13:
+                    valString = "K";
+                    break;
+                default:
+                    valString = Integer.toString(value);
+                    break;
+            }
+            valString = suit + valString;
 
 
-    } else if (!faceUp && value != 0){
-      valString = "––";
-    } else {
-      valString = "  ";
+        } else if (!faceUp && value != 0){
+            valString = "––";
+        } else {
+            valString = "  ";
+        }
+        return valString;
     }
-    return valString;
-  }
 
   public void revealCard() {
     faceUp = true;

@@ -8,6 +8,16 @@ public class GameTextUi implements GameUserInterface {
   }
 
   @Override
+  public void waitStart() {
+    System.out.print("waiting start....");
+  }
+
+  @Override
+  public void waitEnd() {
+    System.out.print("..waiting Ended");
+  }
+
+  @Override
   public String userInput(String queryString) {
     System.out.println(queryString);
     return HelperMethods.inPutFromNextLine();

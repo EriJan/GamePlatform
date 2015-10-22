@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
+
 /**
  * Created by Niklas on 19/10/15.
  */
@@ -25,9 +27,9 @@ public class the21GraphicUi extends GameGraphicUi {
   JLabel jLTotal = new JLabel();
   Box upperBox = new Box(1);
   Box lowerBox = new Box(1);
-  JPanel p1 = new JPanel(new BorderLayout());
-  JPanel p2 = new JPanel(new BorderLayout());
-  JPanel p3 = new JPanel(new BorderLayout());
+  JPanel p1 = new JPanel(new GridBagLayout());
+  JPanel p2 = new JPanel(new GridBagLayout());
+  JPanel p3 = new JPanel(new GridBagLayout());
 
   JLabel[] P1Cards;
   JLabel[] P2Cards;
@@ -37,7 +39,22 @@ public class the21GraphicUi extends GameGraphicUi {
   // JFrame jframe;
 
   public the21GraphicUi() {
+
+
     jframe = new JFrame("The 21 Game");
+    jframe.setLayout(new GridBagLayout());
+    jframe.getContentPane().setBackground(new Color(0, 184, 46));
+    //jframe.setSize(300,300);
+    //jframe.setContentPane(new JLabel(new ImageIcon(this.getClass().getResource("cardicons/Green.png"))));
+
+    //JLabel background = new JLabel(new ImageIcon(this.getClass().getResource("cardicons/Green.png")));
+    //background.setLayout(new BorderLayout());
+    //jframe.add(background);
+
+    //jframe.setLocationRelativeTo(null);
+
+    jframe.setVisible(false);
+    jframe.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
     jLNameP2.setText("playerPC ");
     jLResult2.setText(" result P2 ");
@@ -55,15 +72,15 @@ public class the21GraphicUi extends GameGraphicUi {
 
     jLTotal.setText(" Result Total ");
     p3.add(jLTotal);
-    jframe.add(p1);
-    jframe.add(p2);
-    jframe.add(p3);
+    //jframe.add(p1);
+    //jframe.add(p2);
+    //jframe.add(p3);
 
-    jframe.setLayout(new GridBagLayout());
-    jframe.getContentPane().setBackground(Color.lightGray);
+
     JMenuBar menuBar = new JMenuBar();
     jframe.setJMenuBar(menuBar);
-    jframe.setSize(300,300);
+
+
 
     mnOptions = new JMenu("Options");
     menuBar.add(mnOptions);
@@ -77,26 +94,14 @@ public class the21GraphicUi extends GameGraphicUi {
     });
     mnOptions.add(mntmSetNumberOf);
 
-//    DeckHandler deck = new DeckHandler();
-//    deck.newDeck();
-//    deck.sortDeck();
-//    int noCards = deck.cardsLeft();
-//
-//     for (int i = 0; i < noCards; i++) {
-//       PlayingCard card = deck.drawTop();
-//       card.revealCard();
-//       JLabel label = new JLabel(card.toString(), card.getImage(), JLabel.CENTER);
-//       //label.setPreferredSize(new Dimension(400,400));
-//       label.setVerticalTextPosition(JLabel.BOTTOM);
-//       label.setBorder(new EtchedBorder());
-//       jframe.getContentPane().add(label);
-//     }
 //    jframe.pack();
-    jframe.setVisible(true);
-    jframe.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+    // jframe.setVisible(true);
+
+    //jframe.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
   }
-
+/*
   @Override
   public void gameMessage(String message) {
     //ui.gameMessage(String.format("%s, Your cards :\n%s", player1.getName(), playersHands[0].hand.get(i).toString()));
@@ -105,16 +110,176 @@ public class the21GraphicUi extends GameGraphicUi {
     jframe.repaint();
 
   }
+*/
+
+  @Override
+  public void welcomeMessage(String message) {
+    super.welcomeMessage(message);
+  }
+
+  @Override
+  public void waitStart() {
+    super.waitStart();
+  }
+
+  @Override
+  public void waitEnd() {
+    super.waitEnd();
+  }
+
+  @Override
+  public void gameMessage(String message) {
+    JOptionPane.showMessageDialog(null, message, "Game Message",
+        JOptionPane.PLAIN_MESSAGE);
+
+    //super.gameMessage(message);
+  }
+
+  @Override
+  public String userInput(String queryString) {
+    String retStr = (String) JOptionPane.showInputDialog(jframe,"Type your name, please", queryString);
+    retStr = (retStr == null) ? "" : retStr;
+    return retStr;
+
+    // return super.userInput(queryString);
+  }
+
+  @Override
+  public boolean userInputBool(String queryString, String cond) {
+
+    int ans = JOptionPane.showConfirmDialog(null, queryString, "Game Query",
+        JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+    boolean retAns = (ans == 0) ? true : false;
+
+
+    return retAns;
+
+
+
+
+    // return super.userInputBool(queryString, cond);
+  }
 
   @Override
   public void displayGameState(CardGame game) {
-    gameMessage(game.toString());
+    jframe.getContentPane().removeAll();
+    jframe.setLocation(200,290);
+
+    jframe.setSize(300,300);
+
+    the21 t21 = (the21) game;
+
+    ArrayList<Integer> PCints = t21.getDrowCard2();
+    ArrayList<Integer> UserInts = t21.getDrowCard();
+    ArrayList<ImageIcon> PCImgs = t21.getDrowCard2Img();
+    ArrayList<ImageIcon> UserImgs = t21.getDrowCardImg();
+
+    JPanel housePanel = new JPanel();
+    ImageIcon testBack = new ImageIcon(this.getClass().getResource("cardicons/b1fv.png")) ;
+    housePanel.setPreferredSize(new Dimension(testBack.getIconWidth()*3, testBack.getIconHeight()));
+    SpringLayout houseLayout = new SpringLayout();
+    housePanel.setLayout(houseLayout);
+
+    GridBagConstraints c = new GridBagConstraints();
+    int halfTableSize = 2/2;
+    c.gridx = halfTableSize;
+    c.gridy = 0;
+    jframe.add(housePanel,c);
+
+    //PC
+    JLabel currentLabel = null;
+    JLabel lastLabel = null;
+    int j = 0;
+    for(ImageIcon PCImg : PCImgs) {
+
+      currentLabel = new JLabel(PCImg);
+      housePanel.add(currentLabel);
+      housePanel.setBackground(new Color(0, 184, 46));
+
+      if (j == 0) {
+        houseLayout.putConstraint(SpringLayout.WEST, currentLabel,
+            5,SpringLayout.WEST,housePanel);
+        houseLayout.putConstraint(SpringLayout.NORTH, currentLabel,
+            5,SpringLayout.NORTH,housePanel);
+      } else {
+        houseLayout.putConstraint(SpringLayout.WEST, currentLabel,
+            25,SpringLayout.WEST,lastLabel);
+        houseLayout.putConstraint(SpringLayout.NORTH, currentLabel,
+            0,SpringLayout.NORTH,lastLabel);
+      }
+      lastLabel = currentLabel;
+      j++;
+    }
+
+    //lastLabel.add(new JLabel(t21.getM()));
+
+    houseLayout.putConstraint(SpringLayout.EAST, housePanel,
+        5,SpringLayout.EAST,lastLabel);
+    houseLayout.putConstraint(SpringLayout.SOUTH, housePanel,
+        5,SpringLayout.SOUTH,lastLabel);
+    //PC end
+
+    //userStart
+    GridBagConstraints gbCons = new GridBagConstraints();//size = 1
+
+
+
+    JPanel localPanel = new JPanel();
+    localPanel.setBackground(new Color(0, 184, 46));
+    localPanel.setPreferredSize(new Dimension(testBack.getIconWidth()*3, testBack.getIconHeight()));
+
+    SpringLayout localLayout = new SpringLayout();
+    localPanel.setLayout(localLayout);
+
+    gbCons = new GridBagConstraints();
+    gbCons.gridx = 0;
+    gbCons.gridy = 1;
+    jframe.add(localPanel,gbCons);
+
+    j = 0;
+
+    for(ImageIcon UserImg : UserImgs) {
+      System.out.println(t21.getDrowCard());
+      System.out.println(t21.getDrowCard2());
+
+      currentLabel = new JLabel(UserImg);
+
+      localPanel.add(currentLabel);
+
+      if (j == 0) {
+        localLayout.putConstraint(SpringLayout.WEST, currentLabel,
+            5,SpringLayout.WEST,localPanel);
+        localLayout.putConstraint(SpringLayout.NORTH, currentLabel,
+            5,SpringLayout.NORTH,localPanel);
+      } else {
+        localLayout.putConstraint(SpringLayout.WEST, currentLabel,
+            25,SpringLayout.WEST,lastLabel);
+        localLayout.putConstraint(SpringLayout.NORTH, currentLabel,
+            0,SpringLayout.NORTH,lastLabel);
+      }
+
+      lastLabel = currentLabel;
+      j++;
+    }
+    localLayout.putConstraint(SpringLayout.EAST, localPanel,
+        5,SpringLayout.EAST,lastLabel);
+    localLayout.putConstraint(SpringLayout.SOUTH, localPanel,
+        5,SpringLayout.SOUTH,lastLabel);
+
+
+    jframe.validate();
+    //jframe.pack();
+    jframe.setVisible(true);
+
+    // gameMessage(game.toString());
   }
 
-//___________________
+
+
+  //___________________
   public void setNoOfPlayer() {
     Object[] options1 = { "OK", "Next",
-            "Quit" };
+        "Quit" };
     int result = 0;
     String text;
     JPanel panel = new JPanel();
@@ -124,8 +289,8 @@ public class the21GraphicUi extends GameGraphicUi {
     panel.add(textField);
     do{
       result = JOptionPane.showOptionDialog(null, panel, "Setup",
-              JOptionPane.YES_NO_CANCEL_OPTION,
-              JOptionPane.PLAIN_MESSAGE, null, options1, null);
+          JOptionPane.YES_NO_CANCEL_OPTION,
+          JOptionPane.PLAIN_MESSAGE, null, options1, null);
       if (result == JOptionPane.NO_OPTION) {
         if(!textField.getText().equalsIgnoreCase("")){
           Names.add(textField.getText());
