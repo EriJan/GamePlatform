@@ -73,6 +73,7 @@ public class HelperMethods {
   /**
    * get int from input (scanner nextline)
    *
+   *
    */
   public static int inPutFromNextInt() {
     String input= null;
