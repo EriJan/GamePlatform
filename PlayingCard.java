@@ -43,9 +43,9 @@ public class PlayingCard implements Comparable<PlayingCard> {
       stringSuit = "s";
     }
 
-      this.icon = new ImageIcon(this.getClass().getResource("cardicons/" + stringSuit + i + ".png"), stringSuit + i);
+    this.icon = new ImageIcon(this.getClass().getResource("cardicons/" + stringSuit + i + ".png"), stringSuit + i);
   }
-  
+
   boolean isRed() {
     boolean isRed = false;
     if (this.getSuit() == Suit.Diamonds || this.getSuit() == Suit.Hearts) {
@@ -54,13 +54,13 @@ public class PlayingCard implements Comparable<PlayingCard> {
     return isRed;
   }
 
-    boolean isBlack() {
-        boolean isBlack = false;
-        if (this.getSuit()== Suit.Clubs || this.getSuit()==Suit.Spades){
-            isBlack = true;
-        }
-        return isBlack;
+  boolean isBlack() {
+    boolean isBlack = false;
+    if (this.getSuit()== Suit.Clubs || this.getSuit()==Suit.Spades){
+      isBlack = true;
     }
+    return isBlack;
+  }
 
   // Fixme: add override for hashVal
   @Override
@@ -88,38 +88,38 @@ public class PlayingCard implements Comparable<PlayingCard> {
     }
     return compRes;
   }
-    @Override
-    public String toString() {
-        String valString;
+  @Override
+  public String toString() {
+    String valString;
 
-        if (faceUp) {
-            switch (value) {
-                case 1:
-                    valString = "A";
-                    break;
-                case 11:
-                    valString = "J";
-                    break;
-                case 12:
-                    valString = "Q";
-                    break;
-                case 13:
-                    valString = "K";
-                    break;
-                default:
-                    valString = Integer.toString(value);
-                    break;
-            }
-            valString = suit + valString;
+    if (faceUp) {
+      switch (value) {
+        case 1:
+          valString = "A";
+          break;
+        case 11:
+          valString = "J";
+          break;
+        case 12:
+          valString = "Q";
+          break;
+        case 13:
+          valString = "K";
+          break;
+        default:
+          valString = Integer.toString(value);
+          break;
+      }
+      valString = suit + valString;
 
 
-        } else if (!faceUp && value != 0){
-            valString = "––";
-        } else {
-            valString = "  ";
-        }
-        return valString;
+    } else if (!faceUp && value != 0){
+      valString = "––";
+    } else {
+      valString = "  ";
     }
+    return valString;
+  }
 
   public void revealCard() {
     faceUp = true;

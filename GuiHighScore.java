@@ -13,12 +13,12 @@ import java.awt.*;
  *
  */
 public class GuiHighScore extends JFrame {
-    JPanel jp = new JPanel();
+  JPanel jp = new JPanel();
 
-    JTable jT;
+  JTable jT;
 
 
-public GuiHighScore(String[]... ScoreInArray){
+  public GuiHighScore(String[]... ScoreInArray){
     setTitle("TheGame - HighScore");
     setVisible(true);
     setSize(500,250);
@@ -36,7 +36,7 @@ public GuiHighScore(String[]... ScoreInArray){
     //correct way:
     //jb.setIcon(new ImageIcon(this.getClass().getResource("logo1.png")));
     //wrong way, "Test":
-   //jb.setIcon(new ImageIcon("C:\\location\\logo1.png")); //is under " C:\location\"
+    //jb.setIcon(new ImageIcon("C:\\location\\logo1.png")); //is under " C:\location\"
 
     //jb.setIcon(new ImageIcon("/Users/Janne/JavaProj/src/logo/location/logo1.png")); //is under " C:\location\"
     //logo1.png to logo6.png..
@@ -56,7 +56,7 @@ public GuiHighScore(String[]... ScoreInArray){
 // unbold
 //    label.setFont(f.deriveFont(f.getStyle() & ~Font.BOLD));
 
-            label.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+    label.setAlignmentX(JLabel.CENTER_ALIGNMENT);
     box.add(label);
 
 
@@ -76,7 +76,7 @@ public GuiHighScore(String[]... ScoreInArray){
     validate();
 
 
-}
+  }
 
 
 }
