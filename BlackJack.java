@@ -127,7 +127,7 @@ public class BlackJack extends CardGame {
       if(pos.isBlackJack()) {
         ui.gameMessage("Blackjack på position " + counter);
         pos.setIsDone();
-        pos.getOwner().setWin(2);
+        pos.getOwner().addWin(2);
       }
       counter++;
     }
@@ -154,7 +154,7 @@ public class BlackJack extends CardGame {
           ui.gameMessage("Sorry, you are bust!");
           moreCards = false;
           hand.setIsDone();
-          hand.getOwner().setLoss(1);
+          hand.getOwner().addLosses(1);
         }
       } else {
         hand.setIsDone();
@@ -179,16 +179,16 @@ public class BlackJack extends CardGame {
     if (house.isBust()) {
       for (BlackJackHand pos : positions) {
         if (!pos.isBust() && !pos.isBlackJack()) {
-          pos.getOwner().setWin(1);
+          pos.getOwner().addWin(1);
         }
       }
     } else {
       for (BlackJackHand pos : positions) {
         if (!pos.isBust() && !pos.isBlackJack()) {
           if (pos.getHandValue() > house.getHandValue()) {
-            pos.getOwner().setWin(1);
+            pos.getOwner().addWin(1);
           } else {
-            pos.getOwner().setLoss(1);
+            pos.getOwner().addLosses(1);
           }
         }
       }
@@ -200,7 +200,7 @@ public class BlackJack extends CardGame {
     for (Player pl : players) {
       scoreStr += pl.toString() + " score:";
       scoreStr += "Wins: " + pl.getWin();
-      scoreStr += " Losses: " + pl.getLoss() + "\n";
+      scoreStr += " Losses: " + pl.getLosses() + "\n";
 
       // ui.gameMessage(pl.toString() + " score:");
       // ui.gameMessage("Wins: " + pl.getWin());

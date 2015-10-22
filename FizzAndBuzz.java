@@ -39,7 +39,7 @@ public class FizzAndBuzz extends CardGame {
                 System.out.format("'N' (normal), 'Fizz' (3) or 'Buzz' (5), %s :", playerId.getName());
                 val = HelperMethods.inPutFromNextLine();
                 if (val.equals(RealAnswer)){
-                    playerId.setWin(1);
+                    playerId.addWin(1);
                     System.out.format("Correct %s", playerId.getName());
                 }else System.out.format("Fault %s", playerId.getName());
             }

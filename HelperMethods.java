@@ -14,7 +14,7 @@ public class HelperMethods {
       // note : you may also need
       //        HttpURLConnection.setInstanceFollowRedirects(false)
       HttpURLConnection con =
-              (HttpURLConnection) new URL(URLName).openConnection();
+          (HttpURLConnection) new URL(URLName).openConnection();
       con.setRequestMethod("HEAD");
       return (con.getResponseCode() == HttpURLConnection.HTTP_OK);
     }
@@ -26,151 +26,148 @@ public class HelperMethods {
 
 
   public static String inPutFromNextLine() {
-		String input= null;
-		Scanner in = new Scanner(System.in);
-		input = in.nextLine();
-		return input;
-	}
-	private enum OSType {
-		Windows, MacOS, Linux, Other
-	};
-	protected static OSType detectedOS;
-	public static OSType getOperatingSystemType() {
-		if (detectedOS == null) {
-			String OS = System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH);
-			if ((OS.indexOf("mac") >= 0) || (OS.indexOf("darwin") >= 0)) {
-				detectedOS = OSType.MacOS;
-			} else if (OS.indexOf("win") >= 0) {
-				detectedOS = OSType.Windows;
-			} else if (OS.indexOf("nux") >= 0) {
-				detectedOS = OSType.Linux;
-			} else {
-				detectedOS = OSType.Other;
-			}
-		}
-		return detectedOS;
-	}
+    String input= null;
+    Scanner in = new Scanner(System.in);
+    input = in.nextLine();
+    return input;
+  }
+  private enum OSType {
+    Windows, MacOS, Linux, Other
+  };
+  protected static OSType detectedOS;
+  public static OSType getOperatingSystemType() {
+    if (detectedOS == null) {
+      String OS = System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH);
+      if ((OS.indexOf("mac") >= 0) || (OS.indexOf("darwin") >= 0)) {
+        detectedOS = OSType.MacOS;
+      } else if (OS.indexOf("win") >= 0) {
+        detectedOS = OSType.Windows;
+      } else if (OS.indexOf("nux") >= 0) {
+        detectedOS = OSType.Linux;
+      } else {
+        detectedOS = OSType.Other;
+      }
+    }
+    return detectedOS;
+  }
 
-	public static int inPutFromNextInt() {
-		String input= null;
-		char check;
-		int returnInt;
+  public static int inPutFromNextInt() {
+    String input= null;
+    char check;
+    int returnInt;
     Scanner in = new Scanner(System.in);
     while (true) {
-			input = in.nextLine();
-			check = input.charAt(0);
-			if (Character.isDigit(check)) {
-				returnInt = Integer.parseInt(input);
-				break;
-			} else if( input.equals(null)){
-				System.out.println("Försök igen");
-			} else {
-				System.out.println("Något har blivit fel. Tänk på att svara genom att skriva en siffra.");
-			}
-		}
-		return returnInt;
-	}
+      input = in.nextLine();
+      check = input.charAt(0);
+      if (Character.isDigit(check)) {
+        returnInt = Integer.parseInt(input);
+        break;
+      } else if( input.equals(null)){
+        System.out.println("Försök igen");
+      } else {
+        System.out.println("Något har blivit fel. Tänk på att svara genom att skriva en siffra.");
+      }
+    }
+    return returnInt;
+  }
 
-	public static void printSlowly(String text) {//skriver ut texter lÃ¥ngsamt ut en string..
-		try {
-			for (char character : text.toCharArray()) {
-				System.out.print(character);  // skriver varje char (i introText)
+  public static void printSlowly(String text) {//skriver ut texter lÃ¥ngsamt ut en string..
+    try {
+      for (char character : text.toCharArray()) {
+        System.out.print(character);  // skriver varje char (i introText)
 
-				if ( character != ' ' ){ //om det inte vara var ett mellanslag!
-					Thread.sleep(5);  // vÃ¤nta lite tills nÃ¤sta.. (skapar en trÃ¥d och vÃ¤ntar liiite)
-				}//annars vÃ¤ntar vi inte...
-			}
+        if ( character != ' ' ){ //om det inte vara var ett mellanslag!
+          Thread.sleep(5);  // vÃ¤nta lite tills nÃ¤sta.. (skapar en trÃ¥d och vÃ¤ntar liiite)
+        }//annars vÃ¤ntar vi inte...
+      }
 
-		} catch (InterruptedException e) {//om trÃ¥den blir fel eller liknande
-			System.out.println(text);//skriv ut som vanligt instÃ¤llet..
-		}
-
-
-	}
-
-	public static void printSlowly(String text, int mSecondsDelay) {//skriver ut texter lÃ¥ngsamt ut en string..
-		try {
-			for (char character : text.toCharArray()) {
-				System.out.print(character);  // skriver varje char (i introText)
-
-				if ( character != ' ' ){ //om det inte vara var ett mellanslag!
-					Thread.sleep(mSecondsDelay);  // vÃ¤nta lite tills nÃ¤sta.. (skapar en trÃ¥d och vÃ¤ntar liiite)
-				}//annars vÃ¤ntar vi inte...
-			}
-		} catch (InterruptedException e) {//om trÃ¥den blir fel eller liknande
-			System.out.println(text);//skriv ut som vanligt instÃ¤llet..
-		}
-	}
-
-	/**
-	 * @param menyElements
-	 * @return the name of the selected option
-	 * 	  switch (Methods.choseFromMeny("TestGame,BlackJack,Patians,21")) {
-	case "TestGame":
-	System.out.println("Run the testgame");
-	break;
-
-	default:
-	System.out.println("do nothing..");
-	break;
-
-	}
-	 */
-	public static String choseFromMeny(String menyElements) {
+    } catch (InterruptedException e) {//om trÃ¥den blir fel eller liknande
+      System.out.println(text);//skriv ut som vanligt instÃ¤llet..
+    }
 
 
+  }
 
-		String[] menyElements_ = menyElements.split(",");
-		StringBuilder sb = new StringBuilder(
-				"*********** Chose ***********\n");
-		for(int i = 0; i< menyElements_.length; i++){
-			sb.append(" "
-					+ (i+1) + " : " + menyElements_[i] + "\n");
-		}
-		sb.append("*****************************\n");
-		printSlowly(sb.toString());
-		String choice;
-		do{
-			System.out.print("chose a number(1 to " + menyElements_.length + ") :");
-			choice = inPutFromNextLine();
-			if(choice.isEmpty()|| !choice.matches("[0-9]+")) {
-				choice = "-1";
+  public static void printSlowly(String text, int mSecondsDelay) {//skriver ut texter lÃ¥ngsamt ut en string..
+    try {
+      for (char character : text.toCharArray()) {
+        System.out.print(character);  // skriver varje char (i introText)
 
-			}
-		}while ( (Integer.parseInt(choice)<0) || (((Integer.parseInt(choice))) > (menyElements_.length)) );
+        if ( character != ' ' ){ //om det inte vara var ett mellanslag!
+          Thread.sleep(mSecondsDelay);  // vÃ¤nta lite tills nÃ¤sta.. (skapar en trÃ¥d och vÃ¤ntar liiite)
+        }//annars vÃ¤ntar vi inte...
+      }
+    } catch (InterruptedException e) {//om trÃ¥den blir fel eller liknande
+      System.out.println(text);//skriv ut som vanligt instÃ¤llet..
+    }
+  }
 
-		return menyElements_[(Integer.parseInt(choice)-1)];
-	}
-	public static String choseFromMenyNew(String... menyElements) {
+  /**
+   * @param menyElements
+   * @return the name of the selected option
+   * 	  switch (Methods.choseFromMeny("TestGame,BlackJack,Patians,21")) {
+  case "TestGame":
+  System.out.println("Run the testgame");
+  break;
 
-		StringBuilder sb = new StringBuilder(
-				"*********** Chose ***********\n");
-		for(int i = 0; i< menyElements.length; i++){
-			sb.append(" "
-					+ (i+1) + " : " + menyElements[i] + "\n");
-		}
-		sb.append("*****************************\n");
-		printSlowly(sb.toString());
-		String choice;
-		do{
-			System.out.print("chose a number(1 to " + menyElements.length + ") :");
-			choice = inPutFromNextLine();
-			if(choice.isEmpty()|| !choice.matches("[0-9]+")) {
-				choice = "-1";
+  default:
+  System.out.println("do nothing..");
+  break;
 
-			}
-		}while ( (Integer.parseInt(choice)<0) || (((Integer.parseInt(choice))) > (menyElements.length)) );
+  }
+   */
+  public static String choseFromMeny(String menyElements) {
+    String[] menyElements_ = menyElements.split(",");
+    StringBuilder sb = new StringBuilder(
+        "*********** Chose ***********\n");
+    for(int i = 0; i< menyElements_.length; i++){
+      sb.append(" "
+          + (i+1) + " : " + menyElements_[i] + "\n");
+    }
+    sb.append("*****************************\n");
+    printSlowly(sb.toString());
+    String choice;
+    do{
+      System.out.print("chose a number(1 to " + menyElements_.length + ") :");
+      choice = inPutFromNextLine();
+      if(choice.isEmpty()|| !choice.matches("[0-9]+")) {
+        choice = "-1";
 
-		return menyElements[(Integer.parseInt(choice)-1)];
-	}
+      }
+    }while ( (Integer.parseInt(choice)<0) || (((Integer.parseInt(choice))) > (menyElements_.length)) );
+
+    return menyElements_[(Integer.parseInt(choice)-1)];
+  }
+  public static String choseFromMenyNew(String... menyElements) {
+
+    StringBuilder sb = new StringBuilder(
+        "*********** Chose ***********\n");
+    for (int i = 0; i< menyElements.length; i++){
+      sb.append(" "
+          + (i+1) + " : " + menyElements[i] + "\n");
+    }
+    sb.append("*****************************\n");
+    printSlowly(sb.toString());
+    String choice;
+    do {
+      System.out.print("chose a number(1 to " + menyElements.length + ") :");
+      choice = inPutFromNextLine();
+      if(choice.isEmpty()|| !choice.matches("[0-9]+")) {
+        choice = "-1";
+
+      }
+    } while ( (Integer.parseInt(choice)<0) || (((Integer.parseInt(choice))) > (menyElements.length)) );
+
+    return menyElements[(Integer.parseInt(choice)-1)];
+  }
 
   public static int choseFromMenyInt(String... menyElements) {
 
     StringBuilder sb = new StringBuilder(
-            "*********** Chose ***********\n");
+        "*********** Chose ***********\n");
     for(int i = 0; i< menyElements.length; i++){
       sb.append(" "
-              + (i+1) + " : " + menyElements[i] + "\n");
+          + (i+1) + " : " + menyElements[i] + "\n");
     }
     sb.append("*****************************\n");
     printSlowly(sb.toString());
@@ -201,101 +198,101 @@ public class HelperMethods {
 			return " ;";
 		}
 		*/
-		StringBuilder conent = new StringBuilder("");
-		try{
+    StringBuilder conent = new StringBuilder("");
+    try{
 
-			//Create object of FileReader
-			FileReader inputFile = new FileReader(filename);
+      //Create object of FileReader
+      FileReader inputFile = new FileReader(filename);
 
-			//Instantiate the BufferedReader Class
-			BufferedReader bufferReader = new BufferedReader(inputFile);
+      //Instantiate the BufferedReader Class
+      BufferedReader bufferReader = new BufferedReader(inputFile);
 
-			//Variable to hold the one line data
-			String line;
-
-
-
-			// Read file line by line and print on the console
-			while ((line = bufferReader.readLine()) != null)   {
-				conent.append(line);
-			}
-			//Close the buffer reader
-			bufferReader.close();
-		}catch(Exception e){
-			return " ";
-		}
-		return conent.toString();
-
-	}
-
-	public static void writeFile(String filename, String text) throws IOException {
-		FileOutputStream fos = null;
-		try {
-			fos = new FileOutputStream(filename);
-			fos.write(text.getBytes("UTF-8"));
-		} catch (IOException e) {
-			close(fos);
-			throw e;
-		}
-	}
-
-	public static void close(Closeable closeable) {
-		try {
-			closeable.close();
-		} catch(IOException ignored) {
-		}
-	}
-	public static String introtext() {
-		StringBuilder str = new StringBuilder("");
-		str.append("" +
-				"                                                                        \n" +
-				"                  _/      _/         _/                              \n" +
-				"      _/_/       _/_/    _/                 _/    _/        _/_/_/   \n" +
-				"   _/_/_/_/     _/  _/  _/         _/      _/    _/      _/    _/    \n" +
-				"  _/           _/    _/_/         _/      _/    _/      _/    _/     \n" +
-				"   _/_/_/     _/      _/         _/        _/_/_/        _/_/_/      \n" +
-				"                                _/                          _/       \n" +
-				"                             _/                        _/_/          \n");
+      //Variable to hold the one line data
+      String line;
 
 
 
-
-		return str.toString();
-	}
-
-	public static String introtext2() {
-		StringBuilder str = new StringBuilder("");
-		str.append("" +
-				" ______     __   __       __     __  __     ______    \n" +
-				"/\\  ___\\   /\\ \"-.\\ \\     /\\ \\   /\\ \\/\\ \\   /\\  ___\\   \n" +
-				"\\ \\  __\\   \\ \\ \\-.  \\   _\\_\\ \\  \\ \\ \\_\\ \\  \\ \\ \\__ \\  \n" +
-				" \\ \\_____\\  \\ \\_\\\\\"\\_\\ /\\_____\\  \\ \\_____\\  \\ \\_____\\ \n" +
-				"  \\/_____/   \\/_/ \\/_/ \\/_____/   \\/_____/   \\/_____/ \n" +
-				"                         ");
-		return str.toString();
-	}
-
-    public static int getRandomInt(int min , int max) {
-        Random rand = new Random();
-        return ((rand.nextInt((max - 0) + min) + min));
+      // Read file line by line and print on the console
+      while ((line = bufferReader.readLine()) != null)   {
+        conent.append(line);
+      }
+      //Close the buffer reader
+      bufferReader.close();
+    }catch(Exception e){
+      return " ";
     }
+    return conent.toString();
+
+  }
+
+  public static void writeFile(String filename, String text) throws IOException {
+    FileOutputStream fos = null;
+    try {
+      fos = new FileOutputStream(filename);
+      fos.write(text.getBytes("UTF-8"));
+    } catch (IOException e) {
+      close(fos);
+      throw e;
+    }
+  }
+
+  public static void close(Closeable closeable) {
+    try {
+      closeable.close();
+    } catch(IOException ignored) {
+    }
+  }
+  public static String introtext() {
+    StringBuilder str = new StringBuilder("");
+    str.append("" +
+        "                                                                        \n" +
+        "                  _/      _/         _/                              \n" +
+        "      _/_/       _/_/    _/                 _/    _/        _/_/_/   \n" +
+        "   _/_/_/_/     _/  _/  _/         _/      _/    _/      _/    _/    \n" +
+        "  _/           _/    _/_/         _/      _/    _/      _/    _/     \n" +
+        "   _/_/_/     _/      _/         _/        _/_/_/        _/_/_/      \n" +
+        "                                _/                          _/       \n" +
+        "                             _/                        _/_/          \n");
 
 
-	public static String introtext3() {
-		StringBuilder str = new StringBuilder("");
-		str.append("" +
-				" \n" +
-				"    ▄████████    ███▄▄▄▄          ▄█  ███        █▄        ▄██████▄  \n" +
-				"    ███      ███   ███▀▀▀██▄     ███  ███        ███      ███      ███ \n" +
-				"    ███      █▀     ███     ███     ███  ███        ███      ███      █▀  \n" +
-				"  ▄███▄▄▄         ███      ███     ███  ███        ███    ▄███        \n" +
-				"▀▀███▀▀▀         ███      ███     ███  ███         ███  ▀▀███   ████▄  \n" +
-				"   ███       █▄    ███     ███       ███  ███        ███      ███       ███ \n" +
-				"   ███       ███  ███     ███       ███  ███       ███       ███      ███ \n" +
-				"   ██████████   ▀█      █▀  █▄ ▄███  ████████▀        ████████▀  \n" +
-				"                                       ▀▀▀▀▀▀                          \n");
-		return str.toString();
-	}
+
+
+    return str.toString();
+  }
+
+  public static String introtext2() {
+    StringBuilder str = new StringBuilder("");
+    str.append("" +
+        " ______     __   __       __     __  __     ______    \n" +
+        "/\\  ___\\   /\\ \"-.\\ \\     /\\ \\   /\\ \\/\\ \\   /\\  ___\\   \n" +
+        "\\ \\  __\\   \\ \\ \\-.  \\   _\\_\\ \\  \\ \\ \\_\\ \\  \\ \\ \\__ \\  \n" +
+        " \\ \\_____\\  \\ \\_\\\\\"\\_\\ /\\_____\\  \\ \\_____\\  \\ \\_____\\ \n" +
+        "  \\/_____/   \\/_/ \\/_/ \\/_____/   \\/_____/   \\/_____/ \n" +
+        "                         ");
+    return str.toString();
+  }
+
+  public static int getRandomInt(int min , int max) {
+    Random rand = new Random();
+    return ((rand.nextInt((max - 0) + min) + min));
+  }
+
+
+  public static String introtext3() {
+    StringBuilder str = new StringBuilder("");
+    str.append("" +
+        " \n" +
+        "    ▄████████    ███▄▄▄▄          ▄█  ███        █▄        ▄██████▄  \n" +
+        "    ███      ███   ███▀▀▀██▄     ███  ███        ███      ███      ███ \n" +
+        "    ███      █▀     ███     ███     ███  ███        ███      ███      █▀  \n" +
+        "  ▄███▄▄▄         ███      ███     ███  ███        ███    ▄███        \n" +
+        "▀▀███▀▀▀         ███      ███     ███  ███         ███  ▀▀███   ████▄  \n" +
+        "   ███       █▄    ███     ███       ███  ███        ███      ███       ███ \n" +
+        "   ███       ███  ███     ███       ███  ███       ███       ███      ███ \n" +
+        "   ██████████   ▀█      █▀  █▄ ▄███  ████████▀        ████████▀  \n" +
+        "                                       ▀▀▀▀▀▀                          \n");
+    return str.toString();
+  }
 
 /*	public static String stringTOACCII(String text) { // throws IOException {
 
