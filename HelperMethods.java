@@ -42,6 +42,36 @@ public class HelperMethods {
     return input;
   }
 
+  /**
+   * return OS-Username
+   **/
+  public static String getUserName() {
+    return System.getProperty("user.name");
+  }
+  /**
+   * return OS-Name
+   **/
+  public static String getOSName() {
+    return System.getProperty("os.name");
+  }
+
+  /**
+   * return OS-country
+   **/
+  public static String getOSCountry() {
+    return System.getProperty("user.country");
+  }
+  /**
+   * return OS-language
+   **/
+  public static String getOSLanguage() {
+    return System.getProperty("user.language");
+  }
+
+
+  /**
+   * make a PC-beep!
+   **/
   public static void Beep() {
     Toolkit.getDefaultToolkit().beep();
   }
@@ -54,7 +84,7 @@ public class HelperMethods {
    * return OS :
    * Windows, MacOS, Linux, Other
    *good for path if used..
-   */
+   **/
   public static OSType getOperatingSystemType() {
     if (detectedOS == null) {
       String OS = System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH);
