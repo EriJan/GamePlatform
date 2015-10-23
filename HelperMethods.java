@@ -1,12 +1,19 @@
 //package CardGame;
 
+import java.awt.*;
 import java.io.*;
-import java.net.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
-
+/**
+ * Created by Niklas on 19/10/15.
+ *
+ */
 public class HelperMethods {
+
+  public static final String ERROR_TRY_AGAIN = "Något har blivit fel. Tänk på att svara genom att skriva en siffra.";
 
   public static boolean fileExists(String URLName){
     try {
@@ -24,17 +31,30 @@ public class HelperMethods {
     }
   }
 
-
+  /**
+   * get string from input (scanner nextline)
+   *
+   */
   public static String inPutFromNextLine() {
     String input= null;
     Scanner in = new Scanner(System.in);
     input = in.nextLine();
     return input;
   }
+
+  public static void Beep() {
+    Toolkit.getDefaultToolkit().beep();
+  }
+
   private enum OSType {
     Windows, MacOS, Linux, Other
   };
   protected static OSType detectedOS;
+  /**
+   * return OS :
+   * Windows, MacOS, Linux, Other
+   *good for path if used..
+   */
   public static OSType getOperatingSystemType() {
     if (detectedOS == null) {
       String OS = System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH);
@@ -50,7 +70,11 @@ public class HelperMethods {
     }
     return detectedOS;
   }
-
+  /**
+   * get int from input (scanner nextline)
+   *
+   *
+   */
   public static int inPutFromNextInt() {
     String input= null;
     char check;
@@ -62,15 +86,16 @@ public class HelperMethods {
       if (Character.isDigit(check)) {
         returnInt = Integer.parseInt(input);
         break;
-      } else if( input.equals(null)){
-        System.out.println("Försök igen");
       } else {
-        System.out.println("Något har blivit fel. Tänk på att svara genom att skriva en siffra.");
+        System.out.println(ERROR_TRY_AGAIN);
       }
     }
     return returnInt;
   }
-
+  /**
+   * print slowly a System.out.print, fixed delay
+   *
+   */
   public static void printSlowly(String text) {//skriver ut texter lÃ¥ngsamt ut en string..
     try {
       for (char character : text.toCharArray()) {
@@ -87,7 +112,10 @@ public class HelperMethods {
 
 
   }
-
+  /**
+   * print slowly a System.out.print, and adjusting mSecond
+   *
+   */
   public static void printSlowly(String text, int mSecondsDelay) {//skriver ut texter lÃ¥ngsamt ut en string..
     try {
       for (char character : text.toCharArray()) {
@@ -117,6 +145,9 @@ public class HelperMethods {
   }
    */
   public static String choseFromMeny(String menyElements) {
+
+
+
     String[] menyElements_ = menyElements.split(",");
     StringBuilder sb = new StringBuilder(
         "*********** Chose ***********\n");
@@ -142,21 +173,21 @@ public class HelperMethods {
 
     StringBuilder sb = new StringBuilder(
         "*********** Chose ***********\n");
-    for (int i = 0; i< menyElements.length; i++){
+    for(int i = 0; i< menyElements.length; i++){
       sb.append(" "
           + (i+1) + " : " + menyElements[i] + "\n");
     }
     sb.append("*****************************\n");
     printSlowly(sb.toString());
     String choice;
-    do {
+    do{
       System.out.print("chose a number(1 to " + menyElements.length + ") :");
       choice = inPutFromNextLine();
       if(choice.isEmpty()|| !choice.matches("[0-9]+")) {
         choice = "-1";
 
       }
-    } while ( (Integer.parseInt(choice)<0) || (((Integer.parseInt(choice))) > (menyElements.length)) );
+    }while ( (Integer.parseInt(choice)<0) || (((Integer.parseInt(choice))) > (menyElements.length)) );
 
     return menyElements[(Integer.parseInt(choice)-1)];
   }
@@ -183,7 +214,10 @@ public class HelperMethods {
 
     return Integer.parseInt(choice)-1;
   }
-
+  /**
+   * read filename, if not exist return " "
+   *
+   */
   public static String readFile(String filename)  {
 /*		File file = new File(filename);
 		int len = (int) file.length();
@@ -224,7 +258,10 @@ public class HelperMethods {
     return conent.toString();
 
   }
-
+  /**
+   * write to filename
+   *
+   */
   public static void writeFile(String filename, String text) throws IOException {
     FileOutputStream fos = null;
     try {
@@ -242,6 +279,10 @@ public class HelperMethods {
     } catch(IOException ignored) {
     }
   }
+  /**
+   * print nice logo eNug
+   *
+   */
   public static String introtext() {
     StringBuilder str = new StringBuilder("");
     str.append("" +

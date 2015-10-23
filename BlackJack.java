@@ -3,6 +3,8 @@ import java.io.IOException;
 
 
 public class BlackJack extends CardGame {
+  public static final GameId GAME_ID = GameId.BlackJack;
+
   private DeckHandler deck;
   private ArrayList<BlackJackHand> positions;
   private ArrayList<Player> players;
@@ -40,7 +42,7 @@ public class BlackJack extends CardGame {
           ui.gameMessage("Please add at least one player.");
         }
       } else {
-        players.add(new Player(usrInputStr));
+        players.add(new Player(usrInputStr, GAME_ID));
         playerCounter++;
       }
     }
@@ -90,7 +92,7 @@ public class BlackJack extends CardGame {
         ui.gameMessage("Program end.");
       }
     }
-    printPlayersToFile();
+    writePlayersToFile();
   }
 
   @Override
@@ -98,7 +100,7 @@ public class BlackJack extends CardGame {
 
   }
 
-  public void printPlayersToFile() {
+  public void writePlayersToFile() {
 
     FileSerializable fileTest = new FileSerializable();
     try {

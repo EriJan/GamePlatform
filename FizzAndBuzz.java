@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class FizzAndBuzz extends CardGame {
 
     ArrayList<Player>  players = new ArrayList<>();
-
+    private static final GameId GAME_ID = GameId.FizzAndBuzz;
     //Player player1,player2;
 
 
@@ -18,7 +18,7 @@ public class FizzAndBuzz extends CardGame {
             System.out.println("set playername: [ or set Q to start the game] ");
             val = HelperMethods.inPutFromNextLine();
             if (!val.isEmpty() && !val.equalsIgnoreCase("q")){
-                Player playerX = new Player(val);
+                Player playerX = new Player(val, GAME_ID);
                 players.add(playerX);
             }
             if (val.equalsIgnoreCase("q")){

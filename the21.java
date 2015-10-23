@@ -16,6 +16,7 @@ public class the21  extends CardGame implements Runnable{
   the21Hands[] playersHands  ;
   private String sel,m;
   private GameUserInterface ui;
+  public static final GameId GAME_ID = GameId.the21;
 
   int [] DrowCard = new int[] {0,0,0};
   int [] DrowCard2 = new int[] {0,0,0};
@@ -77,16 +78,11 @@ public class the21  extends CardGame implements Runnable{
     return pCImg;
   }
 
-
-
-
-
-
   the21() {
     ui = new the21GraphicUi();
     deck.newDeck();
     deck.shuffleDeck();
-    player2 = new Player("PC");
+    player2 = new Player("PC", GAME_ID);
   }
 
   @Override
@@ -299,7 +295,7 @@ public class the21  extends CardGame implements Runnable{
   }
 
   private Player getNewPlayer(String name) {
-    return new Player(name);
+    return new Player(name, GAME_ID);
   }
 
   private void PrintWelcome() {

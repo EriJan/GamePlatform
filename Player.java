@@ -1,20 +1,27 @@
+import javax.swing.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class Player implements java.io.Serializable {
+public class Player implements Serializable {
 
-	private static int numberOfPlayers;
+	//private static int numberOfPlayers;
 
 	private String name;
   private EnumMap<GameId,GameStatistics> gameStatsPerGame;
   private GameId currentGame;
   private GameStatistics currentStats;
+  private ImageIcon angryPlayer;
+  private ImageIcon happyPlayer;
 
-	public Player(String name) {
+	public Player(String name, GameId id) {
 		this.name = name;
     gameStatsPerGame = new EnumMap<GameId,GameStatistics>(GameId.class);
-		addNumberOfPlayers();
+    for (GameId loopId : GameId.values()) {
+      gameStatsPerGame.put(loopId, new GameStatistics());
+    }
+
 	}
 
   public void setCurrentGame(GameId id) {
@@ -30,9 +37,20 @@ public class Player implements java.io.Serializable {
 		return name;
 	}
 
+  @Override
 	public String toString() {
-
-		return name;
+    String tmpString = "";
+    tmpString += name + "\n";
+    for (GameId id : GameId.values()) {
+      GameStatistics gameStatistics = gameStatsPerGame.get(id);
+      tmpString += "\n" + id + "\n";
+      if (gameStatistics != null) {
+        tmpString += "Wins: " + gameStatistics.noOfWins + "\n";
+        tmpString += "Losses: " + gameStatistics.noOfLosses + "\n";
+        tmpString += "No of games: " + gameStatistics.noOfGamesPlayed + "\n";
+      }
+    }
+    return tmpString;
 	}
 
 	public void addWin(int add) {
@@ -51,7 +69,7 @@ public class Player implements java.io.Serializable {
 		return currentStats.noOfLosses;
 	}
 
-	public void setNumberOfGamesPlayed(){
+	public void incrNumberOfGamesPlayed(){
 		currentStats.noOfGamesPlayed++;
 	}
 
@@ -59,11 +77,19 @@ public class Player implements java.io.Serializable {
     return currentStats.noOfGamesPlayed;
   }
 
-	private static void addNumberOfPlayers(){
-		numberOfPlayers += 1;
-	}
+  public LocalDate getLastDate() {
+    return currentStats.lastGamePlayed;
+  }
 
-  class GameStatistics {
+  public void setLastDate() {
+    currentStats.lastGamePlayed = LocalDate.now();
+  }
+
+	//private static void addNumberOfPlayers(){
+	//	numberOfPlayers += 1;
+	//}
+
+  class GameStatistics implements Serializable {
     int noOfGamesPlayed;
     int noOfWins;
     int noOfLosses;

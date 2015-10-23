@@ -8,7 +8,7 @@ public class BlackJackHand extends CardDeal {
   BlackJackHand() {
     super();
     isDone = false;
-    owner = new Player("House");
+    owner = new Player("House", BlackJack.GAME_ID);
   }
 
   BlackJackHand(Player owner) {
