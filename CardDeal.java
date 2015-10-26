@@ -15,10 +15,6 @@ public class CardDeal {
     }
   }
 
-  //public List<PlayingCard> getDeal(){
-   // return hand;
- // }
-
   public void recieveCard(PlayingCard newCard) {
     hand.add(newCard);
   }
@@ -35,6 +31,10 @@ public class CardDeal {
       retCard = null;
     }
     return retCard;
+  }
+
+  public List<PlayingCard> getDeal(){
+    return this.hand;
   }
 
   public PlayingCard getLastCard(){

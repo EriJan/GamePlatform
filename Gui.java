@@ -12,18 +12,28 @@ import java.awt.event.MouseEvent;
  * http://www.designmantic.com/logo-design/samples
  */
 public class Gui extends JFrame {
-    JPanel jp = new JPanel();
-    JButton jb = new JButton();
-    JLabel[] bselects;
-    int numberOfOptions = 4;
-            //"Blackjack","Patiens","21","Quit"
+  JPanel jp = new JPanel();
+  JButton jb = new JButton();
+  JLabel[] bselects;
+  public int x, y, w;
 
+  int numberOfOptions = 4;
+  //"Blackjack","Patiens","21","Quit"
 
-public Gui(String... Options){
+//ImageIcon img = new ImageIcon("C:\\location\\logo1.png");
+
+  public Gui(String... Options){
     setTitle("TheGame");
     setVisible(true);
-    setSize(110,270);
+    setSize(210,290);
     setDefaultCloseOperation(EXIT_ON_CLOSE);
+    ImageIcon icon = new ImageIcon(("C:\\location\\logo1.png"));
+    setIconImage(icon.getImage());
+    setLocation(10,0);
+
+    x = getX();
+    w = getWidth();
+    y = getY();
 
 //    getContentPane().setBackground( Color.white );
     //jb.setIcon(new ImageIcon("/images/logo1.png"));
@@ -34,8 +44,8 @@ public Gui(String... Options){
     //correct way:
     //jb.setIcon(new ImageIcon(this.getClass().getResource("logo1.png")));
     //wrong way, "Test":
-  // jb.setIcon(new ImageIcon("C:\\location\\logo1.png")); //is under " C:\location\"
-  jb.setIcon(new ImageIcon("/Users/Janne/JavaProj/src/logo/location/logo1.png")); //is under " C:\location\"
+    jb.setIcon(new ImageIcon("C:\\location\\logo1.png")); //is under " C:\location\"
+    //jb.setIcon(new ImageIcon("/Users/Janne/JavaProj/src/logo/location/logo1.png")); //is under " C:\location\"
     //logo1.png to logo6.png..
 
 
@@ -53,8 +63,8 @@ public Gui(String... Options){
 // unbold
 //    label.setFont(f.deriveFont(f.getStyle() & ~Font.BOLD));
 
-            //label.setHorizontalAlignment(JLabel.RIGHT);
-            label.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+    //label.setHorizontalAlignment(JLabel.RIGHT);
+    label.setAlignmentX(JLabel.CENTER_ALIGNMENT);
     box.add(label);
 
     //jp.setBackground(Color.GREEN);
@@ -67,85 +77,85 @@ public Gui(String... Options){
 
     bselects = new JLabel[Options.length];
     for (int i = 0 ; i<Options.length ; i++){
-        bselects[i] = new JLabel(Options[i]);
-        final int ClickPointer = i; //MYCKET VIKTIG!
+      bselects[i] = new JLabel(Options[i]);
+      final int ClickPointer = i; //MYCKET VIKTIG!
 
-        bselects[i].addMouseListener(new MouseAdapter() {
-            private boolean isMarked;
+      bselects[i].addMouseListener(new MouseAdapter() {
+        private boolean isMarked;
 
-            @Override
-            public void mouseClicked(MouseEvent diceClickID) {
-                //onMouseClicked(ClickID);
-                isMarked = optionsMaker(ClickPointer, isMarked);
+        @Override
+        public void mouseClicked(MouseEvent diceClickID) {
+          //onMouseClicked(ClickID);
+          isMarked = optionsMaker(ClickPointer, isMarked);
 
-            }
+        }
 
-        });
+      });
 
-        bselects[i].addMouseListener(new RatingMouseListener(i));
-        //bselects[i].setBounds(20, 55+(i*(48+10)), 48, 48);
+      bselects[i].addMouseListener(new RatingMouseListener(i));
+      //bselects[i].setBounds(20, 55+(i*(48+10)), 48, 48);
 
-                //jp.add(bselects[i], BorderLayout.SOUTH);
-        box.add(bselects[i], BorderLayout.SOUTH);
-        //jp.add(bselects[i]);
+      //jp.add(bselects[i], BorderLayout.SOUTH);
+      box.add(bselects[i], BorderLayout.SOUTH);
+      //jp.add(bselects[i]);
     }
 
     jp.add(box);
 
     add(jp);
     jb.addActionListener(new ActionListener() { //en inner class för detta..
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("klick");
-            CardGameSelector CardGameSelectorRunnebleThread = new CardGameSelector();
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        System.out.println("klick");
+        CardGameSelector CardGameSelectorRunnebleThread = new CardGameSelector();
 
-            new Thread(CardGameSelectorRunnebleThread).start();
-        }
+        new Thread(CardGameSelectorRunnebleThread).start();
+      }
     });
     validate();
 
 
-}
-    public boolean optionsMaker(final int ClickPointer,boolean isMarked) {
-        if (isMarked){
-               isMarked = false;
-            bselects[ClickPointer].setBorder(null);
+  }
+  public boolean optionsMaker(final int ClickPointer,boolean isMarked) {
+    if (isMarked){
+      isMarked = false;
+      bselects[ClickPointer].setBorder(null);
 
 
-        }else if (!isMarked){
-            //lblMarkeraDeTrningar.setText("på");
-            isMarked = true;
-            Border marking = new BevelBorder(
-                    BevelBorder.LOWERED, Color.DARK_GRAY, Color.BLACK);
-            bselects[ClickPointer].setBorder(marking);
-            System.out.println(bselects[ClickPointer].getText());
+    }else if (!isMarked){
+      //lblMarkeraDeTrningar.setText("på");
+      isMarked = true;
+      Border marking = new BevelBorder(
+          BevelBorder.LOWERED, Color.DARK_GRAY, Color.BLACK);
+      bselects[ClickPointer].setBorder(marking);
+      System.out.println(bselects[ClickPointer].getText());
 
-            CardGameSelector.run(bselects[ClickPointer].getText());
-        }
-        return isMarked;
+      CardGameSelector.run(bselects[ClickPointer].getText());
+    }
+    return isMarked;
+  }
+
+  private class RatingMouseListener extends MouseAdapter {
+    private final int index;
+
+    public RatingMouseListener(int index) {
+      this.index = index;
     }
 
-    private class RatingMouseListener extends MouseAdapter {
-        private final int index;
 
-        public RatingMouseListener(int index) {
-            this.index = index;
-        }
-
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            bselects[index].setBackground(Color.lightGray);
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            bselects[index].setBackground(Color.ORANGE);
-        }
-
+    @Override
+    public void mouseExited(MouseEvent e) {
+      bselects[index].setBackground(Color.lightGray);
     }
 
-    public static void main(String[] args) {
-        Gui g = new Gui("Blackjack","Patiens","21","Quit");
+    @Override
+    public void mouseEntered(MouseEvent e) {
+      bselects[index].setBackground(Color.ORANGE);
     }
+
+  }
+
+  public static void main(String[] args) {
+    Gui g = new Gui("Blackjack","Patiens","21", "FizzAndBuzz","Quit");
+  }
 }

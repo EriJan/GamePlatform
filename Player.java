@@ -1,59 +1,106 @@
-public class Player implements java.io.Serializable {
+import javax.swing.*;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.EnumMap;
+import java.util.Map;
 
-	static int numberOfPlayers_;
+public class Player implements Serializable {
 
-	private String name_;
-	private int win_;
-	private int loss_;
-	private int numberOfMovesPerGame_;
-	private int numberOfGames_;
+	//private static int numberOfPlayers;
 
-	public Player() {
-		addNumberOfPlayers(); //Alltså, kanske inte helt lyckat? Måste väl i så fall ta bort spelare från listan?
-								//Tänkte att man (när jag förstår hur det funkar helt och hållet) kan koppla antaletSpelare
-								//till en funktion i FileSerializable så att man från en binär fil kan utläsa hur många
-								// Player det finns totalt
+	private String name;
+  private EnumMap<GameId,GameStatistics> gameStatsPerGame;
+  private GameId currentGame;
+  private GameStatistics currentStats;
+  private ImageIcon angryPlayer;
+  private ImageIcon happyPlayer;
+
+	public Player(String name, GameId id) {
+		this.name = name;
+    gameStatsPerGame = new EnumMap<GameId,GameStatistics>(GameId.class);
+    for (GameId loopId : GameId.values()) {
+      gameStatsPerGame.put(loopId, new GameStatistics());
+    }
+    setCurrentGame(id);
+
 	}
 
-	public Player(String name) {
-		name_ = name;
-		addNumberOfPlayers();
-	}
+  public void setCurrentGame(GameId id) {
+    currentGame = id;
+    currentStats = gameStatsPerGame.get(currentGame);
+  }
+
+  public GameId getCurrentGame() {
+    return currentGame;
+  }
 
 	public String getName() {
-		return name_;
+		return name;
 	}
 
+  @Override
 	public String toString() {
-
-		return name_;
+    String tmpString = "";
+    tmpString += name + "\n";
+    for (GameId id : GameId.values()) {
+      GameStatistics gameStatistics = gameStatsPerGame.get(id);
+      tmpString += "\n" + id + "\n";
+      if (gameStatistics != null) {
+        tmpString += "Wins: " + gameStatistics.noOfWins + "\n";
+        tmpString += "Losses: " + gameStatistics.noOfLosses + "\n";
+        tmpString += "No of games: " + gameStatistics.noOfGamesPlayed + "\n";
+      }
+    }
+    return tmpString;
 	}
 
-	public void setWin(int add) {
-		win_ += add;
+	public void addWin(int add) {
+    currentStats.noOfWins += add;
 	}
 
 	public int getWin() {
-		return win_;
+		return currentStats.noOfWins;
 	}
 
-	public void setLoss(int add) {
-		loss_ += add;
+	public void addLosses(int add) {
+		currentStats.noOfLosses += add;
 	}
 
-	public int getLoss() {
-		return loss_;
+  public int getLosses() {
+		return currentStats.noOfLosses;
 	}
 
-	public void setNumberOfGames(){
-		numberOfGames_ += 1;
+	public void incrNumberOfGamesPlayed(){
+		currentStats.noOfGamesPlayed++;
 	}
 
-	public int getNumberOfMovesPerGame(){
-		return numberOfMovesPerGame_ /= numberOfGames_;
-	}
+  public int getNumberOfGamesPlayed() {
+    return currentStats.noOfGamesPlayed;
+  }
 
-	private static void addNumberOfPlayers(){
-		numberOfPlayers_ += 1;
-	}
+  public LocalDate getLastDate() {
+    return currentStats.lastGamePlayed;
+  }
+
+  public void setLastDate() {
+    currentStats.lastGamePlayed = LocalDate.now();
+  }
+
+	//private static void addNumberOfPlayers(){
+	//	numberOfPlayers += 1;
+	//}
+
+  class GameStatistics implements Serializable {
+    int noOfGamesPlayed;
+    int noOfWins;
+    int noOfLosses;
+    LocalDate lastGamePlayed;
+
+    GameStatistics() {
+      noOfGamesPlayed = 0;
+      noOfWins = 0;
+      noOfLosses = 0;
+      lastGamePlayed = LocalDate.now();
+    }
+  }
 }

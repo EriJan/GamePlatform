@@ -10,7 +10,6 @@ public class DeckHandler {
   private List<PlayingCard> dealtCards;
   private List<PlayingCard> discardedCards;
 
-
   DeckHandler() {
     fullDeck = new HashSet<PlayingCard>();
     for (Suit suit : Suit.values()) {
@@ -18,7 +17,6 @@ public class DeckHandler {
         fullDeck.add(new PlayingCard(suit,i));
       }
     }
-    // currentDeck = new ArrayList<PlayingCard>(fullDeck);
   }
 
   public PlayingCard drawTop() {
@@ -28,10 +26,6 @@ public class DeckHandler {
   public PlayingCard drawThisCard(PlayingCard card) {
     currentDeck.remove(card);
     return card;
-  }
-
-  public List<PlayingCard> getCurrentDeck(){
-    return currentDeck;
   }
 
   public int cardsLeft() {

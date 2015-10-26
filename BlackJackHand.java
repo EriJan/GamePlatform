@@ -8,7 +8,7 @@ public class BlackJackHand extends CardDeal {
   BlackJackHand() {
     super();
     isDone = false;
-    owner = new Player("House");
+    owner = new Player("House", BlackJack.GAME_ID);
   }
 
   BlackJackHand(Player owner) {
@@ -29,6 +29,7 @@ public class BlackJackHand extends CardDeal {
     boolean isBust = false;
     if (getHandValue() > 21) {
       isBust = true;
+      hideHand();
     }
     return isBust;
   }
@@ -45,19 +46,6 @@ public class BlackJackHand extends CardDeal {
        }
      }
      return blackJack;
-  }
-
-  public int youHaveAnAce () {
-    int aceVal = 0;
-    Scanner userInput = new Scanner(System.in);
-    System.out.println("What is the value of this ace?");
-    String usrInputStr = userInput.nextLine();
-    if (usrInputStr.equals("1")) {
-      aceVal = 1;
-    } else {
-      aceVal = 11;
-    }
-    return aceVal;
   }
 
   @Override
