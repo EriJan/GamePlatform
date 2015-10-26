@@ -21,6 +21,7 @@ public class Player implements Serializable {
     for (GameId loopId : GameId.values()) {
       gameStatsPerGame.put(loopId, new GameStatistics());
     }
+    setCurrentGame(id);
 
 	}
 
