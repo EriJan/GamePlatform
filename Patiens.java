@@ -264,63 +264,81 @@ public class Patiens extends CardGame {
                             }
 
                         }
-                        if (getFaceUpCardFromDeck().getValue() == 13) {//TODO flytta ner detta ett hack
-                            q = getFaceUpCardFromDeck();
-                        }
+
                     }
                 }
             }
         }
+        if (q == null && getFaceUpCardFromDeck().getValue() == 13) {
+            q = getFaceUpCardFromDeck();
+        }
+
         return q;
+    }
+
+    public void removeKingAndCo(CardDeal listToDelitFrom, List<PlayingCard> listOfObjectToRemove) {
+        for (CardDeal deal : cardDealList) {
+            if (deal.equals(listToDelitFrom)) {
+                deal.getDeal().removeAll(listOfObjectToRemove);
+            }
+        }
+    }
+
+    public void putKingFromDealInOpenIndex(PlayingCard p) {
+        ArrayList<PlayingCard> local = new ArrayList<>();
+        local.add(p);
+        addToIndex(local);
+        whatsLeftCardDeal[1].getDeal().remove(p);
+
     }
 
     //Metod som lägger en kung på en ledig plats
 
     public boolean putKingInOpenIndex() {
-        boolean isChange = false;//TODO titta på en lösning som fungerar om det finns fler än en kung
-        List<PlayingCard> localList1 = new ArrayList<>();
+        boolean isChange = false;
+        //List<PlayingCard> localList1 = new ArrayList<>();
         ArrayList<PlayingCard> localList2 = listOfCardsToMove();
+        PlayingCard p = null;
+        if (isEmptyIndex()) {
+            if (numberOfKings(localList2) > 1) {
+                p = kingsToMove(localList2);
+            } else if (numberOfKings(localList2) == 0) {
 
-        if (!ifKingAndOpen(localList2).isEmpty()) {
-            PlayingCard p = ifKingAndOpen(localList2).remove(0);//TODO kolla vilken av kungarna som ska flyttas här
-            if (getFaceUpCardFromDeck() == p) {
-                localList1.add(p);
-                addToIndex(localList1);
-                whatsLeftCardDeal[1].getDeal().remove(p);
                 return isChange;
             } else {
-                if (numberOfKings(localList2) > 1) {
-                    p = kingsToMove(localList2);
+                p = ifKingAndOpen(localList2).remove(0);
+                putKingFromListsInOpenIndex(p);
+            }
+        }
+        if (getFaceUpCardFromDeck() == p) {
+            putKingFromDealInOpenIndex(p);
+        } else {
+            putKingFromListsInOpenIndex(p);
+        }
+
+
+        return isChange;
+    }
+
+    public boolean putKingFromListsInOpenIndex(PlayingCard p) {
+        boolean isChange = false;
+        List<PlayingCard> localList1 = new ArrayList<>();
+        for (CardDeal cardDeal : cardDealList) {
+            if (cardDeal.getDeal().contains(p)) {
+                if (cardDeal.getCard(0).getValue() == 13 && !cardDeal.getCard(0).faceUp) {
+                    continue;
                 }
-                for (CardDeal cardDeal : cardDealList) {
-                    if (cardDeal.getDeal().contains(p)) {
-                        if (cardDeal.getCard(0).getValue() == 13) {
-                            continue;
-                        }
 
-                        for (int i = 0; i < cardDeal.getHandSize(); i++) {
-                            if (cardDeal.getDeal().get(i) == p) {
-                                localList1 = cardDeal.getDeal().subList(i, cardDeal.getHandSize());
-                                addToIndex(localList1);
-                                for (PlayingCard cardRemove : localList1) {
-                                    System.out.println(cardRemove);
-                                    cardDeal.getDeal().remove(cardRemove);
-                                }
-                                isChange = true;
-                                return isChange;
-                            }
-
-                        }
+                for (int i = 0; i < cardDeal.getHandSize(); i++) {
+                    if (cardDeal.getDeal().get(i) == p) {
+                        localList1 = cardDeal.getDeal().subList(i, cardDeal.getHandSize());
+                        addToIndex(localList1);
+                        removeKingAndCo(cardDeal, localList1);
+                        isChange = true;
+                        return isChange;
                     }
-                } if (p == getFaceUpCardFromDeck()) {//Flytta ner
-                    localList1.add(p);
-                    addToIndex(localList1);
-                    whatsLeftCardDeal[1].getDeal().remove(p);
-                    isChange = true;
-                    return isChange;
                 }
             }
-
         }
         return isChange;
     }
